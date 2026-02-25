@@ -1,191 +1,590 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="utf-8">
-<title>Правила / FunPay</title>
-<link href="https://funpay.com/702/css/main.css" rel="stylesheet" media="all">
-<script src="https://funpay.com/520/js/app.bundle.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="alternate" hreflang="ru" href="info.html"><link rel="alternate" hreflang="uk" href="info.html"><link rel="alternate" hreflang="en" href="info%3Fsetlocale=en.html"><link rel="alternate" hreflang="x-default" href="info%3Fsetlocale=en.html"><script type="application/ld+json">[{"@context":"http:\/\/schema.org\/","@type":"WebSite","name":"FunPay","url":"https:\/\/funpay.com\/"}]</script><link rel="preload" href="https://funpay.com/702/fonts/Graphik-Bold-Web.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="https://funpay.com/702/fonts/Graphik-Semibold-Web.woff2" as="font" type="font/woff2" crossorigin><link rel="manifest" href="https://funpay.com/manifest.json">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thin Lucid Agency</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --g: #00ff88;
+            --c: #00d4ff;
+            --bg: #050508;
+            --card: #0c0c10;
+            --line: rgba(0,255,136,0.15);
+            --txt: #e8e8f0;
+            --muted: #555570;
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Syne', sans-serif;
+            background: var(--bg);
+            color: var(--txt);
+            overflow-x: hidden;
+            padding-bottom: env(safe-area-inset-bottom, 0px);
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.08) 2px,rgba(0,0,0,0.08) 4px);
+            pointer-events: none;
+            z-index: 9990;
+        }
+        #bg-canvas { position:fixed; inset:0; z-index:-1; }
+        nav {
+            position: fixed; top:0; left:0; right:0; z-index: 1000;
+            padding: 1.4rem 4rem;
+            display: flex; align-items: center; justify-content: space-between;
+            border-bottom: 1px solid var(--line);
+            background: rgba(5,5,8,0.75);
+            backdrop-filter: blur(16px);
+        }
+        .logo-svg { display: flex; align-items: center; gap: 0.7rem; text-decoration: none; }
+        .logo-text {
+            font-family: 'Space Mono', monospace; font-size: 1.1rem; font-weight: 700;
+            letter-spacing: 0.15em;
+            background: linear-gradient(90deg, var(--g), var(--c));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .nav-links { display:flex; gap:2.5rem; list-style:none; }
+        .nav-links a {
+            color: var(--muted); text-decoration: none; font-size: 0.82rem; font-weight: 600;
+            letter-spacing: 0.12em; text-transform: uppercase; transition: color 0.2s;
+            font-family: 'Space Mono', monospace;
+        }
+        .nav-links a:hover { color: var(--g); }
+        .hero {
+            min-height: 100vh; display: flex; align-items: center;
+            padding: 0 4rem; position: relative; overflow: hidden;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: 20%; right: -10%;
+            width: 600px; height: 600px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(0,255,136,0.06) 0%, transparent 65%);
+            pointer-events: none;
+        }
+        .hero-inner { max-width: 1200px; margin: 0 auto; width: 100%; }
+        .hero-tag {
+            font-family: 'Space Mono', monospace; font-size: 0.75rem; color: var(--g);
+            letter-spacing: 0.25em; text-transform: uppercase;
+            display: inline-flex; align-items: center; gap: 0.6rem; margin-bottom: 2rem;
+            opacity: 0; animation: fadeUp 0.8s 0.3s forwards;
+        }
+        .hero-tag::before { content: ''; display: inline-block; width: 32px; height: 1px; background: var(--g); }
+        .hero h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(4rem, 10vw, 9rem); font-weight: 800; line-height: 0.9;
+            letter-spacing: -0.03em; opacity: 0; animation: fadeUp 0.9s 0.5s forwards;
+        }
+        .hero h1 span {
+            display: block;
+            background: linear-gradient(135deg, var(--g) 0%, var(--c) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .hero h1 .outline {
+            -webkit-text-stroke: 1px rgba(255,255,255,0.15);
+            -webkit-text-fill-color: transparent; background: none; background-clip: unset;
+        }
+        .hero-sub {
+            margin-top: 2.5rem; font-size: 1.05rem; color: var(--muted);
+            letter-spacing: 0.05em; max-width: 480px; line-height: 1.7;
+            opacity: 0; animation: fadeUp 0.9s 0.7s forwards;
+        }
+        .hero-cta { margin-top: 3rem; display: flex; gap: 1.2rem; opacity: 0; animation: fadeUp 0.9s 0.9s forwards; }
+        .btn-primary {
+            display: inline-block; padding: 0.9rem 2.4rem; background: var(--g); color: #000;
+            font-family: 'Space Mono', monospace; font-size: 0.8rem; font-weight: 700;
+            letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none;
+            border: none; cursor: pointer;
+            clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+            transition: background 0.2s, transform 0.2s;
+        }
+        .btn-primary:hover { background: var(--c); transform: translateY(-2px); }
+        .btn-ghost {
+            display: inline-block; padding: 0.9rem 2.4rem; background: transparent; color: var(--txt);
+            font-family: 'Space Mono', monospace; font-size: 0.8rem; font-weight: 700;
+            letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none;
+            border: 1px solid var(--line); cursor: pointer;
+            clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+            transition: border-color 0.2s, color 0.2s;
+        }
+        .btn-ghost:hover { border-color: var(--c); color: var(--c); }
+        .hero-scroll-hint {
+            position: absolute; bottom: 3rem; left: 50%; transform: translateX(-50%);
+            display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+            opacity: 0; animation: fadeUp 1s 1.3s forwards;
+        }
+        .scroll-line {
+            width: 1px; height: 60px;
+            background: linear-gradient(to bottom, transparent, var(--g));
+            animation: scrollPulse 2s ease-in-out infinite;
+        }
+        @keyframes scrollPulse { 0%,100%{opacity:0.3} 50%{opacity:1} }
+        .scroll-label { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: var(--muted); letter-spacing: 0.2em; text-transform: uppercase; writing-mode: vertical-rl; }
+        @keyframes fadeUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
+        section { padding: 7rem 4rem; position: relative; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .section-label {
+            font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--g);
+            letter-spacing: 0.3em; text-transform: uppercase;
+            display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.2rem;
+        }
+        .section-label::after { content: ''; flex: 1; max-width: 60px; height: 1px; background: var(--g); }
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2.2rem, 5vw, 4rem); font-weight: 800; line-height: 1.1;
+            letter-spacing: -0.02em; margin-bottom: 3.5rem;
+        }
+        .section-title .accent {
+            background: linear-gradient(90deg, var(--g), var(--c));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        #team { background: var(--card); }
+        .team-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5px; background: var(--line); border: 1px solid var(--line); margin-bottom: 4rem;
+        }
+        .team-card {
+            background: var(--card); padding: 2.5rem; position: relative; overflow: hidden; transition: background 0.3s;
+        }
+        .team-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 0;
+            background: linear-gradient(to bottom, var(--g), var(--c)); transition: height 0.4s;
+        }
+        .team-card:hover { background: rgba(0,255,136,0.03); }
+        .team-card:hover::before { height: 100%; }
+        .card-num { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: var(--muted); letter-spacing: 0.2em; margin-bottom: 1.5rem; }
+        .team-card h3 {
+            font-family: 'Bebas Neue', 'Syne', sans-serif; font-size: 2.1rem; font-weight: 400;
+            letter-spacing: 0.1em; margin-bottom: 0.25rem; text-transform: uppercase;
+            background: linear-gradient(90deg, #fff 50%, var(--c));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .team-card .role { font-family: 'Space Mono', monospace; font-size: 0.72rem; color: var(--g); letter-spacing: 0.14em; margin-bottom: 1.1rem; }
+        .team-card p { color: var(--muted); line-height: 1.75; font-size: 0.93rem; }
+        .tag-row { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1.1rem; }
+        .tag { font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.25rem 0.6rem; border: 1px solid rgba(0,255,136,0.3); color: var(--g); background: rgba(0,255,136,0.04); white-space: nowrap; }
+        .tag.c { border-color: rgba(0,212,255,0.3); color: var(--c); background: rgba(0,212,255,0.04); }
+        .skill-icons { display: flex; flex-wrap: wrap; gap: 0.55rem; margin-top: 1.3rem; }
+        .skill-icon-wrap { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; cursor: default; }
+        .skill-icon-wrap span { font-family: 'Space Mono', monospace; font-size: 0.52rem; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
+        .skill-icon-wrap:hover span { color: var(--g); }
+        .skill-icon-wrap svg { transition: filter 0.25s, transform 0.25s; border-radius: 4px; }
+        .skill-icon-wrap:hover svg { filter: drop-shadow(0 0 7px rgba(0,255,136,0.55)); transform: translateY(-2px); }
+        .team-card.ceo { border-left: 2px solid var(--g); }
+        .team-card.ceo::after { content: 'ОСНОВАТЕЛЬ'; position: absolute; top: 1.6rem; right: 2rem; font-family: 'Space Mono', monospace; font-size: 0.55rem; letter-spacing: 0.3em; color: var(--g); opacity: 0.4; }
+        .accordion { border: 1px solid var(--line); }
+        .acc-item { border-bottom: 1px solid var(--line); }
+        .acc-item:last-child { border-bottom: none; }
+        .acc-header { padding: 1.6rem 2rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; transition: background 0.2s; }
+        .acc-header:hover { background: rgba(0,255,136,0.03); }
+        .acc-header h3 { font-size: 1.1rem; font-weight: 600; letter-spacing: 0.01em; }
+        .acc-arrow { width: 24px; height: 24px; border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; transition: transform 0.3s, border-color 0.3s; flex-shrink: 0; }
+        .acc-arrow svg { width:10px; height:10px; transition: transform 0.3s; }
+        .acc-item.open .acc-arrow { border-color: var(--g); }
+        .acc-item.open .acc-arrow svg { transform: rotate(180deg); }
+        .acc-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.45s cubic-bezier(0.4,0,0.2,1), opacity 0.35s ease; opacity: 0; }
+        .acc-body > div { overflow: hidden; }
+        .acc-item.open .acc-body { grid-template-rows: 1fr; opacity: 1; }
+        .acc-body-inner { padding: 0 2rem 2rem; color: var(--muted); line-height: 1.8; font-size: 1rem; }
+        #skills { background: var(--bg); }
+        .skills-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+        .skill-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); }
+        .skill-card { background: var(--bg); padding: 2rem 1.8rem; transition: background 0.3s; position: relative; }
+        .skill-card:hover { background: rgba(0,212,255,0.04); }
+        .skill-card-icon { margin-bottom: 1rem; }
+        .skill-card h4 { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; letter-spacing: -0.01em; }
+        .skill-card p { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+        .tech-logos-wrapper { display: flex; justify-content: center; align-items: center; padding: 2rem 0; }
+        .tech-logos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; max-width: 420px; }
+        .tech-logo-item { display: flex; flex-direction: column; align-items: center; gap: 0.55rem; padding: 1.2rem 0.8rem; background: rgba(255,255,255,0.03); border: 1px solid rgba(0,255,136,0.08); border-radius: 14px; cursor: default; transition: border-color 0.25s, background 0.25s, transform 0.25s; opacity: 0; transform: translateY(18px); }
+        .tech-logo-item.visible { opacity: 1; transform: translateY(0); }
+        .tech-logo-item:hover { border-color: rgba(0,255,136,0.35); background: rgba(0,255,136,0.05); transform: translateY(-4px) scale(1.04); }
+        .tech-logo-item img { width: 48px; height: 48px; object-fit: contain; filter: drop-shadow(0 0 6px rgba(0,212,255,0.18)); transition: filter 0.25s; }
+        .tech-logo-item:hover img { filter: drop-shadow(0 0 12px rgba(0,255,136,0.5)); }
+        .tech-logo-item span { font-family: 'Space Mono', monospace; font-size: 0.62rem; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.25s; }
+        .tech-logo-item:hover span { color: var(--g); }
+        #contact { background: var(--card); }
+        .forms-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+        .level-btns { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .level-btn { flex: 1; padding: 0.65rem 0.5rem; background: transparent; border: 1px solid rgba(255,255,255,0.08); color: var(--muted); font-family: 'Space Mono', monospace; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; cursor: pointer; transition: all 0.2s; }
+        .level-btn:hover { border-color: var(--g); color: var(--g); }
+        .level-btn.active { background: var(--g); border-color: var(--g); color: #000; }
+        .form-panel { border: 1px solid var(--line); padding: 2.5rem; position: relative; overflow: hidden; }
+        .form-panel::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--g), var(--c)); }
+        .form-panel-title { font-size: 1.3rem; font-weight: 800; margin-bottom: 0.4rem; letter-spacing: -0.01em; }
+        .form-panel-sub { font-size: 0.82rem; color: var(--muted); margin-bottom: 2rem; font-family: 'Space Mono', monospace; }
+        .fg { margin-bottom: 1.5rem; }
+        .fg label { display: block; font-family: 'Space Mono', monospace; font-size: 0.68rem; color: var(--c); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.5rem; }
+        .fg input, .fg textarea, .fg select { width: 100%; padding: 0.85rem 1.1rem; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.08); color: var(--txt); font-family: 'Syne', sans-serif; font-size: 0.95rem; transition: border-color 0.2s, box-shadow 0.2s; outline: none; -webkit-appearance: none; appearance: none; border-radius: 0; }
+        .fg input::placeholder, .fg textarea::placeholder { color: rgba(255,255,255,0.18); }
+        .fg input:focus, .fg textarea:focus, .fg select:focus { border-color: var(--c); box-shadow: 0 0 0 1px rgba(0,212,255,0.2); background: rgba(0,212,255,0.04); }
+        .fg textarea { min-height: 110px; resize: vertical; }
+        .select-wrapper { position: relative; }
+        .select-wrapper select { display: none; }
+        .custom-select { position: relative; user-select: none; }
+        .custom-select-trigger { display: flex; align-items: center; justify-content: space-between; padding: 0.85rem 1.1rem; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.08); border-radius: 4px; color: rgba(255,255,255,0.35); font-family: 'Syne', sans-serif; font-size: 0.95rem; cursor: pointer; transition: border-color 0.25s, box-shadow 0.25s, background 0.25s; }
+        .custom-select-trigger.has-value { color: var(--txt); }
+        .custom-select.open .custom-select-trigger { border-color: var(--c); box-shadow: 0 0 0 1px rgba(0,212,255,0.2); background: rgba(0,212,255,0.04); }
+        .custom-select-arrow { width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: transform 0.3s cubic-bezier(0.4,0,0.2,1); }
+        .custom-select-arrow svg { width: 12px; height: 12px; stroke: var(--c); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        .custom-select.open .custom-select-arrow { transform: rotate(180deg); }
+        .custom-select-dropdown { position: absolute; top: calc(100% + 4px); left: 0; right: 0; background: #0e0e16; border: 1px solid rgba(0,212,255,0.2); border-radius: 6px; overflow: hidden; z-index: 100; max-height: 0; opacity: 0; transform: translateY(-6px); transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.25s ease, transform 0.3s cubic-bezier(0.4,0,0.2,1); pointer-events: none; box-shadow: 0 12px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,212,255,0.05); }
+        .custom-select.open .custom-select-dropdown { max-height: 320px; opacity: 1; transform: translateY(0); pointer-events: all; overflow-y: auto; }
+        .custom-select-option { padding: 0.78rem 1.1rem; font-family: 'Syne', sans-serif; font-size: 0.9rem; color: var(--muted); cursor: pointer; transition: background 0.15s, color 0.15s, padding-left 0.2s; border-bottom: 1px solid rgba(255,255,255,0.04); display: flex; align-items: center; gap: 0.6rem; }
+        .custom-select-option:last-child { border-bottom: none; }
+        .custom-select-option::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--g); opacity: 0; flex-shrink: 0; transition: opacity 0.2s; }
+        .custom-select-option:hover { background: rgba(0,255,136,0.06); color: var(--txt); padding-left: 1.4rem; }
+        .custom-select-option:hover::before { opacity: 1; }
+        .custom-select-option.selected { color: var(--g); background: rgba(0,255,136,0.04); }
+        .custom-select-option.selected::before { opacity: 1; }
+        .submit-btn { width: 100%; padding: 1rem; background: transparent; border: 1px solid var(--g); color: var(--g); font-family: 'Space Mono', monospace; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; position: relative; overflow: hidden; transition: color 0.3s; }
+        .submit-btn::before { content: ''; position: absolute; inset: 0; background: var(--g); transform: scaleX(0); transform-origin: left; transition: transform 0.3s; }
+        .submit-btn span { position: relative; z-index: 1; }
+        .submit-btn:hover { color: #000; }
+        .submit-btn:hover::before { transform: scaleX(1); }
+        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 9997; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+        .overlay.show { opacity:1; pointer-events:all; }
+        .success-msg { position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%) scale(0.85); background: var(--card); border: 1px solid var(--g); padding: 3rem 4rem; text-align: center; z-index: 9998; opacity: 0; pointer-events: none; transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1); }
+        .success-msg.show { opacity:1; pointer-events:all; transform: translate(-50%,-50%) scale(1); }
+        .success-msg h2 { font-size: 1.6rem; font-weight: 800; color: var(--g); margin-bottom: 0.5rem; }
+        .success-msg p { color: var(--muted); }
+        footer { padding: 3rem 4rem; border-top: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; }
+        footer .logo-text { font-size: 0.9rem; }
+        footer p { font-family: 'Space Mono', monospace; font-size: 0.68rem; color: var(--muted); letter-spacing: 0.1em; }
+        .loader { position: fixed; inset: 0; background: var(--bg); z-index: 10001; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 1.5rem; transition: opacity 0.6s, visibility 0.6s; }
+        .loader.hidden { opacity:0; visibility:hidden; }
+        .loader-ring { width: 64px; height: 64px; border: 1px solid rgba(0,255,136,0.2); border-top-color: var(--g); border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .loader-text { font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--muted); letter-spacing: 0.3em; text-transform: uppercase; }
+        @media (max-width: 900px) { nav { padding: 1.2rem 2rem; } .nav-links { gap: 1.5rem; } section { padding: 5rem 2rem; } .hero { padding: 0 2rem; } .skills-layout { grid-template-columns: 1fr; } .forms-grid { grid-template-columns: 1fr; } footer { padding: 2rem; flex-direction: column; gap: 1rem; text-align: center; } }
+        @media (max-width: 600px) { .nav-links { gap: 1rem; } .nav-links a { font-size: 0.7rem; } .hero h1 { font-size: 3.5rem; } .skill-cards { grid-template-columns: 1fr; } }
+    </style>
 </head>
-<body data-app-data="{&quot;locale&quot;:&quot;ru&quot;,&quot;csrf-token&quot;:&quot;b94mtvj4aojpdmkw&quot;,&quot;userId&quot;:0}">
-    <!--suppress ALL -->
-
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-
-    gtag('consent', 'default', {"analytics_storage":"denied","ad_storage":"denied","ad_user_data":"denied","ad_personalization":"denied"});
-    gtag('config', 'AW-11153904331');
-
-    window.app.analytics.addEvents([{"event":"FunpayPageview","userId":"","clientId":""}]);
-</script>
-
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id= '+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-TWG83B');</script>
-
-<script type="text/javascript" >
-    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-    m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js ", "ym");
-
-    function initYM() {
-        ym(36956765, "init", {
-            clickmap: false,
-            trackLinks: true,
-            accurateTrackBounce: true,
-            webvisor: false,
-            ut: "noindex",
-            ecommerce: "dataLayer"
-        });
-    }
-    </script>
-<noscript><div><img src="https://mc.yandex.ru/watch/36956765?ut=noindex " style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<div class="wrapper">
-    <div class="wrapper-content">
-                        <header id="header">
-            <div class="container">
-                <div id="global-origin"></div>
-                <nav class="navbar navbar-default">
-                    <div class="hide-navbar"></div>
-                    <div class="container-fluid">
-                        <div class="navbar-header">
-                                                            <button type="button" class="collapsed navbar-toggle navbar-toggle-guest" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
-                                    <span class="sr-only">Toggle navigation</span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                </button>
-                                                        <a href="https://funpay.com/ " class="navbar-brand">
-                                                                <img src="https://funpay.com/img/layout/logo-funpay.svg" alt="FunPay" class="logo-color"/>
-                            </a>
-                            <form action="https://funpay.com/games/promoFilter " method="post" class="navbar-form navbar-left dropdown promo-games-filter">
-                                <div class="form-group">
-                                    <input type="text" name="query" class="form-control dropdown-toggle" data-toggle="dropdown" role="searchbox" placeholder="Поиск по 776 играм" autocomplete="off"/>
-                                    <div class="dropdown-menu dropdown-autocomplete hidden"></div>
-                                </div>
-                                <button type="submit" class="btn btn-link"><i class="fa fa-search"></i></button>
-                            </form>
-                        </div>
-                        <div class="nav-container">
-                            <div class="collapse navbar-collapse no-transition" id="navbar">
-                                <ul class="nav navbar-nav">
-                                                                                                                <li class="active dropdown"><a href="https://funpay.com/ " class="menu-item-info dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Помощь <span class="caret"></span></a><ul class="dropdown-menu"><li class="active"><a href="info.html" class="menu-item-trade_info">Правила</a></li>
-<li><a href="https://support.funpay.com/ " class="menu-item-support" target="_blank">Центр помощи</a></li>
-<li><a href="https://support.funpay.com/tickets/new " class="menu-item-request" target="_blank">Отправить запрос</a></li></ul></li>                                                                            <li><a href="https://t.me/funpay_cliphub/10?utm_source=site&amp ;utm_medium=internal&amp;utm_campaign=telegram_cliphub&amp;utm_content=header_button" class="menu-item-cliphub" target="_blank">ClipHub</a></li>                                                                    </ul>
-                                <ul class="nav navbar-nav navbar-right">
-                                                                            <li><a href="https://funpay.com/account/login " class="menu-item-login">Войти</a></li>                                                                            <li><a href="https://funpay.com/account/register " class="menu-item-register">Зарегистрироваться</a></li>                                                                                                                <li class="dropdown">
-    <a href="javascript:void(0)" class="dropdown-toggle menu-item-langs" data-toggle="dropdown">
-        По-русски <i class="menu-icon menu-icon-lang-ru"></i> <span class="caret"></span>
+<body>
+<div class="loader" id="loader"><div class="loader-ring"></div><div class="loader-text">Загрузка...</div></div>
+<canvas id="bg-canvas"></canvas>
+<nav>
+    <a href="#hero" class="logo-svg">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><defs><radialGradient id="sphereGrad" cx="38%" cy="35%" r="60%"><stop offset="0%" stop-color="#00ff88" stop-opacity="0.35"/><stop offset="100%" stop-color="#00d4ff" stop-opacity="0.05"/></radialGradient></defs><circle cx="14" cy="14" r="12" stroke="#00ff88" stroke-width="1.2" fill="url(#sphereGrad)"/><ellipse cx="14" cy="14" rx="12" ry="4.5" stroke="#00d4ff" stroke-width="0.8" fill="none" opacity="0.7"/><ellipse cx="14" cy="14" rx="4.5" ry="12" stroke="#00d4ff" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="14" cy="14" r="2" fill="#00ff88"/></svg>
+        <span class="logo-text">THIN LUCID</span>
     </a>
-    <ul class="dropdown-menu">
-                    <li>
-                <a href="info%3Fsetlocale=en.html" class="menu-item-lang">
-                    English <i class="menu-icon menu-icon-lang-en"></i>
-                </a>
-            </li>
-            </ul>
-</li>                                        <li class="dropdown">
-    <a href="javascript:void(0)" class="dropdown-toggle menu-item-currencies" data-toggle="dropdown">
-        Рубли <span class="caret"></span>
-    </a>
-    <ul class="dropdown-menu">
-                    <li>
-                <a href="javascript:void(0)" data-cy="usd" class="user-cy-switcher menu-item-currency">
-                    Доллары                </a>
-            </li>
-                    <li>
-                <a href="javascript:void(0)" data-cy="eur" class="user-cy-switcher menu-item-currency">
-                    Евро                </a>
-            </li>
-            </ul>
-</li>                                                                    </ul>
-                            </div>
-                        </div>
-                    </div>
-                </nav>
-                            </div>
-        </header>
-
-        <section id="content-body">
-            <div class="search-fade"></div>
-                                                <div id="content" class="content-trade content-trade-info"><div class="container">
-    <div class="page-content-full"><h1 class="page-header">Правила</h1>
-
-</div>
-</div></div>        </section>
+    <ul class="nav-links">
+        <li><a href="#hero">Главная</a></li>
+        <li><a href="#team">Команда</a></li>
+        <li><a href="#skills">Скиллы</a></li>
+        <li><a href="#contact">Связаться</a></li>
+        <li><a href="#join">Вступить</a></li>
+    </ul>
+</nav>
+<section class="hero" id="hero">
+    <div class="hero-inner">
+        <div class="hero-tag">Элитная техническая сеть</div>
+        <h1><span>THIN</span><span class="outline">LUCID</span><span>AGENCY</span></h1>
+        <p class="hero-sub">Элитная сеть технических специалистов. Мы объединяем лучших разработчиков, дизайнеров и инженеров для создания решений завтрашнего дня.</p>
+        <div class="hero-cta"><a href="#team" class="btn-primary">Узнать больше</a><a href="#join" class="btn-ghost">Вступить</a></div>
     </div>
-
-                    <div class="wrapper-footer">
-            <div class="container">
-                <footer id="footer">
-                    <div class="footer-block footer-block-strings">
-                        <span>&copy; 2015&ndash;2026 FunPay</span>
-                        <a href="https://funpay.com/pages/privacyPolicy ">Политика конфиденциальности</a>                        <a href="https://funpay.com/pages/cookiePolicy ">Политика cookie</a>                                                <a href="https://funpay.com/contacts.html " target="_blank" rel="nofollow">Контакты</a>                    </div>
-                    <div class="footer-block footer-block-social">
-                        <a class="btn btn-gray btn-round" href="https://t.me/+zC7jZ0ytESc1ZjUy " target="_blank" rel="nofollow">
-                            <svg width="25" height="20"><use xlink:href="https://funpay.com/3/img/layout/sprites.svg#social-logo-telegram"></use></svg>                        </a>
-                                                    <a class="btn btn-gray btn-round" href="https://www.youtube.com/c/funpayofficial " target="_blank" rel="nofollow"><i class="fab fa-youtube"></i></a>
-                                                    <a class="btn btn-gray btn-round" href="https://vk.com/funpay " target="_blank" rel="nofollow"><i class="fab fa-vk"></i></a>
-                                                    <a class="btn btn-gray btn-round" href="https://www.facebook.com/funpay.official " target="_blank" rel="nofollow"><i class="fab fa-facebook-square"></i></a>
-                                            </div>
-                    <div class="footer-block footer-block-als">
-                        <img src="https://funpay.com/img/layout/als-logo.svg" alt="">
-                        <div>Задизайнено<br>в <a href="https://www.artlebedev.ru/funpay/ " target="_blank">Студии Артемия<br>Лебедева</a></div>
-                    </div>
-                </footer>
+    <div class="hero-scroll-hint"><span class="scroll-label">Вниз</span><div class="scroll-line"></div></div>
+</section>
+<section id="team">
+    <div class="container">
+        <div class="section-label">01 / Команда</div>
+        <h2 class="section-title">О нашей <span class="accent">команде</span></h2>
+        <div class="team-grid">
+            <div class="team-card ceo">
+                <div class="card-num">001</div>
+                <h3>@couchancy</h3>
+                <p class="role">Генеральный директор · Thin Lucid Agency</p>
+                <p>Специалист в области кибербезопасности, веб-разработки и написания кода. Строит элитную сеть технических специалистов с нуля.</p>
+                <div class="skill-icons">
+                    <div class="skill-icon-wrap" title="Cyber"><svg width="34" height="34" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="5" fill="#0d1117"/><path d="M16 4L5 9v6c0 6 4.5 11.6 11 13 6.5-1.4 11-7 11-13V9L16 4z" fill="none" stroke="#00ff88" stroke-width="1.5"/><path d="M11.5 16.5l3 3 6-6" stroke="#00ff88" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Защита</span></div> <div class="skill-icon-wrap" title="Web Dev"><svg width="34" height="34" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="5" fill="#0d1117"/><polyline points="11,10 5,16 11,22" stroke="#00d4ff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><polyline points="21,10 27,16 21,22" stroke="#00d4ff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><line x1="19" y1="9" x2="13" y2="23" stroke="#00ff88" stroke-width="1.3" stroke-linecap="round"/></svg><span>Веб</span></div>
+                    <div class="skill-icon-wrap" title="Python"><svg width="34" height="34" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="5" fill="#0d1117"/><path d="M16 4c-4.6 0-4.3 2-4.3 2v2.1h4.4v.7H9.4S6.3 8.5 6.3 13.2s2.8 4.5 2.8 4.5h1.7v-2.3s-.1-2.1 2.1-2.1h4.6s2.1.1 2.1-2V6.1S19.9 4 16 4zm-2.5 1.4c.43 0 .77.34.77.77s-.34.77-.77.77-.77-.34-.77-.77.34-.77.77-.77z" fill="#3776AB"/><path d="M16 28c4.6 0 4.3-2 4.3-2v-2.1h-4.4v-.7h6.7s3.1.3 3.1-4.4-2.8-4.5-2.8-4.5h-1.7v2.3s.1 2.1-2.1 2.1h-4.6s-2.1-.1-2.1 2v3.2S12.1 28 16 28zm2.5-1.4c-.43 0-.77-.34-.77-.77s.34-.77.77-.77.77.34.77.77-.34.77-.77.77z" fill="#FFD43B"/></svg><span>Python</span></div>
+                    <div class="skill-icon-wrap" title="JS"><svg width="34" height="34" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="5" fill="#F7DF1E"/><text x="7" y="24" font-family="Arial Black,sans-serif" font-weight="900" font-size="14" fill="#000">JS</text></svg><span>JS</span></div>
+                    <div class="skill-icon-wrap" title="Wazuh"><svg width="34" height="34" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="5" fill="#0d1117"/><path d="M4 22l4-12 4 8 4-14 4 10 4-6 4 4" stroke="#00bcd4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="28" cy="22" r="2.5" fill="#00bcd4" opacity="0.7"/></svg><span>Wazuh</span></div>
+                    <div class="skill-icon-wrap" title="Graphics"><svg width="34" height="34" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="5" fill="#0d1117"/><path d="M16 5C9.9 5 5 9.9 5 16c0 6.1 4.9 11 11 11 1.2 0 2.2-1 2.2-2.2 0-.6-.2-1.1-.6-1.5-.3-.4-.6-.9-.6-1.4 0-1.2 1-2.2 2.2-2.2h2.6C25 19.7 27 17.1 27 14 27 9 22 5 16 5z" stroke="#E91E8C" stroke-width="1.4" fill="none"/><circle cx="10" cy="14" r="1.8" fill="#F44336"/><circle cx="13" cy="9.5" r="1.8" fill="#FFEB3B"/><circle cx="19" cy="9.5" r="1.8" fill="#4CAF50"/><circle cx="22" cy="14" r="1.8" fill="#2196F3"/></svg><span>Дизайн</span></div>
+                    <div class="skill-icon-wrap" title="VPN"><svg width="34" height="34" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="5" fill="#0d1117"/><rect x="9" y="15" width="14" height="11" rx="2" stroke="#00ff88" stroke-width="1.4"/><path d="M12 15v-3a4 4 0 018 0v3" stroke="#00ff88" stroke-width="1.4" stroke-linecap="round"/><circle cx="16" cy="21" r="1.5" fill="#00ff88"/><line x1="16" y1="21" x2="16" y2="24" stroke="#00ff88" stroke-width="1.3" stroke-linecap="round"/></svg><span>VPN</span></div>
+                    <div class="skill-icon-wrap" title="Proxy"><svg width="34" height="34" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="5" fill="#0d1117"/><rect x="11" y="11" width="10" height="10" rx="2" fill="#00d4ff" opacity="0.2" stroke="#00d4ff" stroke-width="1.3"/><circle cx="5" cy="10" r="2.5" stroke="#00d4ff" stroke-width="1.2"/><circle cx="5" cy="22" r="2.5" stroke="#00d4ff" stroke-width="1.2"/><circle cx="27" cy="10" r="2.5" stroke="#00ff88" stroke-width="1.2"/><circle cx="27" cy="22" r="2.5" stroke="#00ff88" stroke-width="1.2"/><line x1="7.5" y1="10" x2="11" y2="14" stroke="#00d4ff" stroke-width="1.1"/><line x1="7.5" y1="22" x2="11" y2="18" stroke="#00d4ff" stroke-width="1.1"/><line x1="24.5" y1="10" x2="21" y2="14" stroke="#00ff88" stroke-width="1.1"/><line x1="24.5" y1="22" x2="21" y2="18" stroke="#00ff88" stroke-width="1.1"/></svg><span>Прокси</span></div>
+                </div>
+            </div>
+            <div class="team-card">
+                <div class="card-num">002</div>
+                <h3>@mts_mobile</h3>
+                <p class="role">Совладелец · Разработчик</p>
+                <p>Разработчик и специалист по безопасности. Строит надёжные системы на низком уровне.</p>
+                <div class="skill-icons">
+                    <div class="skill-icon-wrap" title="Python"><svg width="34" height="34" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="5" fill="#0d1117"/><path d="M16 4c-4.6 0-4.3 2-4.3 2v2.1h4.4v.7H9.4S6.3 8.5 6.3 13.2s2.8 4.5 2.8 4.5h1.7v-2.3s-.1-2.1 2.1-2.1h4.6s2.1.1 2.1-2V6.1S19.9 4 16 4zm-2.5 1.4c.43 0 .77.34.77.77s-.34.77-.77.77-.77-.34-.77-.77.34-.77.77-.77z" fill="#3776AB"/><path d="M16 28c4.6 0 4.3-2 4.3-2v-2.1h-4.4v-.7h6.7s3.1.3 3.1-4.4-2.8-4.5-2.8-4.5h-1.7v2.3s.1 2.1-2.1 2.1h-4.6s-2.1-.1-2.1 2v3.2S12.1 28 16 28zm2.5-1.4c-.43 0-.77-.34-.77-.77s.34-.77.77-.77.77.34.77.77-.34.77-.77.77z" fill="#FFD43B"/></svg><span>Python</span></div>
+                    <div class="skill-icon-wrap" title="C"><svg width="34" height="34" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="5" fill="#0d1117"/><circle cx="16" cy="16" r="10" stroke="#00599C" stroke-width="1.4"/><path d="M21 11.5C19.3 9.9 17.8 9 16 9c-3.9 0-7 3.1-7 7s3.1 7 7 7c1.8 0 3.3-.7 5-2.5" stroke="#00599C" stroke-width="1.6" stroke-linecap="round" fill="none"/><text x="13" y="20" font-family="Arial Black,sans-serif" font-weight="900" font-size="10" fill="#00599C">C</text></svg><span>C</span></div>
+                    <div class="skill-icon-wrap" title="Cyber"><svg width="34" height="34" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="5" fill="#0d1117"/><path d="M16 4L5 9v6c0 6 4.5 11.6 11 13 6.5-1.4 11-7 11-13V9L16 4z" fill="none" stroke="#00ff88" stroke-width="1.5"/><path d="M11.5 16.5l3 3 6-6" stroke="#00ff88" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Защита</span></div>
+                    <div class="skill-icon-wrap" title="Unity"><svg width="34" height="34" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="5" fill="#1a1a1a"/><path d="M16 4l10.4 6v12L16 28 5.6 22V10L16 4z" fill="none" stroke="#fff" stroke-width="1.3"/><text x="10.5" y="21" font-family="Arial Black,sans-serif" font-weight="900" font-size="11" fill="#fff">U</text></svg><span>Unity</span></div>
+                </div>
+            </div>
+            <div class="team-card"><div class="card-num">003</div><h3>Дизайн</h3><p class="role">Дизайн</p><p>Креативные умы, превращающие идеи в визуальные шедевры.</p></div>
+            <div class="team-card"><div class="card-num">004</div><h3>Безопасность</h3><p class="role">Безопасность</p><p>Эксперты по кибербезопасности, защищающие ваши данные.</p></div>
+        </div>
+        <div class="accordion">
+            <div class="acc-item">
+                <div class="acc-header"><h3>Наша миссия</h3><div class="acc-arrow"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="2,3 5,7 8,3"/></svg></div></div>
+                <div class="acc-body"><div><div class="acc-body-inner">Мы создаем элитную сеть технических специалистов, объединяющих лучших профессионалов в области IT. Наша цель — революционизировать подход к техническим решениям через инновации и коллаборацию.</div></div></div>
+            </div>
+            <div class="acc-item">
+                <div class="acc-header"><h3>Наши ценности</h3><div class="acc-arrow"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="2,3 5,7 8,3"/></svg></div></div>
+                <div class="acc-body"><div><div class="acc-body-inner">Инновации, профессионализм, командная работа и стремление к совершенству — вот что определяет нашу культуру. Мы верим в силу технологий и их способность менять мир к лучшему.</div></div></div>
             </div>
         </div>
     </div>
-
+</section>
+<section id="skills">
     <div class="container">
-    <div class="banner-cookie-consent">
-        <div class="cc-text">
-            FunPay использует обязательные, технические, аналитические, маркетинговые и другие файлы cookie. Эти файлы очень важны для правильного функционирования всех наших Сайтов и Сервисов. Они помогают нам запомнить вас, ваши предпочтения и настройки. Для более подробной информации ознакомьтесь с&nbsp;нашей <a href="https://funpay.com/pages/cookiePolicy " target="_blank">Политикой cookie</a>.        </div>
-        <div class="cc-buttons">
-            <button type="button" class="btn btn-primary btn-block-mobile cc-accept-all">Принять все</button>
-            <button type="button" class="btn btn-gray btn-block-mobile cc-options">Настроить</button>
+        <div class="section-label">02 / Технологии</div>
+        <h2 class="section-title">Наши <span class="accent">скиллы</span></h2>
+        <div class="skills-layout">
+            <div class="skill-cards">
+                <div class="skill-card"><div class="skill-card-icon"><svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="3" y="5" width="30" height="8" rx="1" stroke="#00d4ff" stroke-width="1.2"/><rect x="3" y="16" width="30" height="8" rx="1" stroke="#00d4ff" stroke-width="1.2"/><circle cx="28" cy="9" r="2" fill="#00ff88"/><circle cx="28" cy="20" r="2" fill="#00ff88"/><line x1="8" y1="9" x2="20" y2="9" stroke="#00d4ff" stroke-width="1" opacity="0.5"/><line x1="8" y1="20" x2="20" y2="20" stroke="#00d4ff" stroke-width="1" opacity="0.5"/><path d="M18 27 L18 31" stroke="#00ff88" stroke-width="1.2"/><path d="M14 31 L22 31" stroke="#00ff88" stroke-width="1.2" stroke-linecap="round"/></svg></div><h4>Аудит серверов</h4><p>Настройка, аудит безопасности серверов и сетей.</p></div>
+                <div class="skill-card"><div class="skill-card-icon"><svg width="36" height="36" viewBox="0 0 36 36" fill="none"><path d="M18 3 L31 8 L31 18 C31 25 25 31 18 33 C11 31 5 25 5 18 L5 8 Z" stroke="#00d4ff" stroke-width="1.2" fill="none"/><circle cx="18" cy="17" r="4" stroke="#00ff88" stroke-width="1"/><line x1="18" y1="13" x2="18" y2="8" stroke="#00ff88" stroke-width="1" stroke-dasharray="2 2"/><line x1="22" y1="17" x2="27" y2="17" stroke="#00ff88" stroke-width="1" stroke-dasharray="2 2"/><line x1="18" y1="21" x2="18" y2="26" stroke="#00ff88" stroke-width="1" stroke-dasharray="2 2"/><line x1="14" y1="17" x2="9" y2="17" stroke="#00ff88" stroke-width="1" stroke-dasharray="2 2"/></svg></div><h4>VPN и Прокси</h4><p>Создание VPN/proxy серверов с подбором локаций и без логов.</p></div>
+                <div class="skill-card"><div class="skill-card-icon"><svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="2" y="6" width="32" height="24" rx="1" stroke="#00d4ff" stroke-width="1.2"/><polyline points="10,14 6,18 10,22" stroke="#00ff88" stroke-width="1.5" stroke-linecap="round"/><polyline points="26,14 30,18 26,22" stroke="#00ff88" stroke-width="1.5" stroke-linecap="round"/><line x1="20" y1="12" x2="16" y2="24" stroke="#00d4ff" stroke-width="1.5" stroke-linecap="round"/></svg></div><h4>Веб-разработка</h4><p>Full-stack разработка современных веб-приложений.</p></div>
+                <div class="skill-card"><div class="skill-card-icon"><svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="3" y="10" width="30" height="18" rx="4" stroke="#00d4ff" stroke-width="1.2"/><line x1="13" y1="16" x2="13" y2="22" stroke="#00ff88" stroke-width="1.5" stroke-linecap="round"/><line x1="10" y1="19" x2="16" y2="19" stroke="#00ff88" stroke-width="1.5" stroke-linecap="round"/><circle cx="24" cy="17" r="1.5" fill="#00d4ff"/><circle cx="27" cy="21" r="1.5" fill="#00d4ff"/><circle cx="21" cy="21" r="1.5" fill="#00d4ff"/></svg></div><h4>Разработка игр</h4><p>Разработка игр и интерактивных приложений.</p></div>
+                <div class="skill-card"><div class="skill-card-icon"><svg width="36" height="36" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="14" r="8" stroke="#00d4ff" stroke-width="1.2"/><circle cx="18" cy="14" r="3" fill="#00ff88" opacity="0.4"/><line x1="18" y1="22" x2="18" y2="33" stroke="#00d4ff" stroke-width="1.2"/><line x1="12" y1="28" x2="24" y2="28" stroke="#00d4ff" stroke-width="1.2" stroke-linecap="round"/><circle cx="11" cy="9" r="1.5" fill="#00ff88"/><circle cx="25" cy="9" r="1.5" fill="#00ff88"/></svg></div><h4>UI/UX &amp; Graphic</h4><p>Дизайн интерфейсов, аватарки, логотипы, брендинг.</p></div>
+                <div class="skill-card"><div class="skill-card-icon"><svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="8" y="12" width="20" height="16" rx="2" stroke="#00d4ff" stroke-width="1.2"/><circle cx="14" cy="20" r="2" stroke="#00ff88" stroke-width="1"/><circle cx="22" cy="20" r="2" stroke="#00ff88" stroke-width="1"/><line x1="18" y1="12" x2="18" y2="7" stroke="#00d4ff" stroke-width="1.2"/><circle cx="18" cy="6" r="1.5" fill="#00d4ff"/><line x1="11" y1="28" x2="9" y2="32" stroke="#00d4ff" stroke-width="1.2" stroke-linecap="round"/><line x1="25" y1="28" x2="27" y2="32" stroke="#00d4ff" stroke-width="1.2" stroke-linecap="round"/></svg></div><h4>Боты &amp; Парсеры</h4><p>Telegram-боты, автоматизация, парсеры данных.</p></div>
+            </div>
+            <div class="tech-logos-wrapper"><div class="tech-logos-grid" id="techLogosGrid"></div></div>
         </div>
     </div>
-</div>    <div class="modal fade modal-cookie-consent" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
-        <div class="modal-content">
-                            <div class="modal-header"><h4 class="h1 modal-title">Настройки файлов cookie</h4></div>
-                        <div class="modal-body">
+</section>
+<section id="contact">
+    <div class="container">
+        <div class="section-label">03 / Контакт</div>
+        <h2 class="section-title">Заказать услугу &amp; <span class="accent">Вступить в команду</span></h2>
+        <div class="forms-grid">
 
-                    <p>Каждый сайт, который вы посещаете, может сохранять данные в вашем браузере или извлекать их из него. Эти данные и их хранение зачастую необходимы и важны для работы базовых функций сайта и подключаемых служб. Хранение таких данных (часто называемых файлами cookie) может использоваться для маркетинга, аналитики и персонализации, например, для сохранения ваших предпочтений. Мы ценим вашу конфиденциальность, поэтому вы можете выбрать, какие данные о вас мы можем собирать и хранить. Вы можете отключить определенные типы хранилищ, если они не нужны для базовой работы Сайта.</p>
-                    <p>Если вам нужно больше информации о каждой категории файлов cookie, которые мы храним, и о том, почему мы их храним, ознакомьтесь с <a href="https://funpay.com/pages/cookiePolicy " target="_blank">Политика cookie</a> и <a href="https://funpay.com/pages/privacyPolicy " target="_blank">Политика конфиденциальности</a>. Подробнее о запросе доступа к данным (включая персональные данные) см. наше <a href="https://funpay.com/pages/dsar " target="_blank">Руководство по запросам на доступ к персональным данным</a>.</p>
-                <hr>
-<div class="checkbox"><label><input type="checkbox" name="cc-option-essential" checked disabled><i></i><strong>Обязательные файлы cookie</strong></label></div><div class="checkbox-indent">
-    <p>Данный тип файлов cookie необходим для правильной работы Сайта и предоставления полного функционала Сервисов. Их отключение может привести к некорректной работе Сайта или Сервисов, доступных после входа в систему.</p>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h4 class="panel-title">
-                <a role="button" data-toggle="collapse" href="info.html#cookie-details-essential">Примеры (нажмите, чтобы раскрыть)</a>
-            </h4>
-        </div>
-        <div id="cookie-details-essential" class="panel-collapse collapse">
-            <div class="panel-body">
+            <!-- SERVICES FORM -->
+            <div class="form-panel" id="contact-panel">
+                <div class="form-panel-title">Заказать услугу</div>
+                <div class="form-panel-sub">Опишите задачу — ответим в течение нескольких часов</div>
+                <form id="contactForm">
+                    <div class="fg"><label>Telegram</label><input type="text" id="username" placeholder="@username" readonly style="opacity:0.6;cursor:default;"></div>
+                    <div class="fg"><label>Тип услуги *</label>
+                        <div class="custom-select" id="csService">
+                            <div class="custom-select-trigger"><span class="custom-select-value">Выберите услугу</span><span class="custom-select-arrow"><svg viewBox="0 0 12 12"><polyline points="2,4 6,8 10,4"/></svg></span></div>
+                            <div class="custom-select-dropdown">
+                                <div class="custom-select-option" data-value="website"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="vertical-align:middle;margin-right:6px"><circle cx="8" cy="8" r="7" stroke="#00d4ff" stroke-width="1.2"/><ellipse cx="8" cy="8" rx="7" ry="3" stroke="#00d4ff" stroke-width="1.2"/><line x1="8" y1="1" x2="8" y2="15" stroke="#00d4ff" stroke-width="1.2"/><line x1="1" y1="8" x2="15" y2="8" stroke="#00d4ff" stroke-width="1.2"/></svg>Сайт / Лендинг</div>
+                                <div class="custom-select-option" data-value="bot"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="vertical-align:middle;margin-right:6px"><rect x="3" y="5" width="10" height="8" rx="2" stroke="#00d4ff" stroke-width="1.2"/><circle cx="6" cy="9" r="1" fill="#00ff88"/><circle cx="10" cy="9" r="1" fill="#00ff88"/><line x1="8" y1="5" x2="8" y2="2" stroke="#00d4ff" stroke-width="1.2"/><circle cx="8" cy="2" r="1" fill="#00d4ff"/></svg>Telegram-бот / Автоматизация</div>
+                                <div class="custom-select-option" data-value="security"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="vertical-align:middle;margin-right:6px"><path d="M8 1L2 4v4c0 3.5 2.5 6.5 6 7 3.5-.5 6-3.5 6-7V4L8 1z" stroke="#00ff88" stroke-width="1.2"/><path d="M5.5 8l2 2 3-3" stroke="#00ff88" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Аудит безопасности</div>
+                                <div class="custom-select-option" data-value="vpn"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="vertical-align:middle;margin-right:6px"><rect x="4" y="7" width="8" height="7" rx="1" stroke="#00d4ff" stroke-width="1.2"/><path d="M6 7V5a2 2 0 014 0v2" stroke="#00d4ff" stroke-width="1.2" stroke-linecap="round"/><circle cx="8" cy="10.5" r="1" fill="#00d4ff"/></svg>VPN / Прокси сервер</div>
+                                <div class="custom-select-option" data-value="design"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="vertical-align:middle;margin-right:6px"><circle cx="8" cy="8" r="6" stroke="#00d4ff" stroke-width="1.2"/><circle cx="5" cy="7" r="1" fill="#f44"/><circle cx="8" cy="5" r="1" fill="#ff0"/><circle cx="11" cy="7" r="1" fill="#4f4"/><circle cx="9.5" cy="10" r="1" fill="#44f"/></svg>UI/UX / Графика / Брендинг</div>
 
-                    <p>«<strong>PHPSESSID</strong>» – когда вы посещаете наш Сайт впервые и пока вы не зарегистрируетесь на Сайте, это единственный тип файлов cookie, используемый нами для сохранения ваших предпочтений. Без данных файлов cookie процесс регистрации невозможен, а некоторые важные элементы Сайта не смогут работать (например, тест CAPTCHA). Эти данные удаляются по завершении сеанса.</p>
-                    <p>«<strong>golden_key</strong>» – сохраняет введённые вами данные во время регистрации и помогает нам запомнить ваш выбор. Без этого файла cookie вы не сможете войти на Сайт или зарегистрироваться на нём. Период хранения составляет 100 дней.</p>
-                    <p>«<strong>locale</strong>» и «<strong>cy</strong>» – эти файлы cookie необходимы нам для того, чтобы запомнить ваш выбор касательно валюты и языка, на котором отображается наш Сайт и предоставляются Сервисы. Период хранения составляет 365 дней.</p>
-                    <p>«<strong>cookie_prefs</strong>» – данный тип файлов cookie сохраняет ваш выбор при использовании инструмента «Настройки файлов cookie». Период хранения составляет 365 дней.</p>
+                                <div class="custom-select-option" data-value="gamedev"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="vertical-align:middle;margin-right:6px"><rect x="1" y="5" width="14" height="8" rx="3" stroke="#00d4ff" stroke-width="1.2"/><line x1="6" y1="7" x2="6" y2="11" stroke="#00ff88" stroke-width="1.3" stroke-linecap="round"/><line x1="4" y1="9" x2="8" y2="9" stroke="#00ff88" stroke-width="1.3" stroke-linecap="round"/><circle cx="11" cy="8" r="0.8" fill="#00d4ff"/><circle cx="13" cy="10" r="0.8" fill="#00d4ff"/></svg>Разработка игр</div>
+                                <div class="custom-select-option" data-value="other"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="vertical-align:middle;margin-right:6px"><circle cx="8" cy="8" r="2.5" stroke="#00d4ff" stroke-width="1.2"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.41 1.41M11.54 11.54l1.41 1.41M3.05 12.95l1.41-1.41M11.54 4.46l1.41-1.41" stroke="#00d4ff" stroke-width="1.2" stroke-linecap="round"/></svg>Другое</div>
                             </div>
-        </div>
-    </div>
-</div>
-<div class="checkbox"><label><input type="checkbox" name="cc-option-analytics"><i></i><strong>Аналитические и сторонние файлы cookie</strong></label></div><div class="checkbox-indent"><p class="mb0">Данные файлы cookie позволяют нам анализировать эффективность работы нашего Сайта и Сервисов при их взаимодействии с пользователем. Они также необходимы для отслеживания технических неполадок. Для измерения производительности нашего Сайта и качества предоставляемых услуг мы также используем сторонние инструменты. Данные инструменты могут использовать файлы cookie для обработки ваших данных в других целях, включая маркетинг и персонализацию. На текущий момент, на сайте используется только Яндекс.Метрика и Google Analytics.</p></div>
-                            </div>
-                            <div class="modal-footer"><button type="button" class="btn btn-gray cc-save" data-dismiss="modal">Сохранить</button>
-<button type="button" class="btn btn-primary cc-accept-all" data-dismiss="modal">Принять все</button>
-</div>
+                        </div>
+                        <input type="hidden" id="serviceType">
                     </div>
+                    <div class="fg"><label>Бюджет *</label>
+                        <div class="custom-select" id="csBudget">
+                            <div class="custom-select-trigger"><span class="custom-select-value">Укажите диапазон</span><span class="custom-select-arrow"><svg viewBox="0 0 12 12"><polyline points="2,4 6,8 10,4"/></svg></span></div>
+                            <div class="custom-select-dropdown">
+                                <div class="custom-select-option" data-value="lt50">До 5 000 руб.</div>
+                                <div class="custom-select-option" data-value="50-150">5 000 — 15 000 руб.</div>
+                                <div class="custom-select-option" data-value="150-500">15 000 — 50 000 руб.</div>
+                                <div class="custom-select-option" data-value="500-1500">50 000 — 150 000 руб.</div>
+                                <div class="custom-select-option" data-value="gt1500">150 000+ руб.</div>
+                                <div class="custom-select-option" data-value="discuss">Обсудим индивидуально</div>
+                            </div>
+                        </div>
+                        <input type="hidden" id="budgetRange">
+                    </div>
+                    <div class="fg"><label>Дедлайн</label>
+                        <div class="custom-select" id="csDeadline">
+                            <div class="custom-select-trigger"><span class="custom-select-value">Когда нужно?</span><span class="custom-select-arrow"><svg viewBox="0 0 12 12"><polyline points="2,4 6,8 10,4"/></svg></span></div>
+                            <div class="custom-select-dropdown">
+                                <div class="custom-select-option" data-value="asap"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="vertical-align:middle;margin-right:6px"><path d="M8 2c0 3-3 4-3 7a3 3 0 006 0c0-3-3-4-3-7z" stroke="#ff6b35" stroke-width="1.2"/><path d="M8 10c0 1-1 1.5-1 2.5a1 1 0 002 0C9 11.5 8 11 8 10z" fill="#ff6b35"/></svg>Срочно</div>
+                                <div class="custom-select-option" data-value="week">До 1 недели</div>
+                                <div class="custom-select-option" data-value="2weeks">1–2 недели</div>
+                                <div class="custom-select-option" data-value="month">До месяца</div>
+                                <div class="custom-select-option" data-value="flexible">Гибко</div>
+                            </div>
+                        </div>
+                        <input type="hidden" id="deadlinePref">
+                    </div>
+                    <div class="fg"><label>Описание проекта *</label><textarea id="message" required placeholder="Что нужно сделать? Чем подробнее — тем точнее оценка..." style="min-height:120px;"></textarea></div>
+                    <div class="fg"><label>Как вы нас нашли?</label>
+                        <div class="custom-select" id="csSource">
+                            <div class="custom-select-trigger"><span class="custom-select-value">Источник</span><span class="custom-select-arrow"><svg viewBox="0 0 12 12"><polyline points="2,4 6,8 10,4"/></svg></span></div>
+                            <div class="custom-select-dropdown">
+                                <div class="custom-select-option" data-value="tg">Telegram</div>
+                                <div class="custom-select-option" data-value="ref">По рекомендации</div>
+                                <div class="custom-select-option" data-value="search">Поиск</div>
+                                <div class="custom-select-option" data-value="social">Соцсети</div>
+                                <div class="custom-select-option" data-value="other">Другое</div>
+                            </div>
+                        </div>
+                        <input type="hidden" id="leadSource">
+                    </div>
+                    <button type="submit" class="submit-btn"><span>Отправить заявку</span></button>
+                </form>
+            </div>
+
+            <!-- JOIN FORM -->
+            <div class="form-panel" id="join">
+                <div class="form-panel-title">Вступить в команду</div>
+                <div class="form-panel-sub">Только сильные — рассматриваем в течение 24 ч</div>
+                <form id="joinForm">
+                    <div class="fg"><label>Telegram</label><input type="text" id="joinUsername" placeholder="@username" readonly style="opacity:0.6;cursor:default;"></div>
+                    <div class="fg"><label>Имя / Псевдоним *</label><input type="text" id="fullName" required placeholder="Иван / Псевдоним"></div>
+                    <div class="fg"><label>Специализация *</label>
+                        <div class="custom-select" id="csSpec">
+                            <div class="custom-select-trigger"><span class="custom-select-value">Выберите роль</span><span class="custom-select-arrow"><svg viewBox="0 0 12 12"><polyline points="2,4 6,8 10,4"/></svg></span></div>
+                            <div class="custom-select-dropdown">
+                                <div class="custom-select-option" data-value="frontend">Фронтенд разработчик</div>
+                                <div class="custom-select-option" data-value="backend">Бэкенд разработчик</div>
+                                <div class="custom-select-option" data-value="fullstack">Фулстек разработчик</div>
+                                <div class="custom-select-option" data-value="mobile">Мобильный разработчик</div>
+                                <div class="custom-select-option" data-value="designer">UI/UX Дизайнер</div>
+                                <div class="custom-select-option" data-value="security">Специалист по безопасности</div>
+                                <div class="custom-select-option" data-value="devops">DevOps инженер</div>
+                                <div class="custom-select-option" data-value="ai">AI/ML инженер</div>
+                                <div class="custom-select-option" data-value="gamedev">Разработчик игр</div>
+</div>
+                        </div>
+                        <input type="hidden" id="specialization">
+                    </div>
+                    <div class="fg"><label>Уровень *</label>
+                        <div class="level-btns" id="levelBtns">
+                            <button type="button" class="level-btn" data-val="Junior">Junior</button>
+                            <button type="button" class="level-btn" data-val="Middle">Middle</button>
+                            <button type="button" class="level-btn" data-val="Senior">Senior</button>
+                            <button type="button" class="level-btn" data-val="Lead">Lead</button>
+                        </div>
+                        <input type="hidden" id="levelField">
+                    </div>
+                    <div class="fg"><label>Опыт (лет) *</label><input type="number" id="experience" required min="0" max="30" placeholder="3"></div>
+                    <div class="fg"><label>Доступность *</label>
+                        <div class="custom-select" id="csAvail">
+                            <div class="custom-select-trigger"><span class="custom-select-value">Формат работы</span><span class="custom-select-arrow"><svg viewBox="0 0 12 12"><polyline points="2,4 6,8 10,4"/></svg></span></div>
+                            <div class="custom-select-dropdown">
+                                <div class="custom-select-option" data-value="fulltime">Полная занятость</div>
+                                <div class="custom-select-option" data-value="parttime">Частичная занятость</div>
+                                <div class="custom-select-option" data-value="project">По проектам</div>
+                                <div class="custom-select-option" data-value="weekend">Подработка / выходные</div>
+                            </div>
+                        </div>
+                        <input type="hidden" id="availability">
+                    </div>
+                    <div class="fg"><label>Часовой пояс *</label>
+                        <div class="custom-select" id="csTz">
+                            <div class="custom-select-trigger"><span class="custom-select-value">Ваш часовой пояс</span><span class="custom-select-arrow"><svg viewBox="0 0 12 12"><polyline points="2,4 6,8 10,4"/></svg></span></div>
+                            <div class="custom-select-dropdown">
+                                <div class="custom-select-option" data-value="UTC-5">UTC-5 (EST)</div>
+                                <div class="custom-select-option" data-value="UTC-4">UTC-4 (EDT)</div>
+                                <div class="custom-select-option" data-value="UTC+0">UTC+0 (Лондон)</div>
+                                <div class="custom-select-option" data-value="UTC+1">UTC+1 (Берлин, Варшава)</div>
+                                <div class="custom-select-option" data-value="UTC+2">UTC+2 (Киев, Рига)</div>
+                                <div class="custom-select-option" data-value="UTC+3">UTC+3 (Москва, Стамбул)</div>
+                                <div class="custom-select-option" data-value="UTC+4">UTC+4 (Баку, Дубай)</div>
+                                <div class="custom-select-option" data-value="UTC+5">UTC+5 (Ташкент)</div>
+                                <div class="custom-select-option" data-value="UTC+6">UTC+6 (Алматы)</div>
+                                <div class="custom-select-option" data-value="UTC+7">UTC+7 (Бангкок, Красноярск)</div>
+                                <div class="custom-select-option" data-value="UTC+8">UTC+8 (Пекин, Сингапур)</div>
+                            </div>
+                        </div>
+                        <input type="hidden" id="tzField">
+                    </div>
+                    <div class="fg"><label>Ожидаемая ставка</label>
+                        <div class="custom-select" id="csRate">
+                            <div class="custom-select-trigger"><span class="custom-select-value">$/час или fix</span><span class="custom-select-arrow"><svg viewBox="0 0 12 12"><polyline points="2,4 6,8 10,4"/></svg></span></div>
+                            <div class="custom-select-dropdown">
+                                <div class="custom-select-option" data-value="lt10">До 1 000 руб/ч</div>
+                                <div class="custom-select-option" data-value="10-25">1 000 — 2 500 руб/ч</div>
+                                <div class="custom-select-option" data-value="25-50">2 500 — 5 000 руб/ч</div>
+                                <div class="custom-select-option" data-value="50+">5 000+ руб/ч</div>
+                                <div class="custom-select-option" data-value="fix">Фикс за проект</div>
+                                <div class="custom-select-option" data-value="discuss">Обсуждаем</div>
+                            </div>
+                        </div>
+                        <input type="hidden" id="rateField">
+                    </div>
+                    <div class="fg"><label>Портфолио / GitHub *</label><input type="text" id="portfolio" required placeholder="https://github.com/username"></div>
+                    <div class="fg"><label>Ссылки (соцсети, Behance, etc.)</label><input type="text" id="socials" placeholder="https://..."></div>
+                    <div class="fg"><label>Ключевые навыки *</label><textarea id="skillsField" required placeholder="Python, React, Docker, Burp Suite..."></textarea></div>
+                    <div class="fg"><label>Почему Thin Lucid? *</label><textarea id="motivation" required placeholder="Чем можете усилить команду? Что ищете?" style="min-height:100px;"></textarea></div>
+                    <button type="submit" class="submit-btn"><span>Подать заявку</span></button>
+                </form>
+            </div>
+        </div>
     </div>
-</div></body>
+</section>
+<footer>
+    <a href="#hero" class="logo-svg"><svg width="22" height="22" viewBox="0 0 28 28" fill="none"><defs><radialGradient id="sphereGradF" cx="38%" cy="35%" r="60%"><stop offset="0%" stop-color="#00ff88" stop-opacity="0.35"/><stop offset="100%" stop-color="#00d4ff" stop-opacity="0.05"/></radialGradient></defs><circle cx="14" cy="14" r="12" stroke="#00ff88" stroke-width="1.2" fill="url(#sphereGradF)"/><ellipse cx="14" cy="14" rx="12" ry="4.5" stroke="#00d4ff" stroke-width="0.8" fill="none" opacity="0.7"/><ellipse cx="14" cy="14" rx="4.5" ry="12" stroke="#00d4ff" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="14" cy="14" r="2" fill="#00ff88"/></svg><span class="logo-text">THIN LUCID</span></a>
+    <p>© 2025 Thin Lucid Agency. Все права защищены.</p>
+</footer>
+<div class="overlay" id="overlay"></div>
+<div class="success-msg" id="successMsg"><h2>Заявка отправлена</h2><p>Мы свяжемся с вами в ближайшее время.</p></div>
+<script>
+window.addEventListener('load', function() {
+setTimeout(function() { var l = document.getElementById('loader'); if (l) l.classList.add('hidden'); }, 1200);
+var bgC = document.getElementById('bg-canvas');
+if (bgC) {
+    var bgCtx = bgC.getContext('2d');
+    function resizeBg() { bgC.width = innerWidth; bgC.height = innerHeight; }
+    resizeBg(); window.addEventListener('resize', resizeBg);
+    var pts = [];
+    for (var i = 0; i < 80; i++) pts.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,vx:(Math.random()-0.5)*0.3,vy:(Math.random()-0.5)*0.3});
+    function animBg() {
+        bgCtx.clearRect(0,0,bgC.width,bgC.height);
+        pts.forEach(function(p){p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>bgC.width)p.vx*=-1;if(p.y<0||p.y>bgC.height)p.vy*=-1;bgCtx.beginPath();bgCtx.arc(p.x,p.y,1.2,0,Math.PI*2);bgCtx.fillStyle='rgba(0,255,136,0.25)';bgCtx.fill();});
+        for(var i=0;i<pts.length;i++){for(var j=i+1;j<pts.length;j++){var dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<130){bgCtx.beginPath();bgCtx.moveTo(pts[i].x,pts[i].y);bgCtx.lineTo(pts[j].x,pts[j].y);bgCtx.strokeStyle='rgba(0,212,255,'+(0.12*(1-d/130))+')';bgCtx.lineWidth=0.5;bgCtx.stroke();}}}
+        requestAnimationFrame(animBg);
+    }
+    animBg();
+}
+var lastY=0,nav=document.querySelector('nav');
+window.addEventListener('scroll',function(){var y=window.scrollY;if(nav){if(y>lastY&&y>80)nav.classList.add('hidden');else nav.classList.remove('hidden');}lastY=y;});
+document.querySelectorAll('.acc-header').forEach(function(header){header.addEventListener('click',function(){var item=header.parentElement,wasOpen=item.classList.contains('open');document.querySelectorAll('.acc-item').forEach(function(i){i.classList.remove('open');});if(!wasOpen)item.classList.add('open');});});
+(function(){
+    var CDN='https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/';
+    var techs=[{url:CDN+'javascript/javascript-original.svg',name:'JavaScript'},{url:CDN+'typescript/typescript-original.svg',name:'TypeScript'},{url:CDN+'python/python-original.svg',name:'Python'},{url:CDN+'go/go-original-wordmark.svg',name:'Go'},{url:CDN+'cplusplus/cplusplus-original.svg',name:'C++'},{url:CDN+'react/react-original.svg',name:'React'},{url:CDN+'html5/html5-original.svg',name:'HTML5'},{url:CDN+'css3/css3-original.svg',name:'CSS3'},{url:CDN+'docker/docker-original.svg',name:'Docker'},{url:CDN+'kubernetes/kubernetes-original.svg',name:'Kubernetes'},{url:CDN+'amazonwebservices/amazonwebservices-original-wordmark.svg',name:'AWS'},{url:CDN+'nodejs/nodejs-original-wordmark.svg',name:'Node.js'},{url:CDN+'git/git-original.svg',name:'Git'},{url:CDN+'postgresql/postgresql-original.svg',name:'PostgreSQL'},{url:CDN+'redis/redis-original.svg',name:'Redis'}];
+    var grid=document.getElementById('techLogosGrid');
+    if(!grid)return;
+    techs.forEach(function(tech,i){var item=document.createElement('div');item.className='tech-logo-item';item.style.transition='opacity 0.5s '+(i*0.06)+'s, transform 0.5s '+(i*0.06)+'s, border-color 0.25s, background 0.25s';var img=document.createElement('img');img.src=tech.url;img.alt=tech.name;img.loading='lazy';var label=document.createElement('span');label.textContent=tech.name;item.appendChild(img);item.appendChild(label);grid.appendChild(item);});
+    var observer=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){grid.querySelectorAll('.tech-logo-item').forEach(function(item){item.classList.add('visible');});observer.disconnect();}});},{threshold:0.15});
+    observer.observe(grid);
+})();
+var tg=window.Telegram&&window.Telegram.WebApp;
+if(tg){tg.ready();tg.expand();if(tg.colorScheme==='light'){document.documentElement.style.setProperty('--bg','#f0f0f5');document.documentElement.style.setProperty('--card','#ffffff');document.documentElement.style.setProperty('--txt','#1a1a2e');document.documentElement.style.setProperty('--muted','#888899');}var user=tg.initDataUnsafe&&tg.initDataUnsafe.user;if(user){var uname=user.username?'@'+user.username:(user.first_name+(user.last_name?' '+user.last_name:''));var uField=document.getElementById('username'),jField=document.getElementById('joinUsername'),fnField=document.getElementById('fullName');if(uField)uField.value=uname;if(jField)jField.value=uname;if(fnField&&!fnField.value)fnField.value=user.first_name+(user.last_name?' '+user.last_name:'');}}
+(function(){
+  function initSelect(id,hiddenId){var cs=document.getElementById(id),hidden=document.getElementById(hiddenId);if(!cs)return;var trigger=cs.querySelector('.custom-select-trigger'),valueEl=cs.querySelector('.custom-select-value'),options=cs.querySelectorAll('.custom-select-option');trigger.addEventListener('click',function(e){e.stopPropagation();cs.classList.toggle('open');});options.forEach(function(opt){opt.addEventListener('click',function(){options.forEach(function(o){o.classList.remove('selected');});opt.classList.add('selected');valueEl.textContent=opt.textContent.trim();trigger.classList.add('has-value');if(hidden)hidden.value=opt.getAttribute('data-value');cs.classList.remove('open');});});document.addEventListener('click',function(){cs.classList.remove('open');});cs.addEventListener('click',function(e){e.stopPropagation();});}
+  initSelect('csService','serviceType');initSelect('csBudget','budgetRange');initSelect('csDeadline','deadlinePref');initSelect('csSource','leadSource');initSelect('csSpec','specialization');initSelect('csAvail','availability');initSelect('csRate','rateField');initSelect('csTz','tzField');
+  document.querySelectorAll('.level-btn').forEach(function(btn){btn.addEventListener('click',function(){document.querySelectorAll('.level-btn').forEach(function(b){b.classList.remove('active');});btn.classList.add('active');document.getElementById('levelField').value=btn.getAttribute('data-val');});});
+})();
+var TG_TOKEN='8759243252:AAGcMEARFHLaWpFDCghswusg2hbcjnBW9nw';
+var TG_CHAT='-1003846908224';
+function sendToTelegram(text,btn){btn.disabled=true;btn.querySelector('span').textContent='Отправка...';return fetch('https://api.telegram.org/bot'+TG_TOKEN+'/sendMessage',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:TG_CHAT,text:text,parse_mode:'HTML'})}).then(function(r){return r.json();}).then(function(data){btn.disabled=false;btn.querySelector('span').textContent='Отправить';if(data.ok){if(tg){tg.HapticFeedback.notificationOccurred('success');}showSuccess();}else{alert('Ошибка: '+(data.description||'попробуйте ещё раз'));}}).catch(function(){btn.disabled=false;btn.querySelector('span').textContent='Отправить';alert('Ошибка сети. Проверьте соединение.');});}
+function showSuccess(){document.getElementById('overlay').classList.add('show');document.getElementById('successMsg').classList.add('show');setTimeout(function(){document.getElementById('overlay').classList.remove('show');document.getElementById('successMsg').classList.remove('show');},3000);}
+var cf=document.getElementById('contactForm');
+if(cf)cf.addEventListener('submit',function(e){e.preventDefault();var username=document.getElementById('username').value.trim(),serviceType=document.getElementById('serviceType').value||'—',budgetRange=document.getElementById('budgetRange').value||'—',deadlinePref=document.getElementById('deadlinePref').value||'—',leadSource=document.getElementById('leadSource').value||'—',message=document.getElementById('message').value.trim();var text='<b>Новая заявка — Услуги</b>\n\n <b>Telegram:</b> '+username+'\n<b>Услуга:</b> '+serviceType+'\n<b>Бюджет:</b> '+budgetRange+'\n<b>Дедлайн:</b> '+deadlinePref+'\n<b>Источник:</b> '+leadSource+'\n\n <b>Описание:</b>\n'+message;var btn=cf.querySelector('button[type="submit"]');sendToTelegram(text,btn).then(function(){cf.reset();});});
+var jf=document.getElementById('joinForm');
+if(jf)jf.addEventListener('submit',function(e){
+  e.preventDefault();
+  var tgUser=tg&&tg.initDataUnsafe&&tg.initDataUnsafe.user;
+  var userId=tgUser?tgUser.id:null;
+  var username=document.getElementById('joinUsername').value.trim(),fullName=document.getElementById('fullName').value.trim(),spec=document.getElementById('specialization').value||'—',level=document.getElementById('levelField').value||'—',exp=document.getElementById('experience').value||'—',avail=document.getElementById('availability').value||'—',rate=document.getElementById('rateField').value||'—',tz=document.getElementById('tzField').value||'—',portfolio=document.getElementById('portfolio').value.trim(),socials=document.getElementById('socials').value.trim()||'—',skills=document.getElementById('skillsField').value.trim(),motivation=document.getElementById('motivation').value.trim();
+  var text='<b>Новая заявка — Команда</b>\n\n<b>Telegram:</b> '+username+'\n<b>Имя:</b> '+fullName+'\n<b>Роль:</b> '+spec+'\n<b>Уровень:</b> '+level+'\n<b>Опыт:</b> '+exp+' лет\n<b>Доступность:</b> '+avail+'\n<b>Ставка:</b> '+rate+'\n<b>Часовой пояс:</b> '+tz+'\n<b>Портфолио:</b> '+portfolio+'\n<b>Соцсети:</b> '+socials+'\n\n<b>Навыки:</b>\n'+skills+'\n\n<b>Мотивация:</b>\n'+motivation;
+  var btn=jf.querySelector('button[type="submit"]');
+  btn.disabled=true;btn.querySelector('span').textContent='Отправка...';
+  console.log('join_apply payload:', {user_id:userId,text:text.substring(0,100)});
+  fetch('https://mini-production-be9c.up.railway.app/join_apply',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user_id:userId,text:text})})
+    .then(function(r){return r.text();})
+    .then(function(res){
+      btn.disabled=false;btn.querySelector('span').textContent='Подать заявку';
+      if(res==='ok'){if(tg)tg.HapticFeedback.notificationOccurred('success');showSuccess();jf.reset();document.getElementById('levelField').value='';document.querySelectorAll('.level-btn').forEach(function(b){b.classList.remove('active');});}
+      else{alert('Ошибка сервера: '+res);}
+    })
+    .catch(function(err){btn.disabled=false;btn.querySelector('span').textContent='Подать заявку';alert('Ошибка сети: '+err);});
+});
+});
+</script>
+</body>
 </html>
