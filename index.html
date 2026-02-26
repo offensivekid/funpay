@@ -42,6 +42,7 @@
             border-bottom: 1px solid var(--line);
             background: rgba(5,5,8,0.75);
             backdrop-filter: blur(16px);
+            transition: transform 0.3s;
         }
         .logo-svg { display: flex; align-items: center; gap: 0.7rem; text-decoration: none; }
         .logo-text {
@@ -209,168 +210,335 @@
         .tech-logo-item:hover img { filter: drop-shadow(0 0 12px rgba(0,255,136,0.5)); }
         .tech-logo-item span { font-family: 'Space Mono', monospace; font-size: 0.62rem; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.25s; }
         .tech-logo-item:hover span { color: var(--g); }
+
+        /* ══════════════════════════════════════════════
+           ДОКУМЕНТЫ — переработанный раздел
+        ══════════════════════════════════════════════ */
         #contact { background: var(--card); }
-        .forms-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
-        .level-btns { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-        .level-btn { flex: 1; padding: 0.65rem 0.5rem; background: transparent; border: 1px solid rgba(255,255,255,0.08); color: var(--muted); font-family: 'Space Mono', monospace; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; cursor: pointer; transition: all 0.2s; }
-        .level-btn:hover { border-color: var(--g); color: var(--g); }
-        .level-btn.active { background: var(--g); border-color: var(--g); color: #000; }
-        .form-panel { border: 1px solid var(--line); padding: 2.5rem; position: relative; overflow: hidden; }
-        .form-panel::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--g), var(--c)); }
-        .form-panel-title { font-size: 1.3rem; font-weight: 800; margin-bottom: 0.4rem; letter-spacing: -0.01em; }
-        .form-panel-sub { font-size: 0.82rem; color: var(--muted); margin-bottom: 2rem; font-family: 'Space Mono', monospace; }
-        .fg { margin-bottom: 1.5rem; }
-        .fg label { display: block; font-family: 'Space Mono', monospace; font-size: 0.68rem; color: var(--c); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.5rem; }
-        .fg input, .fg textarea, .fg select { width: 100%; padding: 0.85rem 1.1rem; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.08); color: var(--txt); font-family: 'Syne', sans-serif; font-size: 0.95rem; transition: border-color 0.2s, box-shadow 0.2s; outline: none; -webkit-appearance: none; appearance: none; border-radius: 0; }
-        .fg input::placeholder, .fg textarea::placeholder { color: rgba(255,255,255,0.18); }
-        .fg input:focus, .fg textarea:focus, .fg select:focus { border-color: var(--c); box-shadow: 0 0 0 1px rgba(0,212,255,0.2); background: rgba(0,212,255,0.04); }
-        .fg textarea { min-height: 110px; resize: vertical; }
-        .select-wrapper { position: relative; }
-        .select-wrapper select { display: none; }
-        .custom-select { position: relative; user-select: none; }
-        .custom-select-trigger { display: flex; align-items: center; justify-content: space-between; padding: 0.85rem 1.1rem; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.08); border-radius: 4px; color: rgba(255,255,255,0.35); font-family: 'Syne', sans-serif; font-size: 0.95rem; cursor: pointer; transition: border-color 0.25s, box-shadow 0.25s, background 0.25s; }
-        .custom-select-trigger.has-value { color: var(--txt); }
-        .custom-select.open .custom-select-trigger { border-color: var(--c); box-shadow: 0 0 0 1px rgba(0,212,255,0.2); background: rgba(0,212,255,0.04); }
-        .custom-select-arrow { width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: transform 0.3s cubic-bezier(0.4,0,0.2,1); }
-        .custom-select-arrow svg { width: 12px; height: 12px; stroke: var(--c); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-        .custom-select.open .custom-select-arrow { transform: rotate(180deg); }
-        .custom-select-dropdown { position: absolute; top: calc(100% + 4px); left: 0; right: 0; background: #0e0e16; border: 1px solid rgba(0,212,255,0.2); border-radius: 6px; overflow: hidden; z-index: 100; max-height: 0; opacity: 0; transform: translateY(-6px); transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.25s ease, transform 0.3s cubic-bezier(0.4,0,0.2,1); pointer-events: none; box-shadow: 0 12px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,212,255,0.05); }
-        .custom-select.open .custom-select-dropdown { max-height: 320px; opacity: 1; transform: translateY(0); pointer-events: all; overflow-y: auto; }
-        .custom-select-option { padding: 0.78rem 1.1rem; font-family: 'Syne', sans-serif; font-size: 0.9rem; color: var(--muted); cursor: pointer; transition: background 0.15s, color 0.15s, padding-left 0.2s; border-bottom: 1px solid rgba(255,255,255,0.04); display: flex; align-items: center; gap: 0.6rem; }
-        .custom-select-option:last-child { border-bottom: none; }
-        .custom-select-option::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--g); opacity: 0; flex-shrink: 0; transition: opacity 0.2s; }
-        .custom-select-option:hover { background: rgba(0,255,136,0.06); color: var(--txt); padding-left: 1.4rem; }
-        .custom-select-option:hover::before { opacity: 1; }
-        .custom-select-option.selected { color: var(--g); background: rgba(0,255,136,0.04); }
-        .custom-select-option.selected::before { opacity: 1; }
-        .submit-btn { width: 100%; padding: 1rem; background: transparent; border: 1px solid var(--g); color: var(--g); font-family: 'Space Mono', monospace; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; position: relative; overflow: hidden; transition: color 0.3s; }
-        .submit-btn::before { content: ''; position: absolute; inset: 0; background: var(--g); transform: scaleX(0); transform-origin: left; transition: transform 0.3s; }
-        .submit-btn span { position: relative; z-index: 1; }
-        .submit-btn:hover { color: #000; }
-        .submit-btn:hover::before { transform: scaleX(1); }
-        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 9997; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
-        .overlay.show { opacity:1; pointer-events:all; }
-        .success-msg { position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%) scale(0.85); background: var(--card); border: 1px solid var(--g); padding: 3rem 4rem; text-align: center; z-index: 9998; opacity: 0; pointer-events: none; transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1); }
-        .success-msg.show { opacity:1; pointer-events:all; transform: translate(-50%,-50%) scale(1); }
-        .success-msg h2 { font-size: 1.6rem; font-weight: 800; color: var(--g); margin-bottom: 0.5rem; }
-        .success-msg p { color: var(--muted); }
-        footer { padding: 3rem 4rem; border-top: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; }
-        footer .logo-text { font-size: 0.9rem; }
-        footer p { font-family: 'Space Mono', monospace; font-size: 0.68rem; color: var(--muted); letter-spacing: 0.1em; }
-        .loader { position: fixed; inset: 0; background: var(--bg); z-index: 10001; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 1.5rem; transition: opacity 0.6s, visibility 0.6s; }
-        .loader.hidden { opacity:0; visibility:hidden; }
-        .loader-ring { width: 64px; height: 64px; border: 1px solid rgba(0,255,136,0.2); border-top-color: var(--g); border-radius: 50%; animation: spin 1s linear infinite; }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        .loader-text { font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--muted); letter-spacing: 0.3em; text-transform: uppercase; }
 
-        /* ═══════════════════════════════════════════
-           DOCS SECTION — внутренние документы
-        ═══════════════════════════════════════════ */
-        #docs { background: var(--bg); }
+        /* Выбор режима */
+        .doc-mode-select {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: var(--line);
+            border: 1px solid var(--line);
+            margin-bottom: 3.5rem;
+        }
+        .doc-mode-btn {
+            background: var(--card);
+            border: none;
+            padding: 2rem 1.5rem;
+            cursor: pointer;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+            transition: background 0.25s;
+        }
+        .doc-mode-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--g), var(--c));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+        }
+        .doc-mode-btn:hover { background: rgba(0,255,136,0.03); }
+        .doc-mode-btn:hover::after, .doc-mode-btn.active::after { transform: scaleX(1); }
+        .doc-mode-btn.active { background: rgba(0,255,136,0.04); }
+        .doc-mode-num {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.6rem; letter-spacing: 0.3em;
+            color: var(--muted); margin-bottom: 0.8rem;
+            text-transform: uppercase;
+        }
+        .doc-mode-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.25rem; font-weight: 800;
+            color: var(--txt); margin-bottom: 0.35rem;
+            letter-spacing: -0.01em;
+        }
+        .doc-mode-btn.active .doc-mode-title { color: var(--g); }
+        .doc-mode-desc {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.68rem; color: var(--muted);
+            letter-spacing: 0.05em; line-height: 1.5;
+        }
+        .doc-mode-arrow {
+            position: absolute; top: 1.5rem; right: 1.5rem;
+            font-size: 1.2rem; color: var(--muted);
+            transition: color 0.2s, transform 0.2s;
+        }
+        .doc-mode-btn:hover .doc-mode-arrow,
+        .doc-mode-btn.active .doc-mode-arrow { color: var(--g); transform: translateX(3px); }
 
-        .docs-tabs {
-            display: flex; gap: 0;
+        /* Панели */
+        .docs-panel { display: none; }
+        .docs-panel.active { display: block; animation: fadeUp 0.35s ease; }
+
+        /* Шаг-виджет для выбора услуги */
+        .service-picker {
+            margin-bottom: 2.5rem;
+        }
+        .service-picker-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase;
+            color: var(--c); margin-bottom: 1rem; display: block;
+        }
+        .service-chips {
+            display: flex; flex-wrap: wrap; gap: 0.5rem;
+        }
+        .service-chip {
+            display: flex; align-items: center; gap: 0.55rem;
+            padding: 0.7rem 1.3rem;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(0,0,0,0.3);
+            cursor: pointer; user-select: none;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.72rem; font-weight: 700;
+            letter-spacing: 0.1em; text-transform: uppercase;
+            color: var(--muted);
+            transition: all 0.2s;
+        }
+        .service-chip:hover { border-color: rgba(0,255,136,0.35); color: var(--txt); }
+        .service-chip.active {
+            border-color: var(--g);
+            background: rgba(0,255,136,0.08);
+            color: var(--g);
+        }
+        .service-chip .chip-ico {
+            width: 18px; height: 18px; display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .service-chip input { display: none; }
+
+        /* Секция полей — показывается/скрывается */
+        .field-section {
+            display: none;
+            margin-bottom: 2.5rem;
+            animation: fadeUp 0.3s ease;
+        }
+        .field-section.visible { display: block; }
+
+        /* Разделитель-заголовок секции */
+        .fs-header {
+            display: flex; align-items: center; gap: 1rem;
+            margin-bottom: 1.5rem; padding-bottom: 1rem;
             border-bottom: 1px solid var(--line);
-            margin-bottom: 3rem;
         }
-        .docs-tab {
-            font-family: 'Space Mono', monospace; font-size: 0.72rem; letter-spacing: 0.15em;
-            text-transform: uppercase; padding: 1rem 2rem;
-            color: var(--muted); cursor: pointer;
-            background: none; border: none;
-            border-bottom: 2px solid transparent;
-            margin-bottom: -1px;
-            transition: color 0.2s, border-color 0.2s;
+        .fs-icon {
+            width: 36px; height: 36px;
+            border: 1px solid var(--line);
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
         }
-        .docs-tab:hover { color: var(--txt); }
-        .docs-tab.active { color: var(--g); border-bottom-color: var(--g); }
+        .fs-title {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem; letter-spacing: 0.2em;
+            text-transform: uppercase; color: var(--g);
+        }
+        .fs-desc { font-size: 0.8rem; color: var(--muted); margin-top: 0.15rem; }
 
-        .docs-panel { display: none; animation: fadeUp 0.3s ease; }
-        .docs-panel.active { display: block; }
-
-        /* Поля внутри docs */
-        .docs-grid { display: grid; gap: 1rem; margin-bottom: 2.5rem; }
+        /* Поля */
+        .docs-grid { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); }
         .docs-grid.cols2 { grid-template-columns: 1fr 1fr; }
         .docs-grid.cols3 { grid-template-columns: 1fr 1fr 1fr; }
+        .docs-grid.cols1 { grid-template-columns: 1fr; }
 
         .docs-field {
-            background: rgba(0,0,0,0.35);
-            border: 1px solid rgba(255,255,255,0.07);
-            padding: 1rem 1.2rem;
-            transition: border-color 0.2s, box-shadow 0.2s;
+            background: var(--card);
+            padding: 1.2rem 1.5rem;
+            transition: background 0.2s;
             position: relative;
         }
+        .docs-field:focus-within { background: rgba(0,212,255,0.03); }
         .docs-field::after {
             content: '';
             position: absolute; top: 0; right: 0;
-            width: 10px; height: 10px;
-            border-top: 1px solid var(--g);
-            border-right: 1px solid var(--g);
-            opacity: 0.4;
-        }
-        .docs-field:focus-within {
-            border-color: rgba(0,212,255,0.4);
-            box-shadow: 0 0 0 1px rgba(0,212,255,0.15), inset 0 0 20px rgba(0,212,255,0.02);
+            width: 8px; height: 8px;
+            border-top: 1px solid rgba(0,255,136,0.3);
+            border-right: 1px solid rgba(0,255,136,0.3);
         }
         .docs-field label {
             display: block;
-            font-family: 'Space Mono', monospace; font-size: 0.62rem;
-            letter-spacing: 0.18em; text-transform: uppercase;
-            color: var(--c); margin-bottom: 0.5rem;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.72rem; letter-spacing: 0.18em;
+            text-transform: uppercase; color: var(--c);
+            margin-bottom: 0.55rem;
         }
-        .docs-field input, .docs-field textarea, .docs-field select {
+        .docs-field input,
+        .docs-field textarea,
+        .docs-field select {
             width: 100%; background: none; border: none; outline: none;
             color: var(--txt); font-family: 'Syne', sans-serif;
-            font-size: 0.95rem; font-weight: 600;
+            font-size: 1.05rem; font-weight: 600;
         }
-        .docs-field input::placeholder, .docs-field textarea::placeholder { color: rgba(255,255,255,0.15); font-weight: 400; }
-        .docs-field textarea { min-height: 80px; resize: vertical; }
-        .docs-field select { color: var(--txt); -webkit-appearance: none; appearance: none; cursor: pointer; }
+        .docs-field input::placeholder,
+        .docs-field textarea::placeholder { color: rgba(255,255,255,0.22); font-weight: 400; font-size: 1.05rem; }
+        .docs-field textarea { min-height: 100px; resize: vertical; }
+        .docs-field select {
+            -webkit-appearance: none; appearance: none; cursor: pointer;
+            color: var(--txt);
+        }
         .docs-field select option { background: #0e0e16; }
 
-        /* Чекбоксы для типа услуги */
-        .docs-checks { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 2.5rem; }
-        .docs-check {
-            display: flex; align-items: center; gap: 0.6rem;
-            cursor: pointer;
-            font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.12em;
-            text-transform: uppercase; color: var(--muted);
-            background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.07);
-            padding: 0.6rem 1.2rem;
-            transition: all 0.15s;
-            user-select: none;
+        /* ── Кастомный дропдаун ── */
+        .cselect-wrap { position: relative; }
+        .cselect-trigger {
+            display: flex; align-items: center; justify-content: space-between;
+            cursor: pointer; user-select: none;
+            color: var(--txt); font-family: 'Syne', sans-serif;
+            font-size: 1.05rem; font-weight: 600;
+            min-height: 1.6em;
         }
-        .docs-check input { display: none; }
-        .docs-check .chk { width: 12px; height: 12px; border: 1px solid currentColor; display: flex; align-items: center; justify-content: center; font-size: 8px; flex-shrink: 0; }
-        .docs-check:has(input:checked) { border-color: rgba(0,255,136,0.4); color: var(--g); background: rgba(0,255,136,0.05); }
-        .docs-check:has(input:checked) .chk::after { content: '✓'; }
+        .cselect-trigger.placeholder { color: rgba(255,255,255,0.22); font-weight: 400; }
+        .cselect-arrow {
+            width: 20px; height: 20px; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+            margin-left: 0.5rem;
+        }
+        .cselect-arrow svg { width: 12px; height: 12px; stroke: var(--c); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        .cselect-wrap.open .cselect-arrow { transform: rotate(180deg); }
+        .cselect-dropdown {
+            position: absolute; top: calc(100% + 10px); left: -1.5rem; right: -1.5rem;
+            background: #0a0a0f;
+            border: 1px solid rgba(0,212,255,0.25);
+            z-index: 500;
+            max-height: 0; opacity: 0; pointer-events: none;
+            transform: translateY(-6px);
+            transition:
+                max-height 0.38s cubic-bezier(0.4,0,0.2,1),
+                opacity 0.28s ease,
+                transform 0.32s cubic-bezier(0.4,0,0.2,1);
+            box-shadow: 0 16px 48px rgba(0,0,0,0.7), 0 0 0 1px rgba(0,212,255,0.06);
+            overflow: hidden;
+        }
+        .cselect-wrap.open .cselect-dropdown {
+            max-height: 280px; opacity: 1; pointer-events: all;
+            transform: translateY(0);
+            overflow-y: auto;
+        }
+        .cselect-dropdown::-webkit-scrollbar { width: 3px; }
+        .cselect-dropdown::-webkit-scrollbar-thumb { background: rgba(0,212,255,0.3); border-radius: 2px; }
+        .cselect-option {
+            padding: 0.9rem 1.5rem;
+            font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 500;
+            color: var(--muted);
+            cursor: pointer;
+            display: flex; align-items: center; gap: 0.7rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            transition: background 0.15s, color 0.15s, padding-left 0.2s;
+        }
+        .cselect-option:last-child { border-bottom: none; }
+        .cselect-option::before {
+            content: ''; width: 4px; height: 4px; border-radius: 50%;
+            background: var(--g); flex-shrink: 0; opacity: 0;
+            transition: opacity 0.2s;
+        }
+        .cselect-option:hover { background: rgba(0,255,136,0.05); color: var(--txt); padding-left: 2rem; }
+        .cselect-option:hover::before { opacity: 1; }
+        .cselect-option.selected { color: var(--g); background: rgba(0,255,136,0.04); }
+        .cselect-option.selected::before { opacity: 1; }
 
-        /* Таблица для стандартных условий */
+        /* Базовые поля (всегда видны в ТЗ) */
+        .base-fields { margin-bottom: 2.5rem; }
+        .base-fields-title {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem; letter-spacing: 0.22em;
+            text-transform: uppercase; color: var(--c);
+            margin-bottom: 1.1rem; display: flex; align-items: center; gap: 0.7rem;
+        }
+        .base-fields-title::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+
+        /* Прогресс-шаги */
+        .doc-progress {
+            display: flex; align-items: center; gap: 0;
+            margin-bottom: 3rem;
+            border: 1px solid var(--line);
+        }
+        .doc-progress-step {
+            flex: 1; padding: 1rem 1.5rem;
+            display: flex; align-items: center; gap: 0.8rem;
+            border-right: 1px solid var(--line);
+            position: relative;
+        }
+        .doc-progress-step:last-child { border-right: none; }
+        .dp-num {
+            width: 28px; height: 28px;
+            border: 1px solid var(--line);
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.65rem; font-weight: 700;
+            color: var(--muted); flex-shrink: 0;
+            transition: all 0.2s;
+        }
+        .doc-progress-step.done .dp-num {
+            border-color: var(--g); color: var(--g);
+            background: rgba(0,255,136,0.08);
+        }
+        .doc-progress-step.active .dp-num {
+            border-color: var(--c); color: var(--c);
+            background: rgba(0,212,255,0.08);
+        }
+        .dp-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.62rem; letter-spacing: 0.12em;
+            color: var(--muted); text-transform: uppercase;
+        }
+        .doc-progress-step.active .dp-label { color: var(--txt); }
+        .doc-progress-step.done .dp-label { color: var(--g); }
+
+        /* Кнопки действий */
+        .docs-actions {
+            display: flex; gap: 1rem;
+            margin-top: 3rem; padding-top: 2rem;
+            border-top: 1px solid var(--line);
+            align-items: center;
+        }
+        .docs-actions .hint {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.65rem; color: var(--muted);
+            letter-spacing: 0.08em; margin-left: auto;
+        }
+
+        /* Договор — таблица */
         .docs-table { width: 100%; border-collapse: collapse; margin-bottom: 2.5rem; }
         .docs-table th {
             background: rgba(0,255,136,0.06); border: 1px solid var(--line);
             padding: 0.8rem 1.2rem;
-            font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.2em;
+            font-family: 'Space Mono', monospace; font-size: 0.62rem; letter-spacing: 0.2em;
             color: var(--g); text-align: left; text-transform: uppercase;
         }
-        .docs-table td { border: 1px solid var(--line); padding: 0.9rem 1.2rem; font-size: 0.9rem; color: var(--muted); vertical-align: top; }
-        .docs-table td:first-child { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: var(--g); letter-spacing: 0.1em; white-space: nowrap; }
+        .docs-table td {
+            border: 1px solid var(--line); padding: 0.9rem 1.2rem;
+            font-size: 0.88rem; color: var(--muted); vertical-align: top;
+        }
+        .docs-table td:first-child {
+            font-family: 'Space Mono', monospace; font-size: 0.63rem;
+            color: var(--g); letter-spacing: 0.1em; white-space: nowrap; width: 180px;
+        }
         .docs-table tr:hover td { background: rgba(0,255,136,0.02); }
 
-        /* Грейд-карточки */
-        .grade-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5px; background: var(--line); border: 1px solid var(--line); margin-bottom: 2.5rem; }
-        .grade-card {
-            background: var(--card); padding: 2rem 1.8rem; position: relative; overflow: hidden;
-            transition: background 0.3s;
+        /* Грейды */
+        .grade-grid {
+            display: grid; grid-template-columns: repeat(3,1fr);
+            gap: 1px; background: var(--line); border: 1px solid var(--line);
+            margin-bottom: 2.5rem;
         }
-        .grade-card:hover { background: rgba(0,255,136,0.03); }
+        .grade-card {
+            background: var(--card); padding: 2rem 1.8rem;
+            position: relative; overflow: hidden; transition: background 0.3s;
+        }
+        .grade-card:hover { background: rgba(0,255,136,0.02); }
         .grade-card::before {
             content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
         }
         .grade-card.gj::before { background: var(--c); }
         .grade-card.gm::before { background: var(--g); }
         .grade-card.gs::before { background: #ff4757; }
-
         .grade-bg-letter {
             font-family: 'Bebas Neue', cursive; font-size: 80px; line-height: 1;
             position: absolute; right: 1rem; bottom: 0.5rem;
@@ -379,16 +547,14 @@
         .grade-card.gj .grade-bg-letter { color: var(--c); }
         .grade-card.gm .grade-bg-letter { color: var(--g); }
         .grade-card.gs .grade-bg-letter { color: #ff4757; }
-
         .grade-badge {
             display: inline-block; padding: 0.2rem 0.7rem; margin-bottom: 1rem;
-            font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.2em;
-            text-transform: uppercase; border: 1px solid;
+            font-family: 'Space Mono', monospace; font-size: 0.65rem;
+            letter-spacing: 0.2em; text-transform: uppercase; border: 1px solid;
         }
         .grade-card.gj .grade-badge { color: var(--c); border-color: var(--c); background: rgba(0,212,255,0.06); }
         .grade-card.gm .grade-badge { color: var(--g); border-color: var(--g); background: rgba(0,255,136,0.06); }
         .grade-card.gs .grade-badge { color: #ff4757; border-color: #ff4757; background: rgba(255,71,87,0.06); }
-
         .grade-list { list-style: none; }
         .grade-list li {
             font-size: 0.88rem; color: var(--muted); padding: 0.45rem 0;
@@ -398,7 +564,107 @@
         .grade-list li:last-child { border: none; }
         .grade-list li::before { content: '▸'; font-size: 0.6rem; color: var(--muted); flex-shrink: 0; }
 
-        /* Шаги найма */
+        /* Грейды — аккордеон-дропдауны */
+        .grade-accordion { margin-bottom: 2.5rem; border: 1px solid var(--line); }
+
+        .grade-acc-item { border-bottom: 1px solid var(--line); }
+        .grade-acc-item:last-child { border-bottom: none; }
+
+        .grade-acc-trigger {
+            display: flex; align-items: center; gap: 1.2rem;
+            padding: 1.4rem 1.8rem;
+            cursor: pointer; user-select: none;
+            background: var(--card);
+            transition: background 0.2s;
+            border: none; width: 100%; text-align: left;
+        }
+        .grade-acc-trigger:hover { background: rgba(0,255,136,0.03); }
+        .grade-acc-item.open .grade-acc-trigger { background: rgba(0,255,136,0.04); }
+
+        .grade-acc-badge {
+            padding: 0.22rem 0.75rem;
+            font-family: 'Space Mono', monospace; font-size: 0.62rem;
+            letter-spacing: 0.2em; text-transform: uppercase;
+            border: 1px solid; flex-shrink: 0;
+            transition: background 0.25s;
+        }
+        .gj .grade-acc-badge { color: var(--c); border-color: var(--c); background: rgba(0,212,255,0.05); }
+        .gm .grade-acc-badge { color: var(--g); border-color: var(--g); background: rgba(0,255,136,0.05); }
+        .gs .grade-acc-badge { color: #ff4757; border-color: #ff4757; background: rgba(255,71,87,0.05); }
+
+        .grade-acc-item.open.gj .grade-acc-badge { background: rgba(0,212,255,0.12); }
+        .grade-acc-item.open.gm .grade-acc-badge { background: rgba(0,255,136,0.12); }
+        .grade-acc-item.open.gs .grade-acc-badge { background: rgba(255,71,87,0.12); }
+
+        .grade-acc-name {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.35rem; letter-spacing: 0.08em;
+            color: var(--txt); flex: 1;
+            transition: color 0.2s;
+        }
+        .grade-acc-item.open.gj .grade-acc-name { color: var(--c); }
+        .grade-acc-item.open.gm .grade-acc-name { color: var(--g); }
+        .grade-acc-item.open.gs .grade-acc-name { color: #ff4757; }
+
+        .grade-acc-meta {
+            font-family: 'Space Mono', monospace; font-size: 0.62rem;
+            color: var(--muted); letter-spacing: 0.08em;
+        }
+
+        .grade-acc-chevron {
+            width: 28px; height: 28px; border: 1px solid var(--line);
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0; transition: border-color 0.3s, transform 0.0s;
+        }
+        .grade-acc-chevron svg { width: 11px; height: 11px; transition: transform 0.4s cubic-bezier(0.4,0,0.2,1); }
+        .grade-acc-item.open .grade-acc-chevron svg { transform: rotate(180deg); }
+        .gj.open .grade-acc-chevron { border-color: var(--c); }
+        .gm.open .grade-acc-chevron { border-color: var(--g); }
+        .gs.open .grade-acc-chevron { border-color: #ff4757; }
+
+        /* Smooth body expand */
+        .grade-acc-body {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.42s cubic-bezier(0.4,0,0.2,1),
+                        opacity 0.35s ease;
+            opacity: 0;
+        }
+        .grade-acc-body > div { overflow: hidden; }
+        .grade-acc-item.open .grade-acc-body {
+            grid-template-rows: 1fr;
+            opacity: 1;
+        }
+
+        .grade-acc-body-inner {
+            padding: 0 1.8rem 1.8rem;
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 0.4rem 2rem;
+        }
+
+        .grade-acc-skill {
+            display: flex; align-items: flex-start; gap: 0.65rem;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            font-size: 0.9rem; color: var(--muted);
+            line-height: 1.4;
+        }
+        .grade-acc-skill:last-child { border: none; }
+        .grade-acc-skill::before {
+            content: '▸'; font-size: 0.55rem;
+            flex-shrink: 0; margin-top: 0.25rem;
+            transition: color 0.2s;
+        }
+        .gj.open .grade-acc-skill::before { color: var(--c); }
+        .gm.open .grade-acc-skill::before { color: var(--g); }
+        .gs.open .grade-acc-skill::before { color: #ff4757; }
+
+        .grade-acc-bar {
+            height: 2px; margin: 0 1.8rem 1.8rem;
+        }
+        .gj .grade-acc-bar { background: linear-gradient(90deg, var(--c), transparent); }
+        .gm .grade-acc-bar { background: linear-gradient(90deg, var(--g), transparent); }
+        .gs .grade-acc-bar { background: linear-gradient(90deg, #ff4757, transparent); }
         .hire-steps { display: flex; flex-direction: column; gap: 3px; margin-bottom: 2.5rem; }
         .hire-step { display: flex; gap: 0; }
         .hire-step-num {
@@ -408,35 +674,123 @@
             padding: 1rem 1.2rem; display: flex; align-items: center;
             flex-shrink: 0; width: 56px; justify-content: center;
         }
-        .hire-step-body {
-            flex: 1; background: rgba(0,0,0,0.2);
-            border: 1px solid var(--line); padding: 1rem 1.4rem;
-        }
+        .hire-step-body { flex: 1; background: rgba(0,0,0,0.2); border: 1px solid var(--line); padding: 1rem 1.4rem; }
         .hire-step-title { font-family: 'Space Mono', monospace; font-size: 0.68rem; letter-spacing: 0.15em; color: var(--g); margin-bottom: 0.25rem; text-transform: uppercase; }
         .hire-step-desc { font-size: 0.88rem; color: var(--muted); }
 
         /* Карточка сотрудника */
-        .employee-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .form-panel { border: 1px solid var(--line); padding: 2.5rem; position: relative; overflow: hidden; max-width: 900px; }
+        .form-panel::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--g), var(--c)); }
+        .form-panel-title { font-size: 1.3rem; font-weight: 800; margin-bottom: 0.4rem; }
+        .form-panel-sub { font-size: 0.82rem; color: var(--muted); margin-bottom: 2rem; font-family: 'Space Mono', monospace; }
 
-        /* Print кнопка */
-        .docs-btn-row { display: flex; gap: 1rem; margin-top: 3rem; }
+        /* Договор — увеличенный текст */
+        #dp-contract .docs-field input,
+        #dp-contract .docs-field textarea,
+        #dp-contract .docs-field select {
+            font-size: 1.08rem;
+            line-height: 1.6;
+        }
+        #dp-contract .docs-field label {
+            font-size: 0.68rem;
+            letter-spacing: 0.22em;
+        }
+        #dp-contract .docs-field {
+            padding: 1.3rem 1.5rem;
+        }
+        #dp-contract .docs-field textarea {
+            min-height: 120px;
+        }
+        .docs-table th {
+            font-size: 0.7rem;
+            padding: 1rem 1.4rem;
+            letter-spacing: 0.18em;
+        }
+        .docs-table td {
+            font-size: 1rem;
+            padding: 1.1rem 1.4rem;
+            line-height: 1.65;
+            color: #c0c0d0;
+        }
+        .docs-table td:first-child {
+            font-size: 0.7rem;
+            width: 200px;
+        }
+        #dp-contract .base-fields-title {
+            font-size: 0.72rem;
+            letter-spacing: 0.28em;
+            margin-bottom: 1.2rem;
+        }
+        #dp-contract .form-panel-title {
+            font-size: 1.7rem;
+        }
+        #dp-contract .form-panel-sub {
+            font-size: 0.88rem;
+        }
+
+        /* ТЗ — выбранные услуги пустой стейт */
+        .no-service-hint {
+            padding: 3rem 2rem; text-align: center;
+            border: 1px dashed rgba(255,255,255,0.07);
+            color: var(--muted);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.72rem; letter-spacing: 0.15em;
+        }
+        .no-service-hint svg { margin: 0 auto 1rem; display: block; opacity: 0.3; }
+
+        /* Submit button */
+        .submit-btn {
+            padding: 1rem 2.8rem; background: transparent;
+            border: 1px solid var(--g); color: var(--g);
+            font-family: 'Space Mono', monospace; font-size: 0.8rem; font-weight: 700;
+            letter-spacing: 0.15em; text-transform: uppercase;
+            cursor: pointer; position: relative; overflow: hidden; transition: color 0.3s;
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+        }
+        .submit-btn::before {
+            content: ''; position: absolute; inset: 0;
+            background: var(--g); transform: scaleX(0); transform-origin: left; transition: transform 0.3s;
+        }
+        .submit-btn span { position: relative; z-index: 1; }
+        .submit-btn:hover { color: #000; }
+        .submit-btn:hover::before { transform: scaleX(1); }
+        .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        /* Overlay & Success */
+        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 9997; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+        .overlay.show { opacity:1; pointer-events:all; }
+        .success-msg { position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%) scale(0.85); background: var(--card); border: 1px solid var(--g); padding: 3rem 4rem; text-align: center; z-index: 9998; opacity: 0; pointer-events: none; transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1); }
+        .success-msg.show { opacity:1; pointer-events:all; transform: translate(-50%,-50%) scale(1); }
+        .success-msg h2 { font-size: 1.6rem; font-weight: 800; color: var(--g); margin-bottom: 0.5rem; }
+        .success-msg p { color: var(--muted); }
+
+        footer { padding: 3rem 4rem; border-top: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; }
+        footer .logo-text { font-size: 0.9rem; }
+        footer p { font-family: 'Space Mono', monospace; font-size: 0.68rem; color: var(--muted); letter-spacing: 0.1em; }
+        .loader { position: fixed; inset: 0; background: var(--bg); z-index: 10001; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 1.5rem; transition: opacity 0.6s, visibility 0.6s; }
+        .loader.hidden { opacity:0; visibility:hidden; }
+        .loader-ring { width: 64px; height: 64px; border: 1px solid rgba(0,255,136,0.2); border-top-color: var(--g); border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .loader-text { font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--muted); letter-spacing: 0.3em; text-transform: uppercase; }
 
         @media (max-width: 900px) {
             nav { padding: 1.2rem 2rem; } .nav-links { gap: 1.5rem; }
             section { padding: 5rem 2rem; } .hero { padding: 0 2rem; }
             .skills-layout { grid-template-columns: 1fr; }
-            .forms-grid { grid-template-columns: 1fr; }
             footer { padding: 2rem; flex-direction: column; gap: 1rem; text-align: center; }
+            .doc-mode-select { grid-template-columns: 1fr; }
             .docs-grid.cols2, .docs-grid.cols3 { grid-template-columns: 1fr; }
             .grade-grid { grid-template-columns: 1fr; }
-            .employee-grid { grid-template-columns: 1fr; }
+            .doc-progress { flex-direction: column; }
+            .doc-progress-step { border-right: none; border-bottom: 1px solid var(--line); }
+            .doc-progress-step:last-child { border-bottom: none; }
         }
         @media (max-width: 600px) {
             .nav-links { gap: 1rem; } .nav-links a { font-size: 0.7rem; }
             .hero h1 { font-size: 3.5rem; } .skill-cards { grid-template-columns: 1fr; }
         }
         @media print {
-            nav, .docs-tabs, .docs-btn-row, #bg-canvas, body::after { display: none !important; }
+            nav, .doc-mode-select, .docs-actions, #bg-canvas, body::after { display: none !important; }
             .docs-panel { display: block !important; }
             body { background: #fff; color: #000; }
         }
@@ -455,7 +809,6 @@
         <li><a href="#team">Команда</a></li>
         <li><a href="#skills">Скиллы</a></li>
         <li><a href="#contact">Документы</a></li>
-        <li><a href="#dp-grades">Вступить</a></li>
     </ul>
 </nav>
 
@@ -465,7 +818,7 @@
         <div class="hero-tag">Элитная техническая сеть</div>
         <h1><span>THIN</span><span class="outline">LUCID</span><span>AGENCY</span></h1>
         <p class="hero-sub">Элитная сеть технических специалистов. Мы объединяем лучших разработчиков, дизайнеров и инженеров для создания решений завтрашнего дня.</p>
-        <div class="hero-cta"><a href="#team" class="btn-primary">Узнать больше</a><a href="#join" class="btn-ghost">Вступить</a></div>
+        <div class="hero-cta"><a href="#team" class="btn-primary">Узнать больше</a><a href="#contact" class="btn-ghost">Документы</a></div>
     </div>
     <div class="hero-scroll-hint"><span class="scroll-label">Вниз</span><div class="scroll-line"></div></div>
 </section>
@@ -497,7 +850,6 @@
                     <div class="skill-icon-wrap"><svg width="34" height="34" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="5" fill="#0d1117"/><path d="M8 20c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="#00d4ff" stroke-width="1.4" fill="none"/><rect x="14" y="20" width="4" height="6" rx="1" fill="#00ff88"/><circle cx="16" cy="10" r="2.5" fill="#00d4ff" opacity="0.7"/><line x1="9" y1="26" x2="23" y2="26" stroke="#00d4ff" stroke-width="1.2" stroke-linecap="round"/></svg><span>UI/UX</span></div>
                     <div class="skill-icon-wrap"><svg width="34" height="34" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="5" fill="#0d1117"/><rect x="6" y="8" width="8" height="8" rx="1.5" fill="#00ff88" opacity="0.8"/><rect x="18" y="8" width="8" height="8" rx="1.5" fill="#00d4ff" opacity="0.8"/><rect x="6" y="18" width="8" height="8" rx="1.5" fill="#00d4ff" opacity="0.6"/><rect x="18" y="18" width="8" height="8" rx="1.5" fill="#00ff88" opacity="0.4"/></svg><span>Figma</span></div>
                     <div class="skill-icon-wrap"><svg width="34" height="34" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="5" fill="#0d1117"/><path d="M5 10h22M5 16h14M5 22h18" stroke="#00ff88" stroke-width="1.5" stroke-linecap="round"/><circle cx="23" cy="22" r="3" stroke="#00d4ff" stroke-width="1.3"/><line x1="25.2" y1="24.2" x2="27" y2="26" stroke="#00d4ff" stroke-width="1.3" stroke-linecap="round"/></svg><span>PM</span></div>
-                    <div class="skill-icon-wrap"><svg width="34" height="34" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="5" fill="#0d1117"/><circle cx="16" cy="12" r="5" stroke="#00d4ff" stroke-width="1.3"/><path d="M6 26c0-4.4 4.5-8 10-8s10 3.6 10 8" stroke="#00d4ff" stroke-width="1.3" stroke-linecap="round" fill="none"/></svg><span>Бренд</span></div>
                 </div>
             </div>
             <div class="team-card"><div class="card-num">003</div><h3>Дизайн</h3><p class="role">Дизайн</p><p>Креативные умы, превращающие идеи в визуальные шедевры.</p></div>
@@ -535,137 +887,320 @@
     </div>
 </section>
 
-<!-- ═══ ДОКУМЕНТЫ (ТЗ / Договор / Грейды) ═══ -->
+<!-- ═══ ДОКУМЕНТЫ ═══ -->
 <section id="contact">
     <div class="container">
         <div class="section-label">03 / Документы</div>
-        <h2 class="section-title">Оформить заказ &amp; <span class="accent">Вступить в команду</span></h2>
+        <h2 class="section-title">Работа с <span class="accent">агентством</span></h2>
 
-        <div class="docs-tabs">
-            <button class="docs-tab active" onclick="docsTab('tz',this)">01 / ТЗ</button>
-            <button class="docs-tab" onclick="docsTab('contract',this)">02 / Договор</button>
-            <button class="docs-tab" onclick="docsTab('grades',this)">03 / Грейды</button>
+        <!-- Выбор режима -->
+        <div class="doc-mode-select">
+            <button class="doc-mode-btn active" onclick="switchMode('tz', this)">
+                <div class="doc-mode-num">01 / Заказчик</div>
+                <div class="doc-mode-title">Техническое задание</div>
+                <div class="doc-mode-desc">Оформите заказ — укажите только нужные услуги</div>
+                <span class="doc-mode-arrow">→</span>
+            </button>
+            <button class="doc-mode-btn" onclick="switchMode('contract', this)">
+                <div class="doc-mode-num">02 / Договор</div>
+                <div class="doc-mode-title">Договор услуг</div>
+                <div class="doc-mode-desc">Реквизиты, условия, подписи</div>
+                <span class="doc-mode-arrow">→</span>
+            </button>
+            <button class="doc-mode-btn" onclick="switchMode('grades', this)">
+                <div class="doc-mode-num">03 / Команда</div>
+                <div class="doc-mode-title">Грейды и найм</div>
+                <div class="doc-mode-desc">Требования и процедура вступления</div>
+                <span class="doc-mode-arrow">→</span>
+            </button>
         </div>
 
         <!-- ─── ТЗ ─── -->
         <div class="docs-panel active" id="dp-tz">
-            <div class="form-panel" style="max-width:900px;">
-                <div class="form-panel-title">Техническое задание</div>
-                <div class="form-panel-sub">Заполните для нового заказа — ответим в течение нескольких часов</div>
 
-                <div class="section-label" style="margin-top:0;">Стороны и проект</div>
+            <!-- Прогресс -->
+            <div class="doc-progress" id="tz-progress">
+                <div class="doc-progress-step active" id="prog-1">
+                    <div class="dp-num">1</div>
+                    <div class="dp-label">Контакт</div>
+                </div>
+                <div class="doc-progress-step" id="prog-2">
+                    <div class="dp-num">2</div>
+                    <div class="dp-label">Тип услуги</div>
+                </div>
+                <div class="doc-progress-step" id="prog-3">
+                    <div class="dp-num">3</div>
+                    <div class="dp-label">Детали</div>
+                </div>
+                <div class="doc-progress-step" id="prog-4">
+                    <div class="dp-num">4</div>
+                    <div class="dp-label">Условия</div>
+                </div>
+            </div>
+
+            <!-- Базовые поля -->
+            <div class="base-fields">
+                <div class="base-fields-title">Контактная информация</div>
                 <div class="docs-grid cols2">
-                    <div class="docs-field"><label>Клиент</label><input type="text" id="tz_client" placeholder="Название / ФИО"></div>
-                    <div class="docs-field"><label>Контактное лицо</label><input type="text" id="tz_contact_name" placeholder="Имя"></div>
-                    <div class="docs-field"><label>Telegram / Email</label><input type="text" id="tz_contact" placeholder="@username или email"></div>
-                    <div class="docs-field"><label>Название проекта</label><input type="text" id="tz_project" placeholder="Например: Редизайн лендинга"></div>
+                    <div class="docs-field">
+                        <label>Клиент / Компания</label>
+                        <input type="text" id="tz_client" placeholder="Название или ФИО">
+                    </div>
+                    <div class="docs-field">
+                        <label>Контактное лицо</label>
+                        <input type="text" id="tz_contact_name" placeholder="Имя">
+                    </div>
+                    <div class="docs-field">
+                        <label>Telegram / Email *</label>
+                        <input type="text" id="tz_contact" placeholder="@username или email">
+                    </div>
+                    <div class="docs-field">
+                        <label>Название проекта *</label>
+                        <input type="text" id="tz_project" placeholder="Например: Редизайн лендинга">
+                    </div>
                 </div>
+            </div>
 
-                <div class="section-label">Тип услуги</div>
-                <div class="docs-checks">
-                    <label class="docs-check"><input type="checkbox"><span class="chk"></span>Разработка</label>
-                    <label class="docs-check"><input type="checkbox"><span class="chk"></span>Пентест</label>
-                    <label class="docs-check"><input type="checkbox"><span class="chk"></span>Дизайн</label>
-                    <label class="docs-check"><input type="checkbox"><span class="chk"></span>VPN / Прокси</label>
-                    <label class="docs-check"><input type="checkbox"><span class="chk"></span>Боты</label>
+            <!-- Выбор услуги -->
+            <div class="service-picker">
+                <span class="service-picker-label">Выберите одну или несколько услуг — появятся нужные поля</span>
+                <div class="service-chips">
+                    <label class="service-chip" id="chip-dev">
+                        <input type="checkbox" onchange="toggleSection('dev-fields', this)">
+                        <span class="chip-ico">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><polyline points="5,5 2,8 5,11" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><polyline points="11,5 14,8 11,11" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><line x1="9.5" y1="4" x2="6.5" y2="12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                        </span>
+                        Разработка
+                    </label>
+                    <label class="service-chip" id="chip-pentest">
+                        <input type="checkbox" onchange="toggleSection('pentest-fields', this)">
+                        <span class="chip-ico">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1L2 3.5v4C2 11 4.8 14.2 8 15 11.2 14.2 14 11 14 7.5V3.5L8 1z" stroke="currentColor" stroke-width="1.3" fill="none"/><path d="M5.5 8l1.8 1.8L11 6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </span>
+                        Пентест
+                    </label>
+                    <label class="service-chip" id="chip-design">
+                        <input type="checkbox" onchange="toggleSection('design-fields', this)">
+                        <span class="chip-ico">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="7" r="4" stroke="currentColor" stroke-width="1.3"/><path d="M3 13c0-2.8 2.2-5 5-5s5 2.2 5 5" stroke="currentColor" stroke-width="1.3" fill="none"/></svg>
+                        </span>
+                        Дизайн
+                    </label>
+                    <label class="service-chip" id="chip-vpn">
+                        <input type="checkbox" onchange="toggleSection('vpn-fields', this)">
+                        <span class="chip-ico">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><ellipse cx="8" cy="8" rx="7" ry="7" stroke="currentColor" stroke-width="1.3"/><ellipse cx="8" cy="8" rx="7" ry="3" stroke="currentColor" stroke-width="1" opacity="0.7"/><line x1="1" y1="8" x2="15" y2="8" stroke="currentColor" stroke-width="1" opacity="0.5"/></svg>
+                        </span>
+                        VPN / Прокси
+                    </label>
+                    <label class="service-chip" id="chip-bots">
+                        <input type="checkbox" onchange="toggleSection('bots-fields', this)">
+                        <span class="chip-ico">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="3" y="4" width="10" height="8" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M6 13v2M10 13v2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="6" cy="7.5" r="1" fill="currentColor"/><circle cx="10" cy="7.5" r="1" fill="currentColor"/></svg>
+                        </span>
+                        Боты &amp; Автоматизация
+                    </label>
                 </div>
+            </div>
 
-                <div class="section-label">Описание задачи</div>
-                <div class="docs-grid">
-                    <div class="docs-field"><label>Краткое описание</label><textarea id="tz_desc" placeholder="Что нужно сделать? Цель проекта, контекст..."></textarea></div>
+            <!-- Заглушка если ничего не выбрано -->
+            <div class="no-service-hint" id="no-service-hint">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M16 4L4 10v6c0 8 5.4 13.9 12 15.5 6.6-1.6 12-7.5 12-15.5V10L16 4z" stroke="#555570" stroke-width="1.2"/><path d="M12 16l3 3 6-6" stroke="#555570" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Выберите тип услуги выше — появятся нужные поля
+            </div>
+
+            <!-- Разработка -->
+            <div class="field-section" id="dev-fields">
+                <div class="fs-header">
+                    <div class="fs-icon">
+                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><polyline points="5,5 2,9 5,13" stroke="#00d4ff" stroke-width="1.3" stroke-linecap="round"/><polyline points="13,5 16,9 13,13" stroke="#00d4ff" stroke-width="1.3" stroke-linecap="round"/><line x1="11" y1="4" x2="7" y2="14" stroke="#00ff88" stroke-width="1.2" stroke-linecap="round"/></svg>
+                    </div>
+                    <div>
+                        <div class="fs-title">Разработка</div>
+                        <div class="fs-desc">Технические детали проекта</div>
+                    </div>
                 </div>
-
-                <div class="section-label">Разработка</div>
+                <div class="docs-grid cols2" style="margin-bottom:1px">
+                    <div class="docs-field"><label>Описание задачи</label><textarea id="dev_desc" placeholder="Что нужно разработать? Цель, функционал..."></textarea></div>
+                    <div class="docs-field"><label>Стек технологий</label><input type="text" id="dev_stack" placeholder="React, Node.js, Python, PostgreSQL..."></div>
+                    <div class="docs-field">
+                        <label>Платформа</label>
+                        <select id="dev_platform"><option value="">— выбрать —</option><option>Web</option><option>Mobile (iOS/Android)</option><option>Desktop</option><option>API / Backend</option><option>Telegram Bot</option></select>
+                    </div>
+                    <div class="docs-field"><label>Интеграции</label><input type="text" id="dev_integrations" placeholder="Stripe, Telegram API, Google OAuth..."></div>
+                </div>
                 <div class="docs-grid cols2">
-                    <div class="docs-field"><label>Стек технологий</label><input type="text" placeholder="React, Node.js, Python..."></div>
-                    <div class="docs-field"><label>Платформа</label>
-                        <select><option value="">— выбрать —</option><option>Web</option><option>Mobile</option><option>Desktop</option><option>API</option></select>
-                    </div>
-                    <div class="docs-field"><label>Интеграции</label><input type="text" placeholder="Stripe, Telegram API..."></div>
-                    <div class="docs-field"><label>Репозиторий</label><input type="text" placeholder="GitHub / GitLab URL"></div>
+                    <div class="docs-field"><label>Репозиторий</label><input type="text" id="dev_repo" placeholder="GitHub / GitLab URL или пустой проект"></div>
+                    <div class="docs-field"><label>Примечания</label><input type="text" id="dev_notes" placeholder="Особые требования, ограничения..."></div>
                 </div>
+            </div>
 
-                <div class="section-label">Пентест</div>
+            <!-- Пентест -->
+            <div class="field-section" id="pentest-fields">
+                <div class="fs-header">
+                    <div class="fs-icon">
+                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 1L2 4v4C2 12.5 5 16.2 9 17.5 13 16.2 16 12.5 16 8V4L9 1z" stroke="#00d4ff" stroke-width="1.2" fill="none"/><path d="M6 9l2.2 2.2L13 7" stroke="#00ff88" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <div>
+                        <div class="fs-title">Пентест / Аудит</div>
+                        <div class="fs-desc">Параметры тестирования безопасности</div>
+                    </div>
+                </div>
+                <div class="docs-grid cols2" style="margin-bottom:1px">
+                    <div class="docs-field"><label>Scope — цели</label><input type="text" id="pt_scope" placeholder="Домен, IP, приложение, API..."></div>
+                    <div class="docs-field"><label>Out of Scope</label><input type="text" id="pt_oos" placeholder="Что исключить из проверки"></div>
+                    <div class="docs-field">
+                        <label>Тип тестирования</label>
+                        <select id="pt_type"><option value="">— выбрать —</option><option>Black Box</option><option>Grey Box</option><option>White Box</option></select>
+                    </div>
+                    <div class="docs-field">
+                        <label>Окружение</label>
+                        <select id="pt_env"><option value="">— выбрать —</option><option>Production</option><option>Staging</option><option>Dev / Sandbox</option></select>
+                    </div>
+                </div>
+                <div class="docs-grid cols1">
+                    <div class="docs-field"><label>Дополнительный контекст</label><textarea id="pt_context" placeholder="Используемые технологии, известные уязвимости, доступы..."></textarea></div>
+                </div>
+            </div>
+
+            <!-- Дизайн -->
+            <div class="field-section" id="design-fields">
+                <div class="fs-header">
+                    <div class="fs-icon">
+                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="8" r="5" stroke="#00d4ff" stroke-width="1.2"/><path d="M3 16c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="#00d4ff" stroke-width="1.2" fill="none"/></svg>
+                    </div>
+                    <div>
+                        <div class="fs-title">Дизайн</div>
+                        <div class="fs-desc">Визуальные и UX-параметры</div>
+                    </div>
+                </div>
+                <div class="docs-grid cols2" style="margin-bottom:1px">
+                    <div class="docs-field"><label>Задача</label><textarea id="des_task" placeholder="Что нужно разработать? UI Kit, редизайн, лого..."></textarea></div>
+                    <div class="docs-field">
+                        <label>Формат результата</label>
+                        <select id="des_format"><option value="">— выбрать —</option><option>Figma-файл</option><option>PNG / SVG</option><option>PDF брендбук</option><option>HTML/CSS вёрстка</option></select>
+                    </div>
+                    <div class="docs-field">
+                        <label>Бренд-гайдлайн</label>
+                        <select id="des_brand"><option value="">— выбрать —</option><option>Есть — пришлю</option><option>Нет — нужно создать</option><option>Частичный</option></select>
+                    </div>
+                    <div class="docs-field"><label>Кол-во экранов / элементов</label><input type="number" id="des_screens" placeholder="0" min="0"></div>
+                </div>
+                <div class="docs-grid cols1">
+                    <div class="docs-field"><label>Референсы / стиль</label><input type="text" id="des_refs" placeholder="Ссылки на проекты-ориентиры, Behance, Dribbble..."></div>
+                </div>
+            </div>
+
+            <!-- VPN / Прокси -->
+            <div class="field-section" id="vpn-fields">
+                <div class="fs-header">
+                    <div class="fs-icon">
+                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#00d4ff" stroke-width="1.2"/><ellipse cx="9" cy="9" rx="8" ry="3" stroke="#00d4ff" stroke-width="1" opacity="0.6"/><line x1="1" y1="9" x2="17" y2="9" stroke="#00d4ff" stroke-width="1" opacity="0.5"/></svg>
+                    </div>
+                    <div>
+                        <div class="fs-title">VPN / Прокси</div>
+                        <div class="fs-desc">Конфигурация приватного сервера</div>
+                    </div>
+                </div>
+                <div class="docs-grid cols2" style="margin-bottom:1px">
+                    <div class="docs-field">
+                        <label>Тип</label>
+                        <select id="vpn_type"><option value="">— выбрать —</option><option>VPN (WireGuard)</option><option>VPN (OpenVPN)</option><option>HTTP/SOCKS прокси</option><option>Residential прокси</option><option>Shadowsocks</option></select>
+                    </div>
+                    <div class="docs-field"><label>Локации</label><input type="text" id="vpn_loc" placeholder="Германия, Нидерланды, США..."></div>
+                    <div class="docs-field"><label>Кол-во пользователей</label><input type="number" id="vpn_users" placeholder="1" min="1"></div>
+                    <div class="docs-field">
+                        <label>Цель использования</label>
+                        <select id="vpn_goal"><option value="">— выбрать —</option><option>Приватность</option><option>Обход блокировок</option><option>Бизнес-инфраструктура</option><option>Разработка / Тестирование</option></select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Боты -->
+            <div class="field-section" id="bots-fields">
+                <div class="fs-header">
+                    <div class="fs-icon">
+                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="3" y="5" width="12" height="9" rx="2.5" stroke="#00d4ff" stroke-width="1.2"/><path d="M7 14v3M11 14v3" stroke="#00d4ff" stroke-width="1.2" stroke-linecap="round"/><circle cx="7" cy="9" r="1.2" fill="#00ff88"/><circle cx="11" cy="9" r="1.2" fill="#00ff88"/></svg>
+                    </div>
+                    <div>
+                        <div class="fs-title">Боты &amp; Автоматизация</div>
+                        <div class="fs-desc">Параметры бота или автоматизации</div>
+                    </div>
+                </div>
+                <div class="docs-grid cols2" style="margin-bottom:1px">
+                    <div class="docs-field">
+                        <label>Платформа</label>
+                        <select id="bot_platform"><option value="">— выбрать —</option><option>Telegram</option><option>Discord</option><option>Slack</option><option>WhatsApp</option><option>Веб-скрапинг</option><option>Другое</option></select>
+                    </div>
+                    <div class="docs-field"><label>Основной функционал</label><input type="text" id="bot_func" placeholder="Платёжный шлюз, CRM, рассылка..."></div>
+                </div>
+                <div class="docs-grid cols1">
+                    <div class="docs-field"><label>Описание автоматизации</label><textarea id="bot_desc" placeholder="Что должен делать бот? Какие процессы автоматизировать?"></textarea></div>
+                </div>
+            </div>
+
+            <!-- Общее: сроки и оплата -->
+            <div class="field-section" id="timeline-fields" style="display:block; margin-top: 2.5rem;">
+                <div class="base-fields-title">Сроки и оплата</div>
+                <div class="docs-grid cols3" style="margin-bottom:1px">
+                    <div class="docs-field"><label>Дата старта</label><input type="date" id="tz_start"></div>
+                    <div class="docs-field"><label>Дедлайн</label><input type="date" id="tz_deadline"></div>
+                    <div class="docs-field"><label>Бюджет</label><input type="text" id="tz_budget" placeholder="Сумма + валюта"></div>
+                </div>
                 <div class="docs-grid cols2">
-                    <div class="docs-field"><label>Scope (цели)</label><input type="text" placeholder="Домен, IP, приложение..."></div>
-                    <div class="docs-field"><label>Out of scope</label><input type="text" placeholder="Что исключить"></div>
-                    <div class="docs-field"><label>Тип</label>
-                        <select><option value="">— выбрать —</option><option>Black Box</option><option>Grey Box</option><option>White Box</option></select>
+                    <div class="docs-field">
+                        <label>Схема оплаты</label>
+                        <select id="tz_payment"><option>50% / 50%</option><option>100% предоплата</option><option>По этапам</option></select>
                     </div>
-                    <div class="docs-field"><label>Окружение</label>
-                        <select><option value="">— выбрать —</option><option>Production</option><option>Staging</option><option>Dev</option></select>
-                    </div>
+                    <div class="docs-field"><label>Способ оплаты</label><input type="text" id="tz_pay_method" placeholder="Карта, крипто, перевод..."></div>
                 </div>
+            </div>
 
-                <div class="section-label">Дизайн</div>
-                <div class="docs-grid cols3">
-                    <div class="docs-field"><label>Формат результата</label>
-                        <select><option value="">— выбрать —</option><option>Figma</option><option>PNG/SVG</option><option>PDF</option></select>
-                    </div>
-                    <div class="docs-field"><label>Бренд-гайдлайн</label>
-                        <select><option value="">— выбрать —</option><option>Есть</option><option>Нет</option><option>Нужно создать</option></select>
-                    </div>
-                    <div class="docs-field"><label>Кол-во экранов</label><input type="number" placeholder="0"></div>
-                </div>
-
-                <div class="section-label">Сроки и оплата</div>
-                <div class="docs-grid cols3">
-                    <div class="docs-field"><label>Дата старта</label><input type="date"></div>
-                    <div class="docs-field"><label>Дедлайн</label><input type="date"></div>
-                    <div class="docs-field"><label>Бюджет</label><input type="text" placeholder="Сумма + валюта"></div>
-                </div>
-                <div class="docs-grid cols2">
-                    <div class="docs-field"><label>Схема оплаты</label>
-                        <select><option>50% / 50%</option><option>100% предоплата</option><option>По этапам</option></select>
-                    </div>
-                    <div class="docs-field"><label>Способ оплаты</label><input type="text" placeholder="Карта, крипто..."></div>
-                </div>
-
-                <div class="docs-btn-row">
-                    <button class="btn-primary" onclick="submitTZDoc()">Отправить ТЗ</button>
-                    <button class="btn-ghost" onclick="clearDocs('dp-tz')">Сбросить</button>
-                </div>
+            <div class="docs-actions">
+                <button class="submit-btn" onclick="submitTZDoc()"><span>Отправить заявку</span></button>
+                <button class="btn-ghost" onclick="clearTZ()">Сбросить</button>
+                <span class="hint">* Обязательные: контакт и проект</span>
             </div>
         </div>
 
         <!-- ─── ДОГОВОР ─── -->
         <div class="docs-panel" id="dp-contract">
-            <div class="form-panel" style="max-width:900px;">
+            <div class="form-panel">
                 <div class="form-panel-title">Договор на оказание услуг</div>
                 <div class="form-panel-sub">Заполните данные — проверьте реквизиты перед подписанием</div>
 
-                <div class="section-label">Реквизиты</div>
-                <div class="docs-grid cols2">
+                <div class="base-fields-title">Реквизиты</div>
+                <div class="docs-grid cols2" style="margin-bottom:2.5rem">
                     <div class="docs-field"><label>Номер договора</label><input type="text" placeholder="TL-2025-001"></div>
                     <div class="docs-field"><label>Дата договора</label><input type="date"></div>
-                    <div class="docs-field"><label>Исполнитель</label><input type="text" placeholder="Thin Lucid Agency"></div>
+                    <div class="docs-field"><label>Исполнитель</label><input type="text" value="Thin Lucid Agency"></div>
                     <div class="docs-field"><label>ИНН / Рег. номер</label><input type="text" placeholder="00000000000"></div>
                     <div class="docs-field"><label>Заказчик</label><input type="text" placeholder="Название / ФИО"></div>
                     <div class="docs-field"><label>ИНН заказчика</label><input type="text" placeholder="00000000000"></div>
                 </div>
 
-                <div class="section-label">Предмет</div>
-                <div class="docs-grid">
+                <div class="base-fields-title">Предмет договора</div>
+                <div class="docs-grid cols1" style="margin-bottom:2.5rem">
                     <div class="docs-field"><label>Описание услуг</label><textarea placeholder="Исполнитель обязуется оказать..."></textarea></div>
                     <div class="docs-field"><label>Результат (deliverable)</label><input type="text" placeholder="Что именно передаётся заказчику"></div>
                 </div>
 
-                <div class="section-label">Финансы</div>
-                <div class="docs-grid cols2">
+                <div class="base-fields-title">Финансы</div>
+                <div class="docs-grid cols2" style="margin-bottom:2.5rem">
                     <div class="docs-field"><label>Общая стоимость</label><input type="text" placeholder="Сумма прописью и цифрами"></div>
                     <div class="docs-field"><label>Предоплата</label><input type="text" placeholder="50% = ..."></div>
                     <div class="docs-field"><label>Финальная оплата</label><input type="text" placeholder="50% = ..."></div>
                     <div class="docs-field"><label>Способ оплаты</label><input type="text" placeholder="Карта / Перевод / Крипто"></div>
                 </div>
 
-                <div class="section-label">Сроки</div>
-                <div class="docs-grid cols2">
+                <div class="base-fields-title">Сроки</div>
+                <div class="docs-grid cols2" style="margin-bottom:2.5rem">
                     <div class="docs-field"><label>Дата начала работ</label><input type="date"></div>
                     <div class="docs-field"><label>Дата завершения</label><input type="date"></div>
                 </div>
 
-                <div class="section-label">Стандартные условия</div>
-                <table class="docs-table">
+                <div class="base-fields-title">Стандартные условия</div>
+                <table class="docs-table" style="margin-bottom:2.5rem">
                     <thead><tr><th>Пункт</th><th>Условие</th></tr></thead>
                     <tbody>
                         <tr><td>Конфиденциальность</td><td>Не разглашать данные 3 года. Портфолио — с разрешения заказчика.</td></tr>
@@ -676,15 +1211,15 @@
                     </tbody>
                 </table>
 
-                <div class="section-label">Подписи</div>
+                <div class="base-fields-title">Подписи</div>
                 <div class="docs-grid cols2">
                     <div class="docs-field"><label>Подпись исполнителя / дата</label><input type="text" placeholder="_________________ / __.__.____"></div>
                     <div class="docs-field"><label>Подпись заказчика / дата</label><input type="text" placeholder="_________________ / __.__.____"></div>
                 </div>
 
-                <div class="docs-btn-row">
-                    <button class="btn-primary" onclick="window.print()">Распечатать</button>
-                    <button class="btn-ghost" onclick="clearDocs('dp-contract')">Сбросить</button>
+                <div class="docs-actions">
+                    <button class="submit-btn" onclick="window.print()"><span>Распечатать</span></button>
+                    <button class="btn-ghost" onclick="clearPanel('dp-contract')">Сбросить</button>
                 </div>
             </div>
         </div>
@@ -692,64 +1227,248 @@
         <!-- ─── ГРЕЙДЫ ─── -->
         <div class="docs-panel" id="dp-grades">
 
-            <div class="section-label">Разработка</div>
-            <div class="grade-grid">
-                <div class="grade-card gj"><div class="grade-bg-letter">J</div><div class="grade-badge">Junior</div><ul class="grade-list"><li>Основной язык (JS / Python / PHP)</li><li>Git базовые команды</li><li>HTML / CSS базово</li><li>Понимание REST API</li><li>Работает под надзором</li></ul></div>
-                <div class="grade-card gm"><div class="grade-bg-letter">M</div><div class="grade-badge">Middle</div><ul class="grade-list"><li>Уверенный стек (фронт / бек)</li><li>SQL / NoSQL базы данных</li><li>Docker, CI/CD базово</li><li>Написание тестов</li><li>Ведёт модуль самостоятельно</li></ul></div>
-                <div class="grade-card gs"><div class="grade-bg-letter">S</div><div class="grade-badge">Senior</div><ul class="grade-list"><li>Архитектурные решения</li><li>Полный стек + DevOps</li><li>Security-first подход</li><li>Code review, менторство</li><li>Ведёт проект целиком</li></ul></div>
+            <div class="base-fields-title">Разработка</div>
+            <div class="grade-accordion">
+                <div class="grade-acc-item gj">
+                    <button class="grade-acc-trigger" onclick="toggleGradeAcc(this)">
+                        <span class="grade-acc-badge">Junior</span>
+                        <span class="grade-acc-name">Junior Developer</span>
+                        <span class="grade-acc-meta">5 критериев</span>
+                        <span class="grade-acc-chevron"><svg viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.6"><polyline points="2,3.5 5.5,7.5 9,3.5"/></svg></span>
+                    </button>
+                    <div class="grade-acc-body"><div>
+                        <div class="grade-acc-bar"></div>
+                        <div class="grade-acc-body-inner">
+                            <div class="grade-acc-skill">Основной язык (JS / Python / PHP)</div>
+                            <div class="grade-acc-skill">Git базовые команды</div>
+                            <div class="grade-acc-skill">HTML / CSS базово</div>
+                            <div class="grade-acc-skill">Понимание REST API</div>
+                            <div class="grade-acc-skill">Работает под надзором</div>
+                        </div>
+                    </div></div>
+                </div>
+                <div class="grade-acc-item gm">
+                    <button class="grade-acc-trigger" onclick="toggleGradeAcc(this)">
+                        <span class="grade-acc-badge">Middle</span>
+                        <span class="grade-acc-name">Middle Developer</span>
+                        <span class="grade-acc-meta">5 критериев</span>
+                        <span class="grade-acc-chevron"><svg viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.6"><polyline points="2,3.5 5.5,7.5 9,3.5"/></svg></span>
+                    </button>
+                    <div class="grade-acc-body"><div>
+                        <div class="grade-acc-bar"></div>
+                        <div class="grade-acc-body-inner">
+                            <div class="grade-acc-skill">Уверенный стек (фронт / бек)</div>
+                            <div class="grade-acc-skill">SQL / NoSQL базы данных</div>
+                            <div class="grade-acc-skill">Docker, CI/CD базово</div>
+                            <div class="grade-acc-skill">Написание тестов</div>
+                            <div class="grade-acc-skill">Ведёт модуль самостоятельно</div>
+                        </div>
+                    </div></div>
+                </div>
+                <div class="grade-acc-item gs">
+                    <button class="grade-acc-trigger" onclick="toggleGradeAcc(this)">
+                        <span class="grade-acc-badge">Senior</span>
+                        <span class="grade-acc-name">Senior Developer</span>
+                        <span class="grade-acc-meta">5 критериев</span>
+                        <span class="grade-acc-chevron"><svg viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.6"><polyline points="2,3.5 5.5,7.5 9,3.5"/></svg></span>
+                    </button>
+                    <div class="grade-acc-body"><div>
+                        <div class="grade-acc-bar"></div>
+                        <div class="grade-acc-body-inner">
+                            <div class="grade-acc-skill">Архитектурные решения</div>
+                            <div class="grade-acc-skill">Полный стек + DevOps</div>
+                            <div class="grade-acc-skill">Security-first подход</div>
+                            <div class="grade-acc-skill">Code review, менторство</div>
+                            <div class="grade-acc-skill">Ведёт проект целиком</div>
+                        </div>
+                    </div></div>
+                </div>
             </div>
 
-            <div class="section-label">Пентест</div>
-            <div class="grade-grid">
-                <div class="grade-card gj"><div class="grade-bg-letter">J</div><div class="grade-badge">Junior</div><ul class="grade-list"><li>Kali Linux, Nmap, Burp Suite</li><li>OWASP Top 10 базово</li><li>CTF: HackTheBox / OverTheWire</li><li>Разведка под надзором</li></ul></div>
-                <div class="grade-card gm"><div class="grade-bg-letter">M</div><div class="grade-badge">Middle</div><ul class="grade-list"><li>Web, Network, Social Engineering</li><li>Metasploit, SQLmap, Nikto</li><li>Написание отчётов</li><li>Web pentest самостоятельно</li></ul></div>
-                <div class="grade-card gs"><div class="grade-bg-letter">S</div><div class="grade-badge">Senior</div><ul class="grade-list"><li>Red Team операции</li><li>OSCP / CEH / eWPT</li><li>Кастомные эксплойты, bypass WAF</li><li>Remediation-консультации</li></ul></div>
+            <div class="base-fields-title">Пентест</div>
+            <div class="grade-accordion">
+                <div class="grade-acc-item gj">
+                    <button class="grade-acc-trigger" onclick="toggleGradeAcc(this)">
+                        <span class="grade-acc-badge">Junior</span>
+                        <span class="grade-acc-name">Junior Pentester</span>
+                        <span class="grade-acc-meta">4 критерия</span>
+                        <span class="grade-acc-chevron"><svg viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.6"><polyline points="2,3.5 5.5,7.5 9,3.5"/></svg></span>
+                    </button>
+                    <div class="grade-acc-body"><div>
+                        <div class="grade-acc-bar"></div>
+                        <div class="grade-acc-body-inner">
+                            <div class="grade-acc-skill">Kali Linux, Nmap, Burp Suite</div>
+                            <div class="grade-acc-skill">OWASP Top 10 базово</div>
+                            <div class="grade-acc-skill">CTF: HackTheBox / OverTheWire</div>
+                            <div class="grade-acc-skill">Разведка под надзором</div>
+                        </div>
+                    </div></div>
+                </div>
+                <div class="grade-acc-item gm">
+                    <button class="grade-acc-trigger" onclick="toggleGradeAcc(this)">
+                        <span class="grade-acc-badge">Middle</span>
+                        <span class="grade-acc-name">Middle Pentester</span>
+                        <span class="grade-acc-meta">4 критерия</span>
+                        <span class="grade-acc-chevron"><svg viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.6"><polyline points="2,3.5 5.5,7.5 9,3.5"/></svg></span>
+                    </button>
+                    <div class="grade-acc-body"><div>
+                        <div class="grade-acc-bar"></div>
+                        <div class="grade-acc-body-inner">
+                            <div class="grade-acc-skill">Web, Network, Social Engineering</div>
+                            <div class="grade-acc-skill">Metasploit, SQLmap, Nikto</div>
+                            <div class="grade-acc-skill">Написание отчётов</div>
+                            <div class="grade-acc-skill">Web pentest самостоятельно</div>
+                        </div>
+                    </div></div>
+                </div>
+                <div class="grade-acc-item gs">
+                    <button class="grade-acc-trigger" onclick="toggleGradeAcc(this)">
+                        <span class="grade-acc-badge">Senior</span>
+                        <span class="grade-acc-name">Senior Pentester</span>
+                        <span class="grade-acc-meta">4 критерия</span>
+                        <span class="grade-acc-chevron"><svg viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.6"><polyline points="2,3.5 5.5,7.5 9,3.5"/></svg></span>
+                    </button>
+                    <div class="grade-acc-body"><div>
+                        <div class="grade-acc-bar"></div>
+                        <div class="grade-acc-body-inner">
+                            <div class="grade-acc-skill">Red Team операции</div>
+                            <div class="grade-acc-skill">OSCP / CEH / eWPT</div>
+                            <div class="grade-acc-skill">Кастомные эксплойты, bypass WAF</div>
+                            <div class="grade-acc-skill">Remediation-консультации</div>
+                        </div>
+                    </div></div>
+                </div>
             </div>
 
-            <div class="section-label">Дизайн</div>
-            <div class="grade-grid">
-                <div class="grade-card gj"><div class="grade-bg-letter">J</div><div class="grade-badge">Junior</div><ul class="grade-list"><li>Figma базово, Adobe XD</li><li>Типографика, сетка, цвет</li><li>Баннеры, иконки, правки</li><li>Работает по гайдлайнам</li></ul></div>
-                <div class="grade-card gm"><div class="grade-bg-letter">M</div><div class="grade-badge">Middle</div><ul class="grade-list"><li>Figma компоненты, автолейаут</li><li>UX-принципы, прототипы</li><li>Design Systems</li><li>UI Kit, экраны приложения</li></ul></div>
-                <div class="grade-card gs"><div class="grade-bg-letter">S</div><div class="grade-badge">Senior</div><ul class="grade-list"><li>Branding, Motion, UX Research</li><li>Figma Variables, dev handoff</li><li>Стратегическое мышление</li><li>Полный дизайн продукта</li></ul></div>
+            <div class="base-fields-title">Дизайн</div>
+            <div class="grade-accordion">
+                <div class="grade-acc-item gj">
+                    <button class="grade-acc-trigger" onclick="toggleGradeAcc(this)">
+                        <span class="grade-acc-badge">Junior</span>
+                        <span class="grade-acc-name">Junior Designer</span>
+                        <span class="grade-acc-meta">4 критерия</span>
+                        <span class="grade-acc-chevron"><svg viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.6"><polyline points="2,3.5 5.5,7.5 9,3.5"/></svg></span>
+                    </button>
+                    <div class="grade-acc-body"><div>
+                        <div class="grade-acc-bar"></div>
+                        <div class="grade-acc-body-inner">
+                            <div class="grade-acc-skill">Figma базово, Adobe XD</div>
+                            <div class="grade-acc-skill">Типографика, сетка, цвет</div>
+                            <div class="grade-acc-skill">Баннеры, иконки, правки</div>
+                            <div class="grade-acc-skill">Работает по гайдлайнам</div>
+                        </div>
+                    </div></div>
+                </div>
+                <div class="grade-acc-item gm">
+                    <button class="grade-acc-trigger" onclick="toggleGradeAcc(this)">
+                        <span class="grade-acc-badge">Middle</span>
+                        <span class="grade-acc-name">Middle Designer</span>
+                        <span class="grade-acc-meta">4 критерия</span>
+                        <span class="grade-acc-chevron"><svg viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.6"><polyline points="2,3.5 5.5,7.5 9,3.5"/></svg></span>
+                    </button>
+                    <div class="grade-acc-body"><div>
+                        <div class="grade-acc-bar"></div>
+                        <div class="grade-acc-body-inner">
+                            <div class="grade-acc-skill">Figma компоненты, автолейаут</div>
+                            <div class="grade-acc-skill">UX-принципы, прототипы</div>
+                            <div class="grade-acc-skill">Design Systems</div>
+                            <div class="grade-acc-skill">UI Kit, экраны приложения</div>
+                        </div>
+                    </div></div>
+                </div>
+                <div class="grade-acc-item gs">
+                    <button class="grade-acc-trigger" onclick="toggleGradeAcc(this)">
+                        <span class="grade-acc-badge">Senior</span>
+                        <span class="grade-acc-name">Senior Designer</span>
+                        <span class="grade-acc-meta">4 критерия</span>
+                        <span class="grade-acc-chevron"><svg viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.6"><polyline points="2,3.5 5.5,7.5 9,3.5"/></svg></span>
+                    </button>
+                    <div class="grade-acc-body"><div>
+                        <div class="grade-acc-bar"></div>
+                        <div class="grade-acc-body-inner">
+                            <div class="grade-acc-skill">Branding, Motion, UX Research</div>
+                            <div class="grade-acc-skill">Figma Variables, dev handoff</div>
+                            <div class="grade-acc-skill">Стратегическое мышление</div>
+                            <div class="grade-acc-skill">Полный дизайн продукта</div>
+                        </div>
+                    </div></div>
+                </div>
             </div>
 
-            <div class="section-label">Процедура найма</div>
+            <div class="base-fields-title">Процедура найма</div>
             <div class="hire-steps">
-                <div class="hire-step"><div class="hire-step-num">01</div><div class="hire-step-body"><div class="hire-step-title">Тестовое задание</div><div class="hire-step-desc">Практическая задача по направлению. Время выполнения: 60–90 минут.</div></div></div>
+                <div class="hire-step"><div class="hire-step-num">01</div><div class="hire-step-body"><div class="hire-step-title">Тестовое задание</div><div class="hire-step-desc">Практическая задача по направлению. Время: 60–90 минут.</div></div></div>
                 <div class="hire-step"><div class="hire-step-num">02</div><div class="hire-step-body"><div class="hire-step-title">Технический разбор</div><div class="hire-step-desc">Разбор решения с ведущим специалистом.</div></div></div>
                 <div class="hire-step"><div class="hire-step-num">03</div><div class="hire-step-body"><div class="hire-step-title">Портфолио / GitHub</div><div class="hire-step-desc">Реальные проекты из опыта. GitHub / Behance / сертификаты.</div></div></div>
                 <div class="hire-step"><div class="hire-step-num">04</div><div class="hire-step-body"><div class="hire-step-title">Soft Skills</div><div class="hire-step-desc">Коммуникация, дедлайны, ответственность.</div></div></div>
                 <div class="hire-step"><div class="hire-step-num">05</div><div class="hire-step-body"><div class="hire-step-title">Итоговый грейд</div><div class="hire-step-desc">Присваивается J / M / S с условиями сотрудничества.</div></div></div>
             </div>
 
-            <div class="section-label">Карточка сотрудника</div>
-            <div class="form-panel" style="max-width:900px;">
-                <div class="form-panel-sub">Заполнять при найме</div>
+            <div class="base-fields-title">Карточка сотрудника</div>
+            <div class="form-panel">
+                <div class="form-panel-sub">Заполняется при найме</div>
                 <div class="docs-grid cols2">
                     <div class="docs-field"><label>Имя / Псевдоним</label><input type="text" placeholder="Никнейм или имя"></div>
                     <div class="docs-field"><label>Telegram</label><input type="text" placeholder="@username"></div>
-                    <div class="docs-field"><label>Направление</label>
-                        <select><option value="">— выбрать —</option><option>Разработка</option><option>Пентест</option><option>Дизайн</option></select>
+
+                    <div class="docs-field">
+                        <label>Направление</label>
+                        <div class="cselect-wrap" id="cs-dir">
+                            <div class="cselect-trigger placeholder" onclick="csToggle('cs-dir')">
+                                <span class="cselect-val">— выбрать —</span>
+                                <span class="cselect-arrow"><svg viewBox="0 0 12 12"><polyline points="2,4 6,8 10,4"/></svg></span>
+                            </div>
+                            <div class="cselect-dropdown">
+                                <div class="cselect-option" onclick="csSelect('cs-dir', this)">Разработка</div>
+                                <div class="cselect-option" onclick="csSelect('cs-dir', this)">Пентест</div>
+                                <div class="cselect-option" onclick="csSelect('cs-dir', this)">Дизайн</div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="docs-field"><label>Грейд</label>
-                        <select><option value="">— выбрать —</option><option>Junior</option><option>Middle</option><option>Senior</option></select>
+
+                    <div class="docs-field">
+                        <label>Грейд</label>
+                        <div class="cselect-wrap" id="cs-grade">
+                            <div class="cselect-trigger placeholder" onclick="csToggle('cs-grade')">
+                                <span class="cselect-val">— выбрать —</span>
+                                <span class="cselect-arrow"><svg viewBox="0 0 12 12"><polyline points="2,4 6,8 10,4"/></svg></span>
+                            </div>
+                            <div class="cselect-dropdown">
+                                <div class="cselect-option" onclick="csSelect('cs-grade', this)">Junior</div>
+                                <div class="cselect-option" onclick="csSelect('cs-grade', this)">Middle</div>
+                                <div class="cselect-option" onclick="csSelect('cs-grade', this)">Senior</div>
+                            </div>
+                        </div>
                     </div>
+
                     <div class="docs-field"><label>Дата вступления</label><input type="date"></div>
-                    <div class="docs-field"><label>Результат проверки</label>
-                        <select><option value="">— выбрать —</option><option>Пройдена</option><option>Не пройдена</option><option>На пересмотре</option></select>
+
+                    <div class="docs-field">
+                        <label>Результат проверки</label>
+                        <div class="cselect-wrap" id="cs-result">
+                            <div class="cselect-trigger placeholder" onclick="csToggle('cs-result')">
+                                <span class="cselect-val">— выбрать —</span>
+                                <span class="cselect-arrow"><svg viewBox="0 0 12 12"><polyline points="2,4 6,8 10,4"/></svg></span>
+                            </div>
+                            <div class="cselect-dropdown">
+                                <div class="cselect-option" onclick="csSelect('cs-result', this)">Пройдена</div>
+                                <div class="cselect-option" onclick="csSelect('cs-result', this)">Не пройдена</div>
+                                <div class="cselect-option" onclick="csSelect('cs-result', this)">На пересмотре</div>
+                            </div>
+                        </div>
                     </div>
+
                     <div class="docs-field" style="grid-column:1/-1"><label>Примечания</label><textarea placeholder="Специализация, ограничения, доп. инфо..."></textarea></div>
                 </div>
-                <div class="docs-btn-row">
-                    <button class="btn-primary" onclick="window.print()">Распечатать</button>
+                <div class="docs-actions">
+                    <button class="submit-btn" onclick="window.print()"><span>Распечатать</span></button>
+                    <button class="btn-ghost" onclick="clearPanel('dp-grades')">Сбросить</button>
                 </div>
             </div>
         </div>
 
     </div>
 </section>
-
-
 
 <!-- ═══ FOOTER ═══ -->
 <footer>
@@ -758,11 +1477,12 @@
 </footer>
 
 <div class="overlay" id="overlay"></div>
-<div class="success-msg" id="successMsg"><h2>Заявка отправлена</h2><p>Мы свяжемся с вами в ближайшее время.</p></div>
+<div class="success-msg" id="successMsg"><h2>✓ Отправлено</h2><p>Мы свяжемся с вами в ближайшее время.</p></div>
 
 <script>
+// ═══ LOADER ═══
 window.addEventListener('load', function() {
-    setTimeout(function() { var l = document.getElementById('loader'); if (l) l.classList.add('hidden'); }, 1200);
+    setTimeout(function() { var l = document.getElementById('loader'); if (l) l.classList.add('hidden'); }, 1000);
 
     // Canvas bg
     var bgC = document.getElementById('bg-canvas');
@@ -782,7 +1502,7 @@ window.addEventListener('load', function() {
     }
 
     // Nav hide on scroll
-    var lastY=0,nav=document.querySelector('nav');
+    var lastY=0, nav=document.querySelector('nav');
     window.addEventListener('scroll',function(){var y=window.scrollY;if(nav){if(y>lastY&&y>80)nav.style.transform='translateY(-100%)';else nav.style.transform='';}lastY=y;});
 
     // Accordion
@@ -807,170 +1527,214 @@ window.addEventListener('load', function() {
 
     // Telegram WebApp
     var tg=window.Telegram&&window.Telegram.WebApp;
-    if(tg){tg.ready();tg.expand();var user=tg.initDataUnsafe&&tg.initDataUnsafe.user;if(user){var uname=user.username?'@'+user.username:(user.first_name+(user.last_name?' '+user.last_name:''));var uField=document.getElementById('username'),jField=document.getElementById('joinUsername'),fnField=document.getElementById('fullName');if(uField)uField.value=uname;if(jField)jField.value=uname;if(fnField&&!fnField.value)fnField.value=user.first_name+(user.last_name?' '+user.last_name:'');}}
-
-    // Custom selects
-    function initSelect(id,hiddenId){
-        var cs=document.getElementById(id),hidden=document.getElementById(hiddenId);
-        if(!cs)return;
-        var trigger=cs.querySelector('.custom-select-trigger'),valueEl=cs.querySelector('.custom-select-value'),options=cs.querySelectorAll('.custom-select-option');
-        trigger.addEventListener('click',function(e){e.stopPropagation();cs.classList.toggle('open');});
-        options.forEach(function(opt){opt.addEventListener('click',function(){options.forEach(function(o){o.classList.remove('selected');});opt.classList.add('selected');valueEl.textContent=opt.textContent.trim();trigger.classList.add('has-value');if(hidden)hidden.value=opt.getAttribute('data-value');cs.classList.remove('open');});});
-        document.addEventListener('click',function(){cs.classList.remove('open');});
-        cs.addEventListener('click',function(e){e.stopPropagation();});
-    }
-    initSelect('csService','serviceType');
-    initSelect('csBudget','budgetRange');
-    initSelect('csDeadline','deadlinePref');
-    initSelect('csPayment','paymentScheme');
-    initSelect('csSource','leadSource');
-    initSelect('csSpec','specialization');
-    initSelect('csAvail','availability');
-
-    // Level buttons
-    document.querySelectorAll('.level-btn').forEach(function(btn){
-        btn.addEventListener('click',function(){
-            document.querySelectorAll('.level-btn').forEach(function(b){b.classList.remove('active');});
-            btn.classList.add('active');
-            document.getElementById('levelField').value=btn.getAttribute('data-val');
-        });
-    });
-
-    // Telegram send
-    var TG_TOKEN='8759243252:AAGcMEARFHLaWpFDCghswusg2hbcjnBW9nw';
-    var TG_CHAT='-1003846908224';
-
-    function showSuccess(){document.getElementById('overlay').classList.add('show');document.getElementById('successMsg').classList.add('show');setTimeout(function(){document.getElementById('overlay').classList.remove('show');document.getElementById('successMsg').classList.remove('show');},3000);}
-
-    function sendTG(text, btnId, resetFn) {
-        var btn = document.getElementById(btnId);
-        btn.disabled=true; btn.querySelector('span').textContent='Отправка...';
-        fetch('https://api.telegram.org/bot'+TG_TOKEN+'/sendMessage',{
-            method:'POST', headers:{'Content-Type':'application/json'},
-            body:JSON.stringify({chat_id:TG_CHAT, text:text, parse_mode:'HTML'})
-        })
-        .then(function(r){return r.json();})
-        .then(function(data){
-            btn.disabled=false; btn.querySelector('span').textContent=btn.id==='tzSubmitBtn'?'Отправить ТЗ':'Подать заявку';
-            if(data.ok){ showSuccess(); if(resetFn)resetFn(); }
-            else{ alert('Ошибка: '+(data.description||'попробуйте ещё раз')); }
-        })
-        .catch(function(){ btn.disabled=false; btn.querySelector('span').textContent='Ошибка'; alert('Ошибка сети.'); });
-    }
-
-    window.submitTZDoc = function() {
-        var client = document.getElementById('tz_client').value.trim();
-        var contact = document.getElementById('tz_contact').value.trim();
-        var project = document.getElementById('tz_project').value.trim();
-        var desc = document.getElementById('tz_desc') ? document.getElementById('tz_desc').value.trim() : '';
-        if(!client||!contact||!project){alert('Заполните обязательные поля');return;}
-        var checks = [];
-        document.querySelectorAll('#dp-tz .docs-check input:checked').forEach(function(c){ checks.push(c.closest('.docs-check').textContent.trim()); });
-        var text = '📋 <b>Новое ТЗ — Thin Lucid</b>\n\n'+
-            '<b>Клиент:</b> '+client+'\n'+
-            '<b>Контакт:</b> '+contact+'\n'+
-            '<b>Проект:</b> '+project+'\n'+
-            '<b>Услуги:</b> '+(checks.join(', ')||'—')+'\n\n'+
-            '<b>Описание:</b>\n'+(desc||'—');
-        var TG_TOKEN='8759243252:AAGcMEARFHLaWpFDCghswusg2hbcjnBW9nw';
-        var TG_CHAT='-1003846908224';
-        fetch('https://api.telegram.org/bot'+TG_TOKEN+'/sendMessage',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:TG_CHAT,text:text,parse_mode:'HTML'})})
-        .then(function(r){return r.json();}).then(function(d){if(d.ok){document.getElementById('overlay').classList.add('show');document.getElementById('successMsg').classList.add('show');setTimeout(function(){document.getElementById('overlay').classList.remove('show');document.getElementById('successMsg').classList.remove('show');},3000);}else{alert('Ошибка отправки');}});
-    };
-    window.submitTZ = function() {
-        var client = document.getElementById('tz_client').value.trim();
-        var contact = document.getElementById('tz_contact').value.trim();
-        var project = document.getElementById('tz_project').value.trim();
-        var service = document.getElementById('serviceType').value;
-        var desc = document.getElementById('tz_desc').value.trim();
-        var budget = document.getElementById('budgetRange').value;
-        var deadline = document.getElementById('deadlinePref').value;
-        var payment = document.getElementById('paymentScheme').value;
-        var source = document.getElementById('leadSource').value;
-        if(!client||!contact||!project||!service||!desc){alert('Заполните все обязательные поля *');return;}
-        var text = '📋 <b>Новое ТЗ — Thin Lucid</b>\n\n'+
-            '<b>Клиент:</b> '+client+'\n'+
-            '<b>Контакт:</b> '+contact+'\n'+
-            '<b>Проект:</b> '+project+'\n'+
-            '<b>Услуга:</b> '+(service||'—')+'\n'+
-            '<b>Бюджет:</b> '+(budget||'—')+'\n'+
-            '<b>Дедлайн:</b> '+(deadline||'—')+'\n'+
-            '<b>Оплата:</b> '+(payment||'—')+'\n'+
-            '<b>Источник:</b> '+(source||'—')+'\n\n'+
-            '<b>Описание:</b>\n'+desc;
-        sendTG(text,'tzSubmitBtn',function(){
-            ['tz_client','tz_contact','tz_project','tz_desc'].forEach(function(id){document.getElementById(id).value='';});
-            ['serviceType','budgetRange','deadlinePref','paymentScheme','leadSource'].forEach(function(id){document.getElementById(id).value='';});
-            ['csService','csBudget','csDeadline','csPayment','csSource'].forEach(function(id){
-                var cs=document.getElementById(id);if(cs){cs.querySelector('.custom-select-value').textContent=cs.querySelector('.custom-select-trigger').textContent.trim().split('\n')[0];cs.querySelector('.custom-select-trigger').classList.remove('has-value');}
-            });
-        });
-    };
-
-    window.submitJoin = function() {
-        var name = document.getElementById('emp_name').value.trim();
-        var tg = document.getElementById('emp_tg').value.trim();
-        var spec = document.getElementById('specialization').value;
-        var level = document.getElementById('levelField').value;
-        var exp = document.getElementById('emp_exp').value;
-        var avail = document.getElementById('availability').value;
-        var portfolio = document.getElementById('emp_portfolio').value.trim();
-        var skills = document.getElementById('emp_skills').value.trim();
-        var motivation = document.getElementById('emp_motivation').value.trim();
-        if(!name||!tg||!spec||!level||!exp||!portfolio||!skills||!motivation){alert('Заполните все обязательные поля *');return;}
-        var text = '🔥 <b>Новая заявка в команду — Thin Lucid</b>\n\n'+
-            '<b>Имя:</b> '+name+'\n'+
-            '<b>Telegram:</b> '+tg+'\n'+
-            '<b>Направление:</b> '+spec+'\n'+
-            '<b>Грейд:</b> '+level+'\n'+
-            '<b>Опыт:</b> '+exp+' лет\n'+
-            '<b>Доступность:</b> '+(avail||'—')+'\n'+
-            '<b>Портфолио:</b> '+portfolio+'\n\n'+
-            '<b>Навыки:</b>\n'+skills+'\n\n'+
-            '<b>Мотивация:</b>\n'+motivation;
-
-        var tgApp = window.Telegram&&window.Telegram.WebApp;
-        var userId = tgApp&&tgApp.initDataUnsafe&&tgApp.initDataUnsafe.user?tgApp.initDataUnsafe.user.id:null;
-        var fullText = text + (userId?'\n\n#uid:'+userId:'');
-
-        var btn = document.getElementById('joinSubmitBtn');
-        btn.disabled=true; btn.querySelector('span').textContent='Отправка...';
-        fetch('https://api.telegram.org/bot'+TG_TOKEN+'/sendMessage',{
-            method:'POST', headers:{'Content-Type':'application/json'},
-            body:JSON.stringify({chat_id:TG_CHAT, text:fullText, parse_mode:'HTML'})
-        })
-        .then(function(r){return r.json();})
-        .then(function(data){
-            btn.disabled=false; btn.querySelector('span').textContent='Подать заявку';
-            if(data.ok){
-                if(userId){
-                    fetch('https://api.telegram.org/bot'+TG_TOKEN+'/editMessageReplyMarkup',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:TG_CHAT,message_id:data.result.message_id,reply_markup:{inline_keyboard:[[{text:'✅ Принять',callback_data:'approve:'+userId},{text:'❌ Отказать',callback_data:'reject:'+userId}]]}})});
-                }
-                showSuccess();
-                ['emp_name','emp_tg','emp_exp','emp_portfolio','emp_skills','emp_motivation'].forEach(function(id){document.getElementById(id).value='';});
-                document.getElementById('levelField').value='';
-                document.querySelectorAll('.level-btn').forEach(function(b){b.classList.remove('active');});
-            } else { alert('Ошибка: '+(data.description||'попробуйте ещё раз')); }
-        })
-        .catch(function(){ btn.disabled=false; btn.querySelector('span').textContent='Подать заявку'; alert('Ошибка сети.'); });
-    };
+    if(tg){tg.ready();tg.expand();}
 });
 
-// Docs tabs
-function docsTab(name, btn) {
-    document.querySelectorAll('.docs-tab').forEach(function(t){t.classList.remove('active');});
-    document.querySelectorAll('.docs-panel').forEach(function(p){p.classList.remove('active');});
+// ═══ ПЕРЕКЛЮЧЕНИЕ РЕЖИМА ДОКУМЕНТОВ ═══
+function switchMode(name, btn) {
+    document.querySelectorAll('.doc-mode-btn').forEach(function(b){ b.classList.remove('active'); });
+    document.querySelectorAll('.docs-panel').forEach(function(p){ p.classList.remove('active'); });
     btn.classList.add('active');
     document.getElementById('dp-'+name).classList.add('active');
 }
 
-// Clear docs form
-function clearDocs(panelId) {
-    var panel = document.getElementById(panelId);
-    panel.querySelectorAll('input, textarea').forEach(function(el){el.value='';});
-    panel.querySelectorAll('select').forEach(function(el){el.selectedIndex=0;});
-    panel.querySelectorAll('input[type=checkbox]').forEach(function(el){el.checked=false;});
+// ═══ ПОКАЗ/СКРЫТИЕ СЕКЦИЙ ПО УСЛУГЕ ═══
+function toggleSection(sectionId, checkbox) {
+    var section = document.getElementById(sectionId);
+    var chip = checkbox.closest('.service-chip');
+    if (checkbox.checked) {
+        section.classList.add('visible');
+        chip.classList.add('active');
+    } else {
+        section.classList.remove('visible');
+        chip.classList.remove('active');
+    }
+    updateProgress();
+    updateNoServiceHint();
 }
+
+function updateNoServiceHint() {
+    var anyChecked = document.querySelectorAll('#dp-tz .service-chip input:checked').length > 0;
+    var hint = document.getElementById('no-service-hint');
+    if (hint) hint.style.display = anyChecked ? 'none' : 'block';
+}
+
+// Прогресс-индикатор
+function updateProgress() {
+    var client = (document.getElementById('tz_contact') || {}).value;
+    var project = (document.getElementById('tz_project') || {}).value;
+    var anyService = document.querySelectorAll('#dp-tz .service-chip input:checked').length > 0;
+    var budget = (document.getElementById('tz_budget') || {}).value;
+
+    function setStep(id, state) {
+        var el = document.getElementById(id);
+        if (!el) return;
+        el.classList.remove('active', 'done');
+        if (state) el.classList.add(state);
+    }
+
+    if (client && project) { setStep('prog-1','done'); } else { setStep('prog-1','active'); }
+    if (anyService) { setStep('prog-2','done'); } else if (client && project) { setStep('prog-2','active'); } else { setStep('prog-2',''); }
+    if (anyService) { setStep('prog-3','active'); } else { setStep('prog-3',''); }
+    if (budget) { setStep('prog-3','done'); setStep('prog-4','active'); } else { setStep('prog-4',''); }
+}
+
+// Слушаем изменения в базовых полях
+document.addEventListener('DOMContentLoaded', function() {
+    ['tz_contact','tz_project','tz_budget'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) el.addEventListener('input', updateProgress);
+    });
+    updateNoServiceHint();
+});
+
+// ═══ ОТПРАВКА ТЗ ═══
+var TG_TOKEN = '8759243252:AAGcMEARFHLaWpFDCghswusg2hbcjnBW9nw';
+var TG_CHAT  = '-1003846908224';
+
+function showSuccess() {
+    document.getElementById('overlay').classList.add('show');
+    document.getElementById('successMsg').classList.add('show');
+    setTimeout(function(){
+        document.getElementById('overlay').classList.remove('show');
+        document.getElementById('successMsg').classList.remove('show');
+    }, 3000);
+}
+
+function g(id) { var el = document.getElementById(id); return el ? el.value.trim() : ''; }
+
+window.submitTZDoc = function() {
+    var client  = g('tz_client');
+    var contact = g('tz_contact');
+    var project = g('tz_project');
+    if (!contact || !project) { alert('Заполните контакт и название проекта'); return; }
+
+    var services = [];
+    document.querySelectorAll('#dp-tz .service-chip input:checked').forEach(function(c) {
+        services.push(c.closest('.service-chip').textContent.trim());
+    });
+
+    var lines = [
+        '📋 <b>Новое ТЗ — Thin Lucid</b>\n',
+        '<b>Клиент:</b> ' + (client || '—'),
+        '<b>Контакт:</b> ' + contact,
+        '<b>Проект:</b> ' + project,
+        '<b>Услуги:</b> ' + (services.join(', ') || '—'),
+        ''
+    ];
+
+    if (document.getElementById('dev-fields').classList.contains('visible')) {
+        lines.push('— <b>Разработка</b>');
+        if(g('dev_desc')) lines.push('  Задача: '+g('dev_desc'));
+        if(g('dev_stack')) lines.push('  Стек: '+g('dev_stack'));
+        if(g('dev_platform')) lines.push('  Платформа: '+g('dev_platform'));
+        if(g('dev_integrations')) lines.push('  Интеграции: '+g('dev_integrations'));
+        if(g('dev_repo')) lines.push('  Репо: '+g('dev_repo'));
+        lines.push('');
+    }
+    if (document.getElementById('pentest-fields').classList.contains('visible')) {
+        lines.push('— <b>Пентест</b>');
+        if(g('pt_scope')) lines.push('  Scope: '+g('pt_scope'));
+        if(g('pt_oos')) lines.push('  Out of scope: '+g('pt_oos'));
+        if(g('pt_type')) lines.push('  Тип: '+g('pt_type'));
+        if(g('pt_env')) lines.push('  Окружение: '+g('pt_env'));
+        if(g('pt_context')) lines.push('  Контекст: '+g('pt_context'));
+        lines.push('');
+    }
+    if (document.getElementById('design-fields').classList.contains('visible')) {
+        lines.push('— <b>Дизайн</b>');
+        if(g('des_task')) lines.push('  Задача: '+g('des_task'));
+        if(g('des_format')) lines.push('  Формат: '+g('des_format'));
+        if(g('des_brand')) lines.push('  Бренд: '+g('des_brand'));
+        if(g('des_screens')) lines.push('  Экранов: '+g('des_screens'));
+        if(g('des_refs')) lines.push('  Референсы: '+g('des_refs'));
+        lines.push('');
+    }
+    if (document.getElementById('vpn-fields').classList.contains('visible')) {
+        lines.push('— <b>VPN/Прокси</b>');
+        if(g('vpn_type')) lines.push('  Тип: '+g('vpn_type'));
+        if(g('vpn_loc')) lines.push('  Локации: '+g('vpn_loc'));
+        if(g('vpn_users')) lines.push('  Польз.: '+g('vpn_users'));
+        if(g('vpn_goal')) lines.push('  Цель: '+g('vpn_goal'));
+        lines.push('');
+    }
+    if (document.getElementById('bots-fields').classList.contains('visible')) {
+        lines.push('— <b>Боты / Автоматизация</b>');
+        if(g('bot_platform')) lines.push('  Платформа: '+g('bot_platform'));
+        if(g('bot_func')) lines.push('  Функционал: '+g('bot_func'));
+        if(g('bot_desc')) lines.push('  Описание: '+g('bot_desc'));
+        lines.push('');
+    }
+
+    if(g('tz_start')||g('tz_deadline')||g('tz_budget')) {
+        lines.push('<b>Сроки / Оплата</b>');
+        if(g('tz_start')) lines.push('  Старт: '+g('tz_start'));
+        if(g('tz_deadline')) lines.push('  Дедлайн: '+g('tz_deadline'));
+        if(g('tz_budget')) lines.push('  Бюджет: '+g('tz_budget'));
+        if(g('tz_payment')) lines.push('  Схема: '+g('tz_payment'));
+        if(g('tz_pay_method')) lines.push('  Способ: '+g('tz_pay_method'));
+    }
+
+    var text = lines.join('\n');
+
+    fetch('https://api.telegram.org/bot'+TG_TOKEN+'/sendMessage', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({chat_id: TG_CHAT, text: text, parse_mode: 'HTML'})
+    })
+    .then(function(r){return r.json();})
+    .then(function(d){ if(d.ok){ showSuccess(); } else { alert('Ошибка: '+(d.description||'попробуйте ещё раз')); }})
+    .catch(function(){ alert('Ошибка сети.'); });
+};
+
+function clearTZ() {
+    document.querySelectorAll('#dp-tz input, #dp-tz textarea, #dp-tz select').forEach(function(el){ el.value=''; });
+    document.querySelectorAll('#dp-tz .service-chip input').forEach(function(el){ el.checked=false; });
+    document.querySelectorAll('#dp-tz .service-chip').forEach(function(el){ el.classList.remove('active'); });
+    document.querySelectorAll('#dp-tz .field-section').forEach(function(el){ el.classList.remove('visible'); });
+    document.querySelectorAll('#dp-tz .doc-progress-step').forEach(function(el,i){ el.classList.remove('active','done'); if(i===0) el.classList.add('active'); });
+    updateNoServiceHint();
+}
+
+function clearPanel(panelId) {
+    var panel = document.getElementById(panelId);
+    panel.querySelectorAll('input, textarea').forEach(function(el){ el.value=''; });
+    panel.querySelectorAll('select').forEach(function(el){ el.selectedIndex=0; });
+}
+
+// ═══ GRADE ACCORDION ═══
+function toggleGradeAcc(trigger) {
+    var item = trigger.closest('.grade-acc-item');
+    var isOpen = item.classList.contains('open');
+    var accordion = item.closest('.grade-accordion');
+    accordion.querySelectorAll('.grade-acc-item').forEach(function(i){ i.classList.remove('open'); });
+    if (!isOpen) item.classList.add('open');
+}
+
+// ═══ CUSTOM SELECT ═══
+function csToggle(id) {
+    var wrap = document.getElementById(id);
+    var isOpen = wrap.classList.contains('open');
+    // close all
+    document.querySelectorAll('.cselect-wrap.open').forEach(function(w){ w.classList.remove('open'); });
+    if (!isOpen) wrap.classList.add('open');
+}
+function csSelect(id, opt) {
+    var wrap = document.getElementById(id);
+    var trigger = wrap.querySelector('.cselect-trigger');
+    var valEl = wrap.querySelector('.cselect-val');
+    wrap.querySelectorAll('.cselect-option').forEach(function(o){ o.classList.remove('selected'); });
+    opt.classList.add('selected');
+    valEl.textContent = opt.textContent.trim();
+    trigger.classList.remove('placeholder');
+    wrap.classList.remove('open');
+}
+// Close on outside click
+document.addEventListener('click', function(e) {
+    if (!e.target.closest('.cselect-wrap')) {
+        document.querySelectorAll('.cselect-wrap.open').forEach(function(w){ w.classList.remove('open'); });
+    }
+});
 </script>
 </body>
 </html>
