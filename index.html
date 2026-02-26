@@ -159,10 +159,11 @@
         .team-card:hover::before { height: 100%; }
         .card-num { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: var(--muted); letter-spacing: 0.2em; margin-bottom: 1.5rem; }
         .team-card h3 {
-            font-family: 'Bebas Neue', 'Syne', sans-serif; font-size: 2.1rem; font-weight: 400;
-            letter-spacing: 0.1em; margin-bottom: 0.25rem; text-transform: uppercase;
+            font-family: 'Bebas Neue', 'Syne', sans-serif; font-size: clamp(1.2rem, 2.8vw, 2.1rem); font-weight: 400;
+            letter-spacing: 0.05em; margin-bottom: 0.25rem; text-transform: uppercase; line-height: 1.1;
             background: linear-gradient(90deg, #fff 50%, var(--c));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            word-break: break-word;
         }
         .team-card .role { font-family: 'Space Mono', monospace; font-size: 0.72rem; color: var(--g); letter-spacing: 0.14em; margin-bottom: 1.1rem; }
         .team-card p { color: var(--muted); line-height: 1.75; font-size: 0.93rem; }
@@ -261,8 +262,184 @@
         .loader-ring { width: 64px; height: 64px; border: 1px solid rgba(0,255,136,0.2); border-top-color: var(--g); border-radius: 50%; animation: spin 1s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
         .loader-text { font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--muted); letter-spacing: 0.3em; text-transform: uppercase; }
-        @media (max-width: 900px) { nav { padding: 1.2rem 2rem; } .nav-links { gap: 1.5rem; } section { padding: 5rem 2rem; } .hero { padding: 0 2rem; } .skills-layout { grid-template-columns: 1fr; } .forms-grid { grid-template-columns: 1fr; } footer { padding: 2rem; flex-direction: column; gap: 1rem; text-align: center; } }
-        @media (max-width: 600px) { .nav-links { gap: 1rem; } .nav-links a { font-size: 0.7rem; } .hero h1 { font-size: 3.5rem; } .skill-cards { grid-template-columns: 1fr; } }
+
+        /* ═══════════════════════════════════════════
+           DOCS SECTION — внутренние документы
+        ═══════════════════════════════════════════ */
+        #docs { background: var(--bg); }
+
+        .docs-tabs {
+            display: flex; gap: 0;
+            border-bottom: 1px solid var(--line);
+            margin-bottom: 3rem;
+        }
+        .docs-tab {
+            font-family: 'Space Mono', monospace; font-size: 0.72rem; letter-spacing: 0.15em;
+            text-transform: uppercase; padding: 1rem 2rem;
+            color: var(--muted); cursor: pointer;
+            background: none; border: none;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -1px;
+            transition: color 0.2s, border-color 0.2s;
+        }
+        .docs-tab:hover { color: var(--txt); }
+        .docs-tab.active { color: var(--g); border-bottom-color: var(--g); }
+
+        .docs-panel { display: none; animation: fadeUp 0.3s ease; }
+        .docs-panel.active { display: block; }
+
+        /* Поля внутри docs */
+        .docs-grid { display: grid; gap: 1rem; margin-bottom: 2.5rem; }
+        .docs-grid.cols2 { grid-template-columns: 1fr 1fr; }
+        .docs-grid.cols3 { grid-template-columns: 1fr 1fr 1fr; }
+
+        .docs-field {
+            background: rgba(0,0,0,0.35);
+            border: 1px solid rgba(255,255,255,0.07);
+            padding: 1rem 1.2rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            position: relative;
+        }
+        .docs-field::after {
+            content: '';
+            position: absolute; top: 0; right: 0;
+            width: 10px; height: 10px;
+            border-top: 1px solid var(--g);
+            border-right: 1px solid var(--g);
+            opacity: 0.4;
+        }
+        .docs-field:focus-within {
+            border-color: rgba(0,212,255,0.4);
+            box-shadow: 0 0 0 1px rgba(0,212,255,0.15), inset 0 0 20px rgba(0,212,255,0.02);
+        }
+        .docs-field label {
+            display: block;
+            font-family: 'Space Mono', monospace; font-size: 0.62rem;
+            letter-spacing: 0.18em; text-transform: uppercase;
+            color: var(--c); margin-bottom: 0.5rem;
+        }
+        .docs-field input, .docs-field textarea, .docs-field select {
+            width: 100%; background: none; border: none; outline: none;
+            color: var(--txt); font-family: 'Syne', sans-serif;
+            font-size: 0.95rem; font-weight: 600;
+        }
+        .docs-field input::placeholder, .docs-field textarea::placeholder { color: rgba(255,255,255,0.15); font-weight: 400; }
+        .docs-field textarea { min-height: 80px; resize: vertical; }
+        .docs-field select { color: var(--txt); -webkit-appearance: none; appearance: none; cursor: pointer; }
+        .docs-field select option { background: #0e0e16; }
+
+        /* Чекбоксы для типа услуги */
+        .docs-checks { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 2.5rem; }
+        .docs-check {
+            display: flex; align-items: center; gap: 0.6rem;
+            cursor: pointer;
+            font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.12em;
+            text-transform: uppercase; color: var(--muted);
+            background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.07);
+            padding: 0.6rem 1.2rem;
+            transition: all 0.15s;
+            user-select: none;
+        }
+        .docs-check input { display: none; }
+        .docs-check .chk { width: 12px; height: 12px; border: 1px solid currentColor; display: flex; align-items: center; justify-content: center; font-size: 8px; flex-shrink: 0; }
+        .docs-check:has(input:checked) { border-color: rgba(0,255,136,0.4); color: var(--g); background: rgba(0,255,136,0.05); }
+        .docs-check:has(input:checked) .chk::after { content: '✓'; }
+
+        /* Таблица для стандартных условий */
+        .docs-table { width: 100%; border-collapse: collapse; margin-bottom: 2.5rem; }
+        .docs-table th {
+            background: rgba(0,255,136,0.06); border: 1px solid var(--line);
+            padding: 0.8rem 1.2rem;
+            font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.2em;
+            color: var(--g); text-align: left; text-transform: uppercase;
+        }
+        .docs-table td { border: 1px solid var(--line); padding: 0.9rem 1.2rem; font-size: 0.9rem; color: var(--muted); vertical-align: top; }
+        .docs-table td:first-child { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: var(--g); letter-spacing: 0.1em; white-space: nowrap; }
+        .docs-table tr:hover td { background: rgba(0,255,136,0.02); }
+
+        /* Грейд-карточки */
+        .grade-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5px; background: var(--line); border: 1px solid var(--line); margin-bottom: 2.5rem; }
+        .grade-card {
+            background: var(--card); padding: 2rem 1.8rem; position: relative; overflow: hidden;
+            transition: background 0.3s;
+        }
+        .grade-card:hover { background: rgba(0,255,136,0.03); }
+        .grade-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+        }
+        .grade-card.gj::before { background: var(--c); }
+        .grade-card.gm::before { background: var(--g); }
+        .grade-card.gs::before { background: #ff4757; }
+
+        .grade-bg-letter {
+            font-family: 'Bebas Neue', cursive; font-size: 80px; line-height: 1;
+            position: absolute; right: 1rem; bottom: 0.5rem;
+            opacity: 0.05; pointer-events: none;
+        }
+        .grade-card.gj .grade-bg-letter { color: var(--c); }
+        .grade-card.gm .grade-bg-letter { color: var(--g); }
+        .grade-card.gs .grade-bg-letter { color: #ff4757; }
+
+        .grade-badge {
+            display: inline-block; padding: 0.2rem 0.7rem; margin-bottom: 1rem;
+            font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.2em;
+            text-transform: uppercase; border: 1px solid;
+        }
+        .grade-card.gj .grade-badge { color: var(--c); border-color: var(--c); background: rgba(0,212,255,0.06); }
+        .grade-card.gm .grade-badge { color: var(--g); border-color: var(--g); background: rgba(0,255,136,0.06); }
+        .grade-card.gs .grade-badge { color: #ff4757; border-color: #ff4757; background: rgba(255,71,87,0.06); }
+
+        .grade-list { list-style: none; }
+        .grade-list li {
+            font-size: 0.88rem; color: var(--muted); padding: 0.45rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            display: flex; align-items: center; gap: 0.6rem;
+        }
+        .grade-list li:last-child { border: none; }
+        .grade-list li::before { content: '▸'; font-size: 0.6rem; color: var(--muted); flex-shrink: 0; }
+
+        /* Шаги найма */
+        .hire-steps { display: flex; flex-direction: column; gap: 3px; margin-bottom: 2.5rem; }
+        .hire-step { display: flex; gap: 0; }
+        .hire-step-num {
+            font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.2em;
+            color: var(--g); background: rgba(0,255,136,0.06);
+            border: 1px solid var(--line); border-right: none;
+            padding: 1rem 1.2rem; display: flex; align-items: center;
+            flex-shrink: 0; width: 56px; justify-content: center;
+        }
+        .hire-step-body {
+            flex: 1; background: rgba(0,0,0,0.2);
+            border: 1px solid var(--line); padding: 1rem 1.4rem;
+        }
+        .hire-step-title { font-family: 'Space Mono', monospace; font-size: 0.68rem; letter-spacing: 0.15em; color: var(--g); margin-bottom: 0.25rem; text-transform: uppercase; }
+        .hire-step-desc { font-size: 0.88rem; color: var(--muted); }
+
+        /* Карточка сотрудника */
+        .employee-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+        /* Print кнопка */
+        .docs-btn-row { display: flex; gap: 1rem; margin-top: 3rem; }
+
+        @media (max-width: 900px) {
+            nav { padding: 1.2rem 2rem; } .nav-links { gap: 1.5rem; }
+            section { padding: 5rem 2rem; } .hero { padding: 0 2rem; }
+            .skills-layout { grid-template-columns: 1fr; }
+            .forms-grid { grid-template-columns: 1fr; }
+            footer { padding: 2rem; flex-direction: column; gap: 1rem; text-align: center; }
+            .docs-grid.cols2, .docs-grid.cols3 { grid-template-columns: 1fr; }
+            .grade-grid { grid-template-columns: 1fr; }
+            .employee-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 600px) {
+            .nav-links { gap: 1rem; } .nav-links a { font-size: 0.7rem; }
+            .hero h1 { font-size: 3.5rem; } .skill-cards { grid-template-columns: 1fr; }
+        }
+        @media print {
+            nav, .docs-tabs, .docs-btn-row, #bg-canvas, body::after { display: none !important; }
+            .docs-panel { display: block !important; }
+            body { background: #fff; color: #000; }
+        }
     </style>
 </head>
 <body>
@@ -277,10 +454,12 @@
         <li><a href="#hero">Главная</a></li>
         <li><a href="#team">Команда</a></li>
         <li><a href="#skills">Скиллы</a></li>
-        <li><a href="#contact">Связаться</a></li>
-        <li><a href="#join">Вступить</a></li>
+        <li><a href="#contact">Документы</a></li>
+        <li><a href="#dp-grades">Вступить</a></li>
     </ul>
 </nav>
+
+<!-- ═══ HERO ═══ -->
 <section class="hero" id="hero">
     <div class="hero-inner">
         <div class="hero-tag">Элитная техническая сеть</div>
@@ -290,6 +469,8 @@
     </div>
     <div class="hero-scroll-hint"><span class="scroll-label">Вниз</span><div class="scroll-line"></div></div>
 </section>
+
+<!-- ═══ TEAM ═══ -->
 <section id="team">
     <div class="container">
         <div class="section-label">01 / Команда</div>
@@ -301,29 +482,26 @@
                 <p class="role">Генеральный директор · Thin Lucid Agency</p>
                 <p>Специалист в области кибербезопасности, веб-разработки и написания кода. Строит элитную сеть технических специалистов с нуля.</p>
                 <div class="skill-icons">
-                    <div class="skill-icon-wrap" title="Cyber"><svg width="34" height="34" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="5" fill="#0d1117"/><path d="M16 4L5 9v6c0 6 4.5 11.6 11 13 6.5-1.4 11-7 11-13V9L16 4z" fill="none" stroke="#00ff88" stroke-width="1.5"/><path d="M11.5 16.5l3 3 6-6" stroke="#00ff88" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Защита</span></div> <div class="skill-icon-wrap" title="Web Dev"><svg width="34" height="34" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="5" fill="#0d1117"/><polyline points="11,10 5,16 11,22" stroke="#00d4ff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><polyline points="21,10 27,16 21,22" stroke="#00d4ff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><line x1="19" y1="9" x2="13" y2="23" stroke="#00ff88" stroke-width="1.3" stroke-linecap="round"/></svg><span>Веб</span></div>
-                    <div class="skill-icon-wrap" title="Python"><svg width="34" height="34" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="5" fill="#0d1117"/><path d="M16 4c-4.6 0-4.3 2-4.3 2v2.1h4.4v.7H9.4S6.3 8.5 6.3 13.2s2.8 4.5 2.8 4.5h1.7v-2.3s-.1-2.1 2.1-2.1h4.6s2.1.1 2.1-2V6.1S19.9 4 16 4zm-2.5 1.4c.43 0 .77.34.77.77s-.34.77-.77.77-.77-.34-.77-.77.34-.77.77-.77z" fill="#3776AB"/><path d="M16 28c4.6 0 4.3-2 4.3-2v-2.1h-4.4v-.7h6.7s3.1.3 3.1-4.4-2.8-4.5-2.8-4.5h-1.7v2.3s.1 2.1-2.1 2.1h-4.6s-2.1-.1-2.1 2v3.2S12.1 28 16 28zm2.5-1.4c-.43 0-.77-.34-.77-.77s.34-.77.77-.77.77.34.77.77-.34.77-.77.77z" fill="#FFD43B"/></svg><span>Python</span></div>
-                    <div class="skill-icon-wrap" title="JS"><svg width="34" height="34" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="5" fill="#F7DF1E"/><text x="7" y="24" font-family="Arial Black,sans-serif" font-weight="900" font-size="14" fill="#000">JS</text></svg><span>JS</span></div>
-                    <div class="skill-icon-wrap" title="Wazuh"><svg width="34" height="34" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="5" fill="#0d1117"/><path d="M4 22l4-12 4 8 4-14 4 10 4-6 4 4" stroke="#00bcd4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="28" cy="22" r="2.5" fill="#00bcd4" opacity="0.7"/></svg><span>Wazuh</span></div>
-                    <div class="skill-icon-wrap" title="Graphics"><svg width="34" height="34" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="5" fill="#0d1117"/><path d="M16 5C9.9 5 5 9.9 5 16c0 6.1 4.9 11 11 11 1.2 0 2.2-1 2.2-2.2 0-.6-.2-1.1-.6-1.5-.3-.4-.6-.9-.6-1.4 0-1.2 1-2.2 2.2-2.2h2.6C25 19.7 27 17.1 27 14 27 9 22 5 16 5z" stroke="#E91E8C" stroke-width="1.4" fill="none"/><circle cx="10" cy="14" r="1.8" fill="#F44336"/><circle cx="13" cy="9.5" r="1.8" fill="#FFEB3B"/><circle cx="19" cy="9.5" r="1.8" fill="#4CAF50"/><circle cx="22" cy="14" r="1.8" fill="#2196F3"/></svg><span>Дизайн</span></div>
-                    <div class="skill-icon-wrap" title="VPN"><svg width="34" height="34" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="5" fill="#0d1117"/><rect x="9" y="15" width="14" height="11" rx="2" stroke="#00ff88" stroke-width="1.4"/><path d="M12 15v-3a4 4 0 018 0v3" stroke="#00ff88" stroke-width="1.4" stroke-linecap="round"/><circle cx="16" cy="21" r="1.5" fill="#00ff88"/><line x1="16" y1="21" x2="16" y2="24" stroke="#00ff88" stroke-width="1.3" stroke-linecap="round"/></svg><span>VPN</span></div>
-                    <div class="skill-icon-wrap" title="Proxy"><svg width="34" height="34" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="5" fill="#0d1117"/><rect x="11" y="11" width="10" height="10" rx="2" fill="#00d4ff" opacity="0.2" stroke="#00d4ff" stroke-width="1.3"/><circle cx="5" cy="10" r="2.5" stroke="#00d4ff" stroke-width="1.2"/><circle cx="5" cy="22" r="2.5" stroke="#00d4ff" stroke-width="1.2"/><circle cx="27" cy="10" r="2.5" stroke="#00ff88" stroke-width="1.2"/><circle cx="27" cy="22" r="2.5" stroke="#00ff88" stroke-width="1.2"/><line x1="7.5" y1="10" x2="11" y2="14" stroke="#00d4ff" stroke-width="1.1"/><line x1="7.5" y1="22" x2="11" y2="18" stroke="#00d4ff" stroke-width="1.1"/><line x1="24.5" y1="10" x2="21" y2="14" stroke="#00ff88" stroke-width="1.1"/><line x1="24.5" y1="22" x2="21" y2="18" stroke="#00ff88" stroke-width="1.1"/></svg><span>Прокси</span></div>
+                    <div class="skill-icon-wrap"><svg width="34" height="34" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="5" fill="#0d1117"/><path d="M16 4L5 9v6c0 6 4.5 11.6 11 13 6.5-1.4 11-7 11-13V9L16 4z" fill="none" stroke="#00ff88" stroke-width="1.5"/><path d="M11.5 16.5l3 3 6-6" stroke="#00ff88" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Защита</span></div>
+                    <div class="skill-icon-wrap"><svg width="34" height="34" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="5" fill="#0d1117"/><polyline points="11,10 5,16 11,22" stroke="#00d4ff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><polyline points="21,10 27,16 21,22" stroke="#00d4ff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><line x1="19" y1="9" x2="13" y2="23" stroke="#00ff88" stroke-width="1.3" stroke-linecap="round"/></svg><span>Веб</span></div>
+                    <div class="skill-icon-wrap"><svg width="34" height="34" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="5" fill="#0d1117"/><path d="M16 4c-4.6 0-4.3 2-4.3 2v2.1h4.4v.7H9.4S6.3 8.5 6.3 13.2s2.8 4.5 2.8 4.5h1.7v-2.3s-.1-2.1 2.1-2.1h4.6s2.1.1 2.1-2V6.1S19.9 4 16 4zm-2.5 1.4c.43 0 .77.34.77.77s-.34.77-.77.77-.77-.34-.77-.77.34-.77.77-.77z" fill="#3776AB"/><path d="M16 28c4.6 0 4.3-2 4.3-2v-2.1h-4.4v-.7h6.7s3.1.3 3.1-4.4-2.8-4.5-2.8-4.5h-1.7v2.3s.1 2.1-2.1 2.1h-4.6s-2.1-.1-2.1 2v3.2S12.1 28 16 28zm2.5-1.4c-.43 0-.77-.34-.77-.77s.34-.77.77-.77.77.34.77.77-.34.77-.77.77z" fill="#FFD43B"/></svg><span>Python</span></div>
+                    <div class="skill-icon-wrap"><svg width="34" height="34" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="5" fill="#F7DF1E"/><text x="7" y="24" font-family="Arial Black,sans-serif" font-weight="900" font-size="14" fill="#000">JS</text></svg><span>JS</span></div>
                 </div>
             </div>
             <div class="team-card">
                 <div class="card-num">002</div>
-                <h3>@mts_mobile</h3>
-                <p class="role">Совладелец · Разработчик</p>
-                <p>Разработчик и специалист по безопасности. Строит надёжные системы на низком уровне.</p>
+                <h3>@loginovmatvey</h3>
+                <p class="role">Дизайнер · Менеджер проекта</p>
+                <p>Отвечает за визуальную идентичность агентства и управление проектами. Делает сложное — красивым и понятным.</p>
                 <div class="skill-icons">
-                    <div class="skill-icon-wrap" title="Python"><svg width="34" height="34" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="5" fill="#0d1117"/><path d="M16 4c-4.6 0-4.3 2-4.3 2v2.1h4.4v.7H9.4S6.3 8.5 6.3 13.2s2.8 4.5 2.8 4.5h1.7v-2.3s-.1-2.1 2.1-2.1h4.6s2.1.1 2.1-2V6.1S19.9 4 16 4zm-2.5 1.4c.43 0 .77.34.77.77s-.34.77-.77.77-.77-.34-.77-.77.34-.77.77-.77z" fill="#3776AB"/><path d="M16 28c4.6 0 4.3-2 4.3-2v-2.1h-4.4v-.7h6.7s3.1.3 3.1-4.4-2.8-4.5-2.8-4.5h-1.7v2.3s.1 2.1-2.1 2.1h-4.6s-2.1-.1-2.1 2v3.2S12.1 28 16 28zm2.5-1.4c-.43 0-.77-.34-.77-.77s.34-.77.77-.77.77.34.77.77-.34.77-.77.77z" fill="#FFD43B"/></svg><span>Python</span></div>
-                    <div class="skill-icon-wrap" title="C"><svg width="34" height="34" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="5" fill="#0d1117"/><circle cx="16" cy="16" r="10" stroke="#00599C" stroke-width="1.4"/><path d="M21 11.5C19.3 9.9 17.8 9 16 9c-3.9 0-7 3.1-7 7s3.1 7 7 7c1.8 0 3.3-.7 5-2.5" stroke="#00599C" stroke-width="1.6" stroke-linecap="round" fill="none"/><text x="13" y="20" font-family="Arial Black,sans-serif" font-weight="900" font-size="10" fill="#00599C">C</text></svg><span>C</span></div>
-                    <div class="skill-icon-wrap" title="Cyber"><svg width="34" height="34" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="5" fill="#0d1117"/><path d="M16 4L5 9v6c0 6 4.5 11.6 11 13 6.5-1.4 11-7 11-13V9L16 4z" fill="none" stroke="#00ff88" stroke-width="1.5"/><path d="M11.5 16.5l3 3 6-6" stroke="#00ff88" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Защита</span></div>
-                    <div class="skill-icon-wrap" title="Unity"><svg width="34" height="34" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="5" fill="#1a1a1a"/><path d="M16 4l10.4 6v12L16 28 5.6 22V10L16 4z" fill="none" stroke="#fff" stroke-width="1.3"/><text x="10.5" y="21" font-family="Arial Black,sans-serif" font-weight="900" font-size="11" fill="#fff">U</text></svg><span>Unity</span></div>
+                    <div class="skill-icon-wrap"><svg width="34" height="34" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="5" fill="#0d1117"/><path d="M8 20c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="#00d4ff" stroke-width="1.4" fill="none"/><rect x="14" y="20" width="4" height="6" rx="1" fill="#00ff88"/><circle cx="16" cy="10" r="2.5" fill="#00d4ff" opacity="0.7"/><line x1="9" y1="26" x2="23" y2="26" stroke="#00d4ff" stroke-width="1.2" stroke-linecap="round"/></svg><span>UI/UX</span></div>
+                    <div class="skill-icon-wrap"><svg width="34" height="34" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="5" fill="#0d1117"/><rect x="6" y="8" width="8" height="8" rx="1.5" fill="#00ff88" opacity="0.8"/><rect x="18" y="8" width="8" height="8" rx="1.5" fill="#00d4ff" opacity="0.8"/><rect x="6" y="18" width="8" height="8" rx="1.5" fill="#00d4ff" opacity="0.6"/><rect x="18" y="18" width="8" height="8" rx="1.5" fill="#00ff88" opacity="0.4"/></svg><span>Figma</span></div>
+                    <div class="skill-icon-wrap"><svg width="34" height="34" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="5" fill="#0d1117"/><path d="M5 10h22M5 16h14M5 22h18" stroke="#00ff88" stroke-width="1.5" stroke-linecap="round"/><circle cx="23" cy="22" r="3" stroke="#00d4ff" stroke-width="1.3"/><line x1="25.2" y1="24.2" x2="27" y2="26" stroke="#00d4ff" stroke-width="1.3" stroke-linecap="round"/></svg><span>PM</span></div>
+                    <div class="skill-icon-wrap"><svg width="34" height="34" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="5" fill="#0d1117"/><circle cx="16" cy="12" r="5" stroke="#00d4ff" stroke-width="1.3"/><path d="M6 26c0-4.4 4.5-8 10-8s10 3.6 10 8" stroke="#00d4ff" stroke-width="1.3" stroke-linecap="round" fill="none"/></svg><span>Бренд</span></div>
                 </div>
             </div>
             <div class="team-card"><div class="card-num">003</div><h3>Дизайн</h3><p class="role">Дизайн</p><p>Креативные умы, превращающие идеи в визуальные шедевры.</p></div>
-            <div class="team-card"><div class="card-num">004</div><h3>Безопасность</h3><p class="role">Безопасность</p><p>Эксперты по кибербезопасности, защищающие ваши данные.</p></div>
+            <div class="team-card"><div class="card-num">004</div><h3>КИБЕР<br>БЕЗОПАСНОСТЬ</h3><p class="role">Безопасность</p><p>Эксперты по кибербезопасности, защищающие ваши данные.</p></div>
         </div>
         <div class="accordion">
             <div class="acc-item">
@@ -337,6 +515,8 @@
         </div>
     </div>
 </section>
+
+<!-- ═══ SKILLS ═══ -->
 <section id="skills">
     <div class="container">
         <div class="section-label">02 / Технологии</div>
@@ -344,274 +524,453 @@
         <div class="skills-layout">
             <div class="skill-cards">
                 <div class="skill-card"><div class="skill-card-icon"><svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="3" y="5" width="30" height="8" rx="1" stroke="#00d4ff" stroke-width="1.2"/><rect x="3" y="16" width="30" height="8" rx="1" stroke="#00d4ff" stroke-width="1.2"/><circle cx="28" cy="9" r="2" fill="#00ff88"/><circle cx="28" cy="20" r="2" fill="#00ff88"/><line x1="8" y1="9" x2="20" y2="9" stroke="#00d4ff" stroke-width="1" opacity="0.5"/><line x1="8" y1="20" x2="20" y2="20" stroke="#00d4ff" stroke-width="1" opacity="0.5"/><path d="M18 27 L18 31" stroke="#00ff88" stroke-width="1.2"/><path d="M14 31 L22 31" stroke="#00ff88" stroke-width="1.2" stroke-linecap="round"/></svg></div><h4>Аудит серверов</h4><p>Настройка, аудит безопасности серверов и сетей.</p></div>
-                <div class="skill-card"><div class="skill-card-icon"><svg width="36" height="36" viewBox="0 0 36 36" fill="none"><path d="M18 3 L31 8 L31 18 C31 25 25 31 18 33 C11 31 5 25 5 18 L5 8 Z" stroke="#00d4ff" stroke-width="1.2" fill="none"/><circle cx="18" cy="17" r="4" stroke="#00ff88" stroke-width="1"/><line x1="18" y1="13" x2="18" y2="8" stroke="#00ff88" stroke-width="1" stroke-dasharray="2 2"/><line x1="22" y1="17" x2="27" y2="17" stroke="#00ff88" stroke-width="1" stroke-dasharray="2 2"/><line x1="18" y1="21" x2="18" y2="26" stroke="#00ff88" stroke-width="1" stroke-dasharray="2 2"/><line x1="14" y1="17" x2="9" y2="17" stroke="#00ff88" stroke-width="1" stroke-dasharray="2 2"/></svg></div><h4>VPN и Прокси</h4><p>Создание VPN/proxy серверов с подбором локаций и без логов.</p></div>
+                <div class="skill-card"><div class="skill-card-icon"><svg width="36" height="36" viewBox="0 0 36 36" fill="none"><path d="M18 3 L31 8 L31 18 C31 25 25 31 18 33 C11 31 5 25 5 18 L5 8 Z" stroke="#00d4ff" stroke-width="1.2" fill="none"/></svg></div><h4>VPN и Прокси</h4><p>Создание VPN/proxy серверов с подбором локаций и без логов.</p></div>
                 <div class="skill-card"><div class="skill-card-icon"><svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="2" y="6" width="32" height="24" rx="1" stroke="#00d4ff" stroke-width="1.2"/><polyline points="10,14 6,18 10,22" stroke="#00ff88" stroke-width="1.5" stroke-linecap="round"/><polyline points="26,14 30,18 26,22" stroke="#00ff88" stroke-width="1.5" stroke-linecap="round"/><line x1="20" y1="12" x2="16" y2="24" stroke="#00d4ff" stroke-width="1.5" stroke-linecap="round"/></svg></div><h4>Веб-разработка</h4><p>Full-stack разработка современных веб-приложений.</p></div>
-                <div class="skill-card"><div class="skill-card-icon"><svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="3" y="10" width="30" height="18" rx="4" stroke="#00d4ff" stroke-width="1.2"/><line x1="13" y1="16" x2="13" y2="22" stroke="#00ff88" stroke-width="1.5" stroke-linecap="round"/><line x1="10" y1="19" x2="16" y2="19" stroke="#00ff88" stroke-width="1.5" stroke-linecap="round"/><circle cx="24" cy="17" r="1.5" fill="#00d4ff"/><circle cx="27" cy="21" r="1.5" fill="#00d4ff"/><circle cx="21" cy="21" r="1.5" fill="#00d4ff"/></svg></div><h4>Разработка игр</h4><p>Разработка игр и интерактивных приложений.</p></div>
-                <div class="skill-card"><div class="skill-card-icon"><svg width="36" height="36" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="14" r="8" stroke="#00d4ff" stroke-width="1.2"/><circle cx="18" cy="14" r="3" fill="#00ff88" opacity="0.4"/><line x1="18" y1="22" x2="18" y2="33" stroke="#00d4ff" stroke-width="1.2"/><line x1="12" y1="28" x2="24" y2="28" stroke="#00d4ff" stroke-width="1.2" stroke-linecap="round"/><circle cx="11" cy="9" r="1.5" fill="#00ff88"/><circle cx="25" cy="9" r="1.5" fill="#00ff88"/></svg></div><h4>UI/UX &amp; Graphic</h4><p>Дизайн интерфейсов, аватарки, логотипы, брендинг.</p></div>
-                <div class="skill-card"><div class="skill-card-icon"><svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="8" y="12" width="20" height="16" rx="2" stroke="#00d4ff" stroke-width="1.2"/><circle cx="14" cy="20" r="2" stroke="#00ff88" stroke-width="1"/><circle cx="22" cy="20" r="2" stroke="#00ff88" stroke-width="1"/><line x1="18" y1="12" x2="18" y2="7" stroke="#00d4ff" stroke-width="1.2"/><circle cx="18" cy="6" r="1.5" fill="#00d4ff"/><line x1="11" y1="28" x2="9" y2="32" stroke="#00d4ff" stroke-width="1.2" stroke-linecap="round"/><line x1="25" y1="28" x2="27" y2="32" stroke="#00d4ff" stroke-width="1.2" stroke-linecap="round"/></svg></div><h4>Боты &amp; Парсеры</h4><p>Telegram-боты, автоматизация, парсеры данных.</p></div>
+                <div class="skill-card"><div class="skill-card-icon"><svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="3" y="10" width="30" height="18" rx="4" stroke="#00d4ff" stroke-width="1.2"/></svg></div><h4>Разработка игр</h4><p>Разработка игр и интерактивных приложений.</p></div>
+                <div class="skill-card"><div class="skill-card-icon"><svg width="36" height="36" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="14" r="8" stroke="#00d4ff" stroke-width="1.2"/></svg></div><h4>UI/UX &amp; Graphic</h4><p>Дизайн интерфейсов, аватарки, логотипы, брендинг.</p></div>
+                <div class="skill-card"><div class="skill-card-icon"><svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="8" y="12" width="20" height="16" rx="2" stroke="#00d4ff" stroke-width="1.2"/></svg></div><h4>Боты &amp; Парсеры</h4><p>Telegram-боты, автоматизация, парсеры данных.</p></div>
             </div>
             <div class="tech-logos-wrapper"><div class="tech-logos-grid" id="techLogosGrid"></div></div>
         </div>
     </div>
 </section>
+
+<!-- ═══ ДОКУМЕНТЫ (ТЗ / Договор / Грейды) ═══ -->
 <section id="contact">
     <div class="container">
-        <div class="section-label">03 / Контакт</div>
-        <h2 class="section-title">Заказать услугу &amp; <span class="accent">Вступить в команду</span></h2>
-        <div class="forms-grid">
+        <div class="section-label">03 / Документы</div>
+        <h2 class="section-title">Оформить заказ &amp; <span class="accent">Вступить в команду</span></h2>
 
-            <!-- SERVICES FORM -->
-            <div class="form-panel" id="contact-panel">
-                <div class="form-panel-title">Заказать услугу</div>
-                <div class="form-panel-sub">Опишите задачу — ответим в течение нескольких часов</div>
-                <form id="contactForm">
-                    <div class="fg"><label>Telegram</label><input type="text" id="username" placeholder="@username" readonly style="opacity:0.6;cursor:default;"></div>
-                    <div class="fg"><label>Тип услуги *</label>
-                        <div class="custom-select" id="csService">
-                            <div class="custom-select-trigger"><span class="custom-select-value">Выберите услугу</span><span class="custom-select-arrow"><svg viewBox="0 0 12 12"><polyline points="2,4 6,8 10,4"/></svg></span></div>
-                            <div class="custom-select-dropdown">
-                                <div class="custom-select-option" data-value="website"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="vertical-align:middle;margin-right:6px"><circle cx="8" cy="8" r="7" stroke="#00d4ff" stroke-width="1.2"/><ellipse cx="8" cy="8" rx="7" ry="3" stroke="#00d4ff" stroke-width="1.2"/><line x1="8" y1="1" x2="8" y2="15" stroke="#00d4ff" stroke-width="1.2"/><line x1="1" y1="8" x2="15" y2="8" stroke="#00d4ff" stroke-width="1.2"/></svg>Сайт / Лендинг</div>
-                                <div class="custom-select-option" data-value="bot"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="vertical-align:middle;margin-right:6px"><rect x="3" y="5" width="10" height="8" rx="2" stroke="#00d4ff" stroke-width="1.2"/><circle cx="6" cy="9" r="1" fill="#00ff88"/><circle cx="10" cy="9" r="1" fill="#00ff88"/><line x1="8" y1="5" x2="8" y2="2" stroke="#00d4ff" stroke-width="1.2"/><circle cx="8" cy="2" r="1" fill="#00d4ff"/></svg>Telegram-бот / Автоматизация</div>
-                                <div class="custom-select-option" data-value="security"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="vertical-align:middle;margin-right:6px"><path d="M8 1L2 4v4c0 3.5 2.5 6.5 6 7 3.5-.5 6-3.5 6-7V4L8 1z" stroke="#00ff88" stroke-width="1.2"/><path d="M5.5 8l2 2 3-3" stroke="#00ff88" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Аудит безопасности</div>
-                                <div class="custom-select-option" data-value="vpn"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="vertical-align:middle;margin-right:6px"><rect x="4" y="7" width="8" height="7" rx="1" stroke="#00d4ff" stroke-width="1.2"/><path d="M6 7V5a2 2 0 014 0v2" stroke="#00d4ff" stroke-width="1.2" stroke-linecap="round"/><circle cx="8" cy="10.5" r="1" fill="#00d4ff"/></svg>VPN / Прокси сервер</div>
-                                <div class="custom-select-option" data-value="design"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="vertical-align:middle;margin-right:6px"><circle cx="8" cy="8" r="6" stroke="#00d4ff" stroke-width="1.2"/><circle cx="5" cy="7" r="1" fill="#f44"/><circle cx="8" cy="5" r="1" fill="#ff0"/><circle cx="11" cy="7" r="1" fill="#4f4"/><circle cx="9.5" cy="10" r="1" fill="#44f"/></svg>UI/UX / Графика / Брендинг</div>
+        <div class="docs-tabs">
+            <button class="docs-tab active" onclick="docsTab('tz',this)">01 / ТЗ</button>
+            <button class="docs-tab" onclick="docsTab('contract',this)">02 / Договор</button>
+            <button class="docs-tab" onclick="docsTab('grades',this)">03 / Грейды</button>
+        </div>
 
-                                <div class="custom-select-option" data-value="gamedev"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="vertical-align:middle;margin-right:6px"><rect x="1" y="5" width="14" height="8" rx="3" stroke="#00d4ff" stroke-width="1.2"/><line x1="6" y1="7" x2="6" y2="11" stroke="#00ff88" stroke-width="1.3" stroke-linecap="round"/><line x1="4" y1="9" x2="8" y2="9" stroke="#00ff88" stroke-width="1.3" stroke-linecap="round"/><circle cx="11" cy="8" r="0.8" fill="#00d4ff"/><circle cx="13" cy="10" r="0.8" fill="#00d4ff"/></svg>Разработка игр</div>
-                                <div class="custom-select-option" data-value="other"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="vertical-align:middle;margin-right:6px"><circle cx="8" cy="8" r="2.5" stroke="#00d4ff" stroke-width="1.2"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.41 1.41M11.54 11.54l1.41 1.41M3.05 12.95l1.41-1.41M11.54 4.46l1.41-1.41" stroke="#00d4ff" stroke-width="1.2" stroke-linecap="round"/></svg>Другое</div>
-                            </div>
-                        </div>
-                        <input type="hidden" id="serviceType">
-                    </div>
-                    <div class="fg"><label>Бюджет *</label>
-                        <div class="custom-select" id="csBudget">
-                            <div class="custom-select-trigger"><span class="custom-select-value">Укажите диапазон</span><span class="custom-select-arrow"><svg viewBox="0 0 12 12"><polyline points="2,4 6,8 10,4"/></svg></span></div>
-                            <div class="custom-select-dropdown">
-                                <div class="custom-select-option" data-value="lt50">До 5 000 руб.</div>
-                                <div class="custom-select-option" data-value="50-150">5 000 — 15 000 руб.</div>
-                                <div class="custom-select-option" data-value="150-500">15 000 — 50 000 руб.</div>
-                                <div class="custom-select-option" data-value="500-1500">50 000 — 150 000 руб.</div>
-                                <div class="custom-select-option" data-value="gt1500">150 000+ руб.</div>
-                                <div class="custom-select-option" data-value="discuss">Обсудим индивидуально</div>
-                            </div>
-                        </div>
-                        <input type="hidden" id="budgetRange">
-                    </div>
-                    <div class="fg"><label>Дедлайн</label>
-                        <div class="custom-select" id="csDeadline">
-                            <div class="custom-select-trigger"><span class="custom-select-value">Когда нужно?</span><span class="custom-select-arrow"><svg viewBox="0 0 12 12"><polyline points="2,4 6,8 10,4"/></svg></span></div>
-                            <div class="custom-select-dropdown">
-                                <div class="custom-select-option" data-value="asap"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="vertical-align:middle;margin-right:6px"><path d="M8 2c0 3-3 4-3 7a3 3 0 006 0c0-3-3-4-3-7z" stroke="#ff6b35" stroke-width="1.2"/><path d="M8 10c0 1-1 1.5-1 2.5a1 1 0 002 0C9 11.5 8 11 8 10z" fill="#ff6b35"/></svg>Срочно</div>
-                                <div class="custom-select-option" data-value="week">До 1 недели</div>
-                                <div class="custom-select-option" data-value="2weeks">1–2 недели</div>
-                                <div class="custom-select-option" data-value="month">До месяца</div>
-                                <div class="custom-select-option" data-value="flexible">Гибко</div>
-                            </div>
-                        </div>
-                        <input type="hidden" id="deadlinePref">
-                    </div>
-                    <div class="fg"><label>Описание проекта *</label><textarea id="message" required placeholder="Что нужно сделать? Чем подробнее — тем точнее оценка..." style="min-height:120px;"></textarea></div>
-                    <div class="fg"><label>Как вы нас нашли?</label>
-                        <div class="custom-select" id="csSource">
-                            <div class="custom-select-trigger"><span class="custom-select-value">Источник</span><span class="custom-select-arrow"><svg viewBox="0 0 12 12"><polyline points="2,4 6,8 10,4"/></svg></span></div>
-                            <div class="custom-select-dropdown">
-                                <div class="custom-select-option" data-value="tg">Telegram</div>
-                                <div class="custom-select-option" data-value="ref">По рекомендации</div>
-                                <div class="custom-select-option" data-value="search">Поиск</div>
-                                <div class="custom-select-option" data-value="social">Соцсети</div>
-                                <div class="custom-select-option" data-value="other">Другое</div>
-                            </div>
-                        </div>
-                        <input type="hidden" id="leadSource">
-                    </div>
-                    <button type="submit" class="submit-btn"><span>Отправить заявку</span></button>
-                </form>
-            </div>
+        <!-- ─── ТЗ ─── -->
+        <div class="docs-panel active" id="dp-tz">
+            <div class="form-panel" style="max-width:900px;">
+                <div class="form-panel-title">Техническое задание</div>
+                <div class="form-panel-sub">Заполните для нового заказа — ответим в течение нескольких часов</div>
 
-            <!-- JOIN FORM -->
-            <div class="form-panel" id="join">
-                <div class="form-panel-title">Вступить в команду</div>
-                <div class="form-panel-sub">Только сильные — рассматриваем в течение 24 ч</div>
-                <form id="joinForm">
-                    <div class="fg"><label>Telegram</label><input type="text" id="joinUsername" placeholder="@username" readonly style="opacity:0.6;cursor:default;"></div>
-                    <div class="fg"><label>Имя / Псевдоним *</label><input type="text" id="fullName" required placeholder="Иван / Псевдоним"></div>
-                    <div class="fg"><label>Специализация *</label>
-                        <div class="custom-select" id="csSpec">
-                            <div class="custom-select-trigger"><span class="custom-select-value">Выберите роль</span><span class="custom-select-arrow"><svg viewBox="0 0 12 12"><polyline points="2,4 6,8 10,4"/></svg></span></div>
-                            <div class="custom-select-dropdown">
-                                <div class="custom-select-option" data-value="frontend">Фронтенд разработчик</div>
-                                <div class="custom-select-option" data-value="backend">Бэкенд разработчик</div>
-                                <div class="custom-select-option" data-value="fullstack">Фулстек разработчик</div>
-                                <div class="custom-select-option" data-value="mobile">Мобильный разработчик</div>
-                                <div class="custom-select-option" data-value="designer">UI/UX Дизайнер</div>
-                                <div class="custom-select-option" data-value="security">Специалист по безопасности</div>
-                                <div class="custom-select-option" data-value="devops">DevOps инженер</div>
-                                <div class="custom-select-option" data-value="ai">AI/ML инженер</div>
-                                <div class="custom-select-option" data-value="gamedev">Разработчик игр</div>
-</div>
-                        </div>
-                        <input type="hidden" id="specialization">
+                <div class="section-label" style="margin-top:0;">Стороны и проект</div>
+                <div class="docs-grid cols2">
+                    <div class="docs-field"><label>Клиент</label><input type="text" id="tz_client" placeholder="Название / ФИО"></div>
+                    <div class="docs-field"><label>Контактное лицо</label><input type="text" id="tz_contact_name" placeholder="Имя"></div>
+                    <div class="docs-field"><label>Telegram / Email</label><input type="text" id="tz_contact" placeholder="@username или email"></div>
+                    <div class="docs-field"><label>Название проекта</label><input type="text" id="tz_project" placeholder="Например: Редизайн лендинга"></div>
+                </div>
+
+                <div class="section-label">Тип услуги</div>
+                <div class="docs-checks">
+                    <label class="docs-check"><input type="checkbox"><span class="chk"></span>Разработка</label>
+                    <label class="docs-check"><input type="checkbox"><span class="chk"></span>Пентест</label>
+                    <label class="docs-check"><input type="checkbox"><span class="chk"></span>Дизайн</label>
+                    <label class="docs-check"><input type="checkbox"><span class="chk"></span>VPN / Прокси</label>
+                    <label class="docs-check"><input type="checkbox"><span class="chk"></span>Боты</label>
+                </div>
+
+                <div class="section-label">Описание задачи</div>
+                <div class="docs-grid">
+                    <div class="docs-field"><label>Краткое описание</label><textarea id="tz_desc" placeholder="Что нужно сделать? Цель проекта, контекст..."></textarea></div>
+                </div>
+
+                <div class="section-label">Разработка</div>
+                <div class="docs-grid cols2">
+                    <div class="docs-field"><label>Стек технологий</label><input type="text" placeholder="React, Node.js, Python..."></div>
+                    <div class="docs-field"><label>Платформа</label>
+                        <select><option value="">— выбрать —</option><option>Web</option><option>Mobile</option><option>Desktop</option><option>API</option></select>
                     </div>
-                    <div class="fg"><label>Уровень *</label>
-                        <div class="level-btns" id="levelBtns">
-                            <button type="button" class="level-btn" data-val="Junior">Junior</button>
-                            <button type="button" class="level-btn" data-val="Middle">Middle</button>
-                            <button type="button" class="level-btn" data-val="Senior">Senior</button>
-                            <button type="button" class="level-btn" data-val="Lead">Lead</button>
-                        </div>
-                        <input type="hidden" id="levelField">
+                    <div class="docs-field"><label>Интеграции</label><input type="text" placeholder="Stripe, Telegram API..."></div>
+                    <div class="docs-field"><label>Репозиторий</label><input type="text" placeholder="GitHub / GitLab URL"></div>
+                </div>
+
+                <div class="section-label">Пентест</div>
+                <div class="docs-grid cols2">
+                    <div class="docs-field"><label>Scope (цели)</label><input type="text" placeholder="Домен, IP, приложение..."></div>
+                    <div class="docs-field"><label>Out of scope</label><input type="text" placeholder="Что исключить"></div>
+                    <div class="docs-field"><label>Тип</label>
+                        <select><option value="">— выбрать —</option><option>Black Box</option><option>Grey Box</option><option>White Box</option></select>
                     </div>
-                    <div class="fg"><label>Опыт (лет) *</label><input type="number" id="experience" required min="0" max="30" placeholder="3"></div>
-                    <div class="fg"><label>Доступность *</label>
-                        <div class="custom-select" id="csAvail">
-                            <div class="custom-select-trigger"><span class="custom-select-value">Формат работы</span><span class="custom-select-arrow"><svg viewBox="0 0 12 12"><polyline points="2,4 6,8 10,4"/></svg></span></div>
-                            <div class="custom-select-dropdown">
-                                <div class="custom-select-option" data-value="fulltime">Полная занятость</div>
-                                <div class="custom-select-option" data-value="parttime">Частичная занятость</div>
-                                <div class="custom-select-option" data-value="project">По проектам</div>
-                                <div class="custom-select-option" data-value="weekend">Подработка / выходные</div>
-                            </div>
-                        </div>
-                        <input type="hidden" id="availability">
+                    <div class="docs-field"><label>Окружение</label>
+                        <select><option value="">— выбрать —</option><option>Production</option><option>Staging</option><option>Dev</option></select>
                     </div>
-                    <div class="fg"><label>Часовой пояс *</label>
-                        <div class="custom-select" id="csTz">
-                            <div class="custom-select-trigger"><span class="custom-select-value">Ваш часовой пояс</span><span class="custom-select-arrow"><svg viewBox="0 0 12 12"><polyline points="2,4 6,8 10,4"/></svg></span></div>
-                            <div class="custom-select-dropdown">
-                                <div class="custom-select-option" data-value="UTC-5">UTC-5 (EST)</div>
-                                <div class="custom-select-option" data-value="UTC-4">UTC-4 (EDT)</div>
-                                <div class="custom-select-option" data-value="UTC+0">UTC+0 (Лондон)</div>
-                                <div class="custom-select-option" data-value="UTC+1">UTC+1 (Берлин, Варшава)</div>
-                                <div class="custom-select-option" data-value="UTC+2">UTC+2 (Киев, Рига)</div>
-                                <div class="custom-select-option" data-value="UTC+3">UTC+3 (Москва, Стамбул)</div>
-                                <div class="custom-select-option" data-value="UTC+4">UTC+4 (Баку, Дубай)</div>
-                                <div class="custom-select-option" data-value="UTC+5">UTC+5 (Ташкент)</div>
-                                <div class="custom-select-option" data-value="UTC+6">UTC+6 (Алматы)</div>
-                                <div class="custom-select-option" data-value="UTC+7">UTC+7 (Бангкок, Красноярск)</div>
-                                <div class="custom-select-option" data-value="UTC+8">UTC+8 (Пекин, Сингапур)</div>
-                            </div>
-                        </div>
-                        <input type="hidden" id="tzField">
+                </div>
+
+                <div class="section-label">Дизайн</div>
+                <div class="docs-grid cols3">
+                    <div class="docs-field"><label>Формат результата</label>
+                        <select><option value="">— выбрать —</option><option>Figma</option><option>PNG/SVG</option><option>PDF</option></select>
                     </div>
-                    <div class="fg"><label>Ожидаемая ставка</label>
-                        <div class="custom-select" id="csRate">
-                            <div class="custom-select-trigger"><span class="custom-select-value">$/час или fix</span><span class="custom-select-arrow"><svg viewBox="0 0 12 12"><polyline points="2,4 6,8 10,4"/></svg></span></div>
-                            <div class="custom-select-dropdown">
-                                <div class="custom-select-option" data-value="lt10">До 1 000 руб/ч</div>
-                                <div class="custom-select-option" data-value="10-25">1 000 — 2 500 руб/ч</div>
-                                <div class="custom-select-option" data-value="25-50">2 500 — 5 000 руб/ч</div>
-                                <div class="custom-select-option" data-value="50+">5 000+ руб/ч</div>
-                                <div class="custom-select-option" data-value="fix">Фикс за проект</div>
-                                <div class="custom-select-option" data-value="discuss">Обсуждаем</div>
-                            </div>
-                        </div>
-                        <input type="hidden" id="rateField">
+                    <div class="docs-field"><label>Бренд-гайдлайн</label>
+                        <select><option value="">— выбрать —</option><option>Есть</option><option>Нет</option><option>Нужно создать</option></select>
                     </div>
-                    <div class="fg"><label>Портфолио / GitHub *</label><input type="text" id="portfolio" required placeholder="https://github.com/username"></div>
-                    <div class="fg"><label>Ссылки (соцсети, Behance, etc.)</label><input type="text" id="socials" placeholder="https://..."></div>
-                    <div class="fg"><label>Ключевые навыки *</label><textarea id="skillsField" required placeholder="Python, React, Docker, Burp Suite..."></textarea></div>
-                    <div class="fg"><label>Почему Thin Lucid? *</label><textarea id="motivation" required placeholder="Чем можете усилить команду? Что ищете?" style="min-height:100px;"></textarea></div>
-                    <button type="submit" class="submit-btn"><span>Подать заявку</span></button>
-                </form>
+                    <div class="docs-field"><label>Кол-во экранов</label><input type="number" placeholder="0"></div>
+                </div>
+
+                <div class="section-label">Сроки и оплата</div>
+                <div class="docs-grid cols3">
+                    <div class="docs-field"><label>Дата старта</label><input type="date"></div>
+                    <div class="docs-field"><label>Дедлайн</label><input type="date"></div>
+                    <div class="docs-field"><label>Бюджет</label><input type="text" placeholder="Сумма + валюта"></div>
+                </div>
+                <div class="docs-grid cols2">
+                    <div class="docs-field"><label>Схема оплаты</label>
+                        <select><option>50% / 50%</option><option>100% предоплата</option><option>По этапам</option></select>
+                    </div>
+                    <div class="docs-field"><label>Способ оплаты</label><input type="text" placeholder="Карта, крипто..."></div>
+                </div>
+
+                <div class="docs-btn-row">
+                    <button class="btn-primary" onclick="submitTZDoc()">Отправить ТЗ</button>
+                    <button class="btn-ghost" onclick="clearDocs('dp-tz')">Сбросить</button>
+                </div>
             </div>
         </div>
+
+        <!-- ─── ДОГОВОР ─── -->
+        <div class="docs-panel" id="dp-contract">
+            <div class="form-panel" style="max-width:900px;">
+                <div class="form-panel-title">Договор на оказание услуг</div>
+                <div class="form-panel-sub">Заполните данные — проверьте реквизиты перед подписанием</div>
+
+                <div class="section-label">Реквизиты</div>
+                <div class="docs-grid cols2">
+                    <div class="docs-field"><label>Номер договора</label><input type="text" placeholder="TL-2025-001"></div>
+                    <div class="docs-field"><label>Дата договора</label><input type="date"></div>
+                    <div class="docs-field"><label>Исполнитель</label><input type="text" placeholder="Thin Lucid Agency"></div>
+                    <div class="docs-field"><label>ИНН / Рег. номер</label><input type="text" placeholder="00000000000"></div>
+                    <div class="docs-field"><label>Заказчик</label><input type="text" placeholder="Название / ФИО"></div>
+                    <div class="docs-field"><label>ИНН заказчика</label><input type="text" placeholder="00000000000"></div>
+                </div>
+
+                <div class="section-label">Предмет</div>
+                <div class="docs-grid">
+                    <div class="docs-field"><label>Описание услуг</label><textarea placeholder="Исполнитель обязуется оказать..."></textarea></div>
+                    <div class="docs-field"><label>Результат (deliverable)</label><input type="text" placeholder="Что именно передаётся заказчику"></div>
+                </div>
+
+                <div class="section-label">Финансы</div>
+                <div class="docs-grid cols2">
+                    <div class="docs-field"><label>Общая стоимость</label><input type="text" placeholder="Сумма прописью и цифрами"></div>
+                    <div class="docs-field"><label>Предоплата</label><input type="text" placeholder="50% = ..."></div>
+                    <div class="docs-field"><label>Финальная оплата</label><input type="text" placeholder="50% = ..."></div>
+                    <div class="docs-field"><label>Способ оплаты</label><input type="text" placeholder="Карта / Перевод / Крипто"></div>
+                </div>
+
+                <div class="section-label">Сроки</div>
+                <div class="docs-grid cols2">
+                    <div class="docs-field"><label>Дата начала работ</label><input type="date"></div>
+                    <div class="docs-field"><label>Дата завершения</label><input type="date"></div>
+                </div>
+
+                <div class="section-label">Стандартные условия</div>
+                <table class="docs-table">
+                    <thead><tr><th>Пункт</th><th>Условие</th></tr></thead>
+                    <tbody>
+                        <tr><td>Конфиденциальность</td><td>Не разглашать данные 3 года. Портфолио — с разрешения заказчика.</td></tr>
+                        <tr><td>Ответственность</td><td>Пеня 0.1% за каждый день просрочки. Лимит — сумма договора.</td></tr>
+                        <tr><td>Гарантия</td><td>Устранение дефектов в течение 14 дней после приёмки.</td></tr>
+                        <tr><td>Расторжение</td><td>Клиент — уведомление за 7 дней + оплата выполненного. Исполнитель — при просрочке &gt;14 дней.</td></tr>
+                        <tr><td>Форс-мажор</td><td>Стороны освобождаются от ответственности при обстоятельствах непреодолимой силы.</td></tr>
+                    </tbody>
+                </table>
+
+                <div class="section-label">Подписи</div>
+                <div class="docs-grid cols2">
+                    <div class="docs-field"><label>Подпись исполнителя / дата</label><input type="text" placeholder="_________________ / __.__.____"></div>
+                    <div class="docs-field"><label>Подпись заказчика / дата</label><input type="text" placeholder="_________________ / __.__.____"></div>
+                </div>
+
+                <div class="docs-btn-row">
+                    <button class="btn-primary" onclick="window.print()">Распечатать</button>
+                    <button class="btn-ghost" onclick="clearDocs('dp-contract')">Сбросить</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── ГРЕЙДЫ ─── -->
+        <div class="docs-panel" id="dp-grades">
+
+            <div class="section-label">Разработка</div>
+            <div class="grade-grid">
+                <div class="grade-card gj"><div class="grade-bg-letter">J</div><div class="grade-badge">Junior</div><ul class="grade-list"><li>Основной язык (JS / Python / PHP)</li><li>Git базовые команды</li><li>HTML / CSS базово</li><li>Понимание REST API</li><li>Работает под надзором</li></ul></div>
+                <div class="grade-card gm"><div class="grade-bg-letter">M</div><div class="grade-badge">Middle</div><ul class="grade-list"><li>Уверенный стек (фронт / бек)</li><li>SQL / NoSQL базы данных</li><li>Docker, CI/CD базово</li><li>Написание тестов</li><li>Ведёт модуль самостоятельно</li></ul></div>
+                <div class="grade-card gs"><div class="grade-bg-letter">S</div><div class="grade-badge">Senior</div><ul class="grade-list"><li>Архитектурные решения</li><li>Полный стек + DevOps</li><li>Security-first подход</li><li>Code review, менторство</li><li>Ведёт проект целиком</li></ul></div>
+            </div>
+
+            <div class="section-label">Пентест</div>
+            <div class="grade-grid">
+                <div class="grade-card gj"><div class="grade-bg-letter">J</div><div class="grade-badge">Junior</div><ul class="grade-list"><li>Kali Linux, Nmap, Burp Suite</li><li>OWASP Top 10 базово</li><li>CTF: HackTheBox / OverTheWire</li><li>Разведка под надзором</li></ul></div>
+                <div class="grade-card gm"><div class="grade-bg-letter">M</div><div class="grade-badge">Middle</div><ul class="grade-list"><li>Web, Network, Social Engineering</li><li>Metasploit, SQLmap, Nikto</li><li>Написание отчётов</li><li>Web pentest самостоятельно</li></ul></div>
+                <div class="grade-card gs"><div class="grade-bg-letter">S</div><div class="grade-badge">Senior</div><ul class="grade-list"><li>Red Team операции</li><li>OSCP / CEH / eWPT</li><li>Кастомные эксплойты, bypass WAF</li><li>Remediation-консультации</li></ul></div>
+            </div>
+
+            <div class="section-label">Дизайн</div>
+            <div class="grade-grid">
+                <div class="grade-card gj"><div class="grade-bg-letter">J</div><div class="grade-badge">Junior</div><ul class="grade-list"><li>Figma базово, Adobe XD</li><li>Типографика, сетка, цвет</li><li>Баннеры, иконки, правки</li><li>Работает по гайдлайнам</li></ul></div>
+                <div class="grade-card gm"><div class="grade-bg-letter">M</div><div class="grade-badge">Middle</div><ul class="grade-list"><li>Figma компоненты, автолейаут</li><li>UX-принципы, прототипы</li><li>Design Systems</li><li>UI Kit, экраны приложения</li></ul></div>
+                <div class="grade-card gs"><div class="grade-bg-letter">S</div><div class="grade-badge">Senior</div><ul class="grade-list"><li>Branding, Motion, UX Research</li><li>Figma Variables, dev handoff</li><li>Стратегическое мышление</li><li>Полный дизайн продукта</li></ul></div>
+            </div>
+
+            <div class="section-label">Процедура найма</div>
+            <div class="hire-steps">
+                <div class="hire-step"><div class="hire-step-num">01</div><div class="hire-step-body"><div class="hire-step-title">Тестовое задание</div><div class="hire-step-desc">Практическая задача по направлению. Время выполнения: 60–90 минут.</div></div></div>
+                <div class="hire-step"><div class="hire-step-num">02</div><div class="hire-step-body"><div class="hire-step-title">Технический разбор</div><div class="hire-step-desc">Разбор решения с ведущим специалистом.</div></div></div>
+                <div class="hire-step"><div class="hire-step-num">03</div><div class="hire-step-body"><div class="hire-step-title">Портфолио / GitHub</div><div class="hire-step-desc">Реальные проекты из опыта. GitHub / Behance / сертификаты.</div></div></div>
+                <div class="hire-step"><div class="hire-step-num">04</div><div class="hire-step-body"><div class="hire-step-title">Soft Skills</div><div class="hire-step-desc">Коммуникация, дедлайны, ответственность.</div></div></div>
+                <div class="hire-step"><div class="hire-step-num">05</div><div class="hire-step-body"><div class="hire-step-title">Итоговый грейд</div><div class="hire-step-desc">Присваивается J / M / S с условиями сотрудничества.</div></div></div>
+            </div>
+
+            <div class="section-label">Карточка сотрудника</div>
+            <div class="form-panel" style="max-width:900px;">
+                <div class="form-panel-sub">Заполнять при найме</div>
+                <div class="docs-grid cols2">
+                    <div class="docs-field"><label>Имя / Псевдоним</label><input type="text" placeholder="Никнейм или имя"></div>
+                    <div class="docs-field"><label>Telegram</label><input type="text" placeholder="@username"></div>
+                    <div class="docs-field"><label>Направление</label>
+                        <select><option value="">— выбрать —</option><option>Разработка</option><option>Пентест</option><option>Дизайн</option></select>
+                    </div>
+                    <div class="docs-field"><label>Грейд</label>
+                        <select><option value="">— выбрать —</option><option>Junior</option><option>Middle</option><option>Senior</option></select>
+                    </div>
+                    <div class="docs-field"><label>Дата вступления</label><input type="date"></div>
+                    <div class="docs-field"><label>Результат проверки</label>
+                        <select><option value="">— выбрать —</option><option>Пройдена</option><option>Не пройдена</option><option>На пересмотре</option></select>
+                    </div>
+                    <div class="docs-field" style="grid-column:1/-1"><label>Примечания</label><textarea placeholder="Специализация, ограничения, доп. инфо..."></textarea></div>
+                </div>
+                <div class="docs-btn-row">
+                    <button class="btn-primary" onclick="window.print()">Распечатать</button>
+                </div>
+            </div>
+        </div>
+
     </div>
 </section>
+
+
+
+<!-- ═══ FOOTER ═══ -->
 <footer>
     <a href="#hero" class="logo-svg"><svg width="22" height="22" viewBox="0 0 28 28" fill="none"><defs><radialGradient id="sphereGradF" cx="38%" cy="35%" r="60%"><stop offset="0%" stop-color="#00ff88" stop-opacity="0.35"/><stop offset="100%" stop-color="#00d4ff" stop-opacity="0.05"/></radialGradient></defs><circle cx="14" cy="14" r="12" stroke="#00ff88" stroke-width="1.2" fill="url(#sphereGradF)"/><ellipse cx="14" cy="14" rx="12" ry="4.5" stroke="#00d4ff" stroke-width="0.8" fill="none" opacity="0.7"/><ellipse cx="14" cy="14" rx="4.5" ry="12" stroke="#00d4ff" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="14" cy="14" r="2" fill="#00ff88"/></svg><span class="logo-text">THIN LUCID</span></a>
     <p>© 2025 Thin Lucid Agency. Все права защищены.</p>
 </footer>
+
 <div class="overlay" id="overlay"></div>
 <div class="success-msg" id="successMsg"><h2>Заявка отправлена</h2><p>Мы свяжемся с вами в ближайшее время.</p></div>
+
 <script>
 window.addEventListener('load', function() {
-setTimeout(function() { var l = document.getElementById('loader'); if (l) l.classList.add('hidden'); }, 1200);
-var bgC = document.getElementById('bg-canvas');
-if (bgC) {
-    var bgCtx = bgC.getContext('2d');
-    function resizeBg() { bgC.width = innerWidth; bgC.height = innerHeight; }
-    resizeBg(); window.addEventListener('resize', resizeBg);
-    var pts = [];
-    for (var i = 0; i < 80; i++) pts.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,vx:(Math.random()-0.5)*0.3,vy:(Math.random()-0.5)*0.3});
-    function animBg() {
-        bgCtx.clearRect(0,0,bgC.width,bgC.height);
-        pts.forEach(function(p){p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>bgC.width)p.vx*=-1;if(p.y<0||p.y>bgC.height)p.vy*=-1;bgCtx.beginPath();bgCtx.arc(p.x,p.y,1.2,0,Math.PI*2);bgCtx.fillStyle='rgba(0,255,136,0.25)';bgCtx.fill();});
-        for(var i=0;i<pts.length;i++){for(var j=i+1;j<pts.length;j++){var dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<130){bgCtx.beginPath();bgCtx.moveTo(pts[i].x,pts[i].y);bgCtx.lineTo(pts[j].x,pts[j].y);bgCtx.strokeStyle='rgba(0,212,255,'+(0.12*(1-d/130))+')';bgCtx.lineWidth=0.5;bgCtx.stroke();}}}
-        requestAnimationFrame(animBg);
-    }
-    animBg();
-}
-var lastY=0,nav=document.querySelector('nav');
-window.addEventListener('scroll',function(){var y=window.scrollY;if(nav){if(y>lastY&&y>80)nav.classList.add('hidden');else nav.classList.remove('hidden');}lastY=y;});
-document.querySelectorAll('.acc-header').forEach(function(header){header.addEventListener('click',function(){var item=header.parentElement,wasOpen=item.classList.contains('open');document.querySelectorAll('.acc-item').forEach(function(i){i.classList.remove('open');});if(!wasOpen)item.classList.add('open');});});
-(function(){
-    var CDN='https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/';
-    var techs=[{url:CDN+'javascript/javascript-original.svg',name:'JavaScript'},{url:CDN+'typescript/typescript-original.svg',name:'TypeScript'},{url:CDN+'python/python-original.svg',name:'Python'},{url:CDN+'go/go-original-wordmark.svg',name:'Go'},{url:CDN+'cplusplus/cplusplus-original.svg',name:'C++'},{url:CDN+'react/react-original.svg',name:'React'},{url:CDN+'html5/html5-original.svg',name:'HTML5'},{url:CDN+'css3/css3-original.svg',name:'CSS3'},{url:CDN+'docker/docker-original.svg',name:'Docker'},{url:CDN+'kubernetes/kubernetes-original.svg',name:'Kubernetes'},{url:CDN+'amazonwebservices/amazonwebservices-original-wordmark.svg',name:'AWS'},{url:CDN+'nodejs/nodejs-original-wordmark.svg',name:'Node.js'},{url:CDN+'git/git-original.svg',name:'Git'},{url:CDN+'postgresql/postgresql-original.svg',name:'PostgreSQL'},{url:CDN+'redis/redis-original.svg',name:'Redis'}];
-    var grid=document.getElementById('techLogosGrid');
-    if(!grid)return;
-    techs.forEach(function(tech,i){var item=document.createElement('div');item.className='tech-logo-item';item.style.transition='opacity 0.5s '+(i*0.06)+'s, transform 0.5s '+(i*0.06)+'s, border-color 0.25s, background 0.25s';var img=document.createElement('img');img.src=tech.url;img.alt=tech.name;img.loading='lazy';var label=document.createElement('span');label.textContent=tech.name;item.appendChild(img);item.appendChild(label);grid.appendChild(item);});
-    var observer=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){grid.querySelectorAll('.tech-logo-item').forEach(function(item){item.classList.add('visible');});observer.disconnect();}});},{threshold:0.15});
-    observer.observe(grid);
-})();
-var tg=window.Telegram&&window.Telegram.WebApp;
-if(tg){tg.ready();tg.expand();if(tg.colorScheme==='light'){document.documentElement.style.setProperty('--bg','#f0f0f5');document.documentElement.style.setProperty('--card','#ffffff');document.documentElement.style.setProperty('--txt','#1a1a2e');document.documentElement.style.setProperty('--muted','#888899');}var user=tg.initDataUnsafe&&tg.initDataUnsafe.user;if(user){var uname=user.username?'@'+user.username:(user.first_name+(user.last_name?' '+user.last_name:''));var uField=document.getElementById('username'),jField=document.getElementById('joinUsername'),fnField=document.getElementById('fullName');if(uField)uField.value=uname;if(jField)jField.value=uname;if(fnField&&!fnField.value)fnField.value=user.first_name+(user.last_name?' '+user.last_name:'');}}
-(function(){
-  function initSelect(id,hiddenId){var cs=document.getElementById(id),hidden=document.getElementById(hiddenId);if(!cs)return;var trigger=cs.querySelector('.custom-select-trigger'),valueEl=cs.querySelector('.custom-select-value'),options=cs.querySelectorAll('.custom-select-option');trigger.addEventListener('click',function(e){e.stopPropagation();cs.classList.toggle('open');});options.forEach(function(opt){opt.addEventListener('click',function(){options.forEach(function(o){o.classList.remove('selected');});opt.classList.add('selected');valueEl.textContent=opt.textContent.trim();trigger.classList.add('has-value');if(hidden)hidden.value=opt.getAttribute('data-value');cs.classList.remove('open');});});document.addEventListener('click',function(){cs.classList.remove('open');});cs.addEventListener('click',function(e){e.stopPropagation();});}
-  initSelect('csService','serviceType');initSelect('csBudget','budgetRange');initSelect('csDeadline','deadlinePref');initSelect('csSource','leadSource');initSelect('csSpec','specialization');initSelect('csAvail','availability');initSelect('csRate','rateField');initSelect('csTz','tzField');
-  document.querySelectorAll('.level-btn').forEach(function(btn){btn.addEventListener('click',function(){document.querySelectorAll('.level-btn').forEach(function(b){b.classList.remove('active');});btn.classList.add('active');document.getElementById('levelField').value=btn.getAttribute('data-val');});});
-})();
-var TG_TOKEN='8759243252:AAGcMEARFHLaWpFDCghswusg2hbcjnBW9nw';
-var TG_CHAT='-1003846908224';
-function sendToTelegram(text,btn){btn.disabled=true;btn.querySelector('span').textContent='Отправка...';return fetch('https://api.telegram.org/bot'+TG_TOKEN+'/sendMessage',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:TG_CHAT,text:text,parse_mode:'HTML'})}).then(function(r){return r.json();}).then(function(data){btn.disabled=false;btn.querySelector('span').textContent='Отправить';if(data.ok){if(tg){tg.HapticFeedback.notificationOccurred('success');}showSuccess();}else{alert('Ошибка: '+(data.description||'попробуйте ещё раз'));}}).catch(function(){btn.disabled=false;btn.querySelector('span').textContent='Отправить';alert('Ошибка сети. Проверьте соединение.');});}
-function showSuccess(){document.getElementById('overlay').classList.add('show');document.getElementById('successMsg').classList.add('show');setTimeout(function(){document.getElementById('overlay').classList.remove('show');document.getElementById('successMsg').classList.remove('show');},3000);}
-var cf=document.getElementById('contactForm');
-if(cf)cf.addEventListener('submit',function(e){e.preventDefault();var username=document.getElementById('username').value.trim(),serviceType=document.getElementById('serviceType').value||'—',budgetRange=document.getElementById('budgetRange').value||'—',deadlinePref=document.getElementById('deadlinePref').value||'—',leadSource=document.getElementById('leadSource').value||'—',message=document.getElementById('message').value.trim();var text='<b>Новая заявка — Услуги</b>\n\n <b>Telegram:</b> '+username+'\n<b>Услуга:</b> '+serviceType+'\n<b>Бюджет:</b> '+budgetRange+'\n<b>Дедлайн:</b> '+deadlinePref+'\n<b>Источник:</b> '+leadSource+'\n\n <b>Описание:</b>\n'+message;var btn=cf.querySelector('button[type="submit"]');sendToTelegram(text,btn).then(function(){cf.reset();});});
-var jf=document.getElementById('joinForm');
-if(jf)jf.addEventListener('submit',function(e){
-  e.preventDefault();
-  var tgUser=tg&&tg.initDataUnsafe&&tg.initDataUnsafe.user;
-  var userId=tgUser?tgUser.id:null;
-  var username=document.getElementById('joinUsername').value.trim(),fullName=document.getElementById('fullName').value.trim(),spec=document.getElementById('specialization').value||'—',level=document.getElementById('levelField').value||'—',exp=document.getElementById('experience').value||'—',avail=document.getElementById('availability').value||'—',rate=document.getElementById('rateField').value||'—',tz=document.getElementById('tzField').value||'—',portfolio=document.getElementById('portfolio').value.trim(),socials=document.getElementById('socials').value.trim()||'—',skills=document.getElementById('skillsField').value.trim(),motivation=document.getElementById('motivation').value.trim();
-  var text='<b>Новая заявка — Команда</b>\n\n<b>Telegram:</b> '+username+'\n<b>Имя:</b> '+fullName+'\n<b>Роль:</b> '+spec+'\n<b>Уровень:</b> '+level+'\n<b>Опыт:</b> '+exp+' лет\n<b>Доступность:</b> '+avail+'\n<b>Ставка:</b> '+rate+'\n<b>Часовой пояс:</b> '+tz+'\n<b>Портфолио:</b> '+portfolio+'\n<b>Соцсети:</b> '+socials+'\n\n<b>Навыки:</b>\n'+skills+'\n\n<b>Мотивация:</b>\n'+motivation;
-  var btn=jf.querySelector('button[type="submit"]');
-  btn.disabled=true;btn.querySelector('span').textContent='Отправка...';
-  // Добавляем user_id в текст чтобы бот мог отправить кнопки
-  var fullText = text + (userId ? '\n\n#uid:'+userId : '');
-  fetch('https://api.telegram.org/bot'+TG_TOKEN+'/sendMessage',{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({chat_id:TG_CHAT,text:fullText,parse_mode:'HTML'})
-  })
-    .then(function(r){return r.json();})
-    .then(function(data){
-      btn.disabled=false;btn.querySelector('span').textContent='Подать заявку';
-      if(data.ok){
-        // Теперь просим бот добавить кнопки через отдельный запрос
-        if(userId){
-          fetch('https://api.telegram.org/bot'+TG_TOKEN+'/editMessageReplyMarkup',{
-            method:'POST',
-            headers:{'Content-Type':'application/json'},
-            body:JSON.stringify({
-              chat_id:TG_CHAT,
-              message_id:data.result.message_id,
-              reply_markup:{inline_keyboard:[[
-                {text:'✅ Принять',callback_data:'approve:'+userId},
-                {text:'❌ Отказать',callback_data:'reject:'+userId}
-              ]]}
-            })
-          });
+    setTimeout(function() { var l = document.getElementById('loader'); if (l) l.classList.add('hidden'); }, 1200);
+
+    // Canvas bg
+    var bgC = document.getElementById('bg-canvas');
+    if (bgC) {
+        var bgCtx = bgC.getContext('2d');
+        function resizeBg() { bgC.width = innerWidth; bgC.height = innerHeight; }
+        resizeBg(); window.addEventListener('resize', resizeBg);
+        var pts = [];
+        for (var i = 0; i < 80; i++) pts.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,vx:(Math.random()-0.5)*0.3,vy:(Math.random()-0.5)*0.3});
+        function animBg() {
+            bgCtx.clearRect(0,0,bgC.width,bgC.height);
+            pts.forEach(function(p){p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>bgC.width)p.vx*=-1;if(p.y<0||p.y>bgC.height)p.vy*=-1;bgCtx.beginPath();bgCtx.arc(p.x,p.y,1.2,0,Math.PI*2);bgCtx.fillStyle='rgba(0,255,136,0.25)';bgCtx.fill();});
+            for(var i=0;i<pts.length;i++){for(var j=i+1;j<pts.length;j++){var dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<130){bgCtx.beginPath();bgCtx.moveTo(pts[i].x,pts[i].y);bgCtx.lineTo(pts[j].x,pts[j].y);bgCtx.strokeStyle='rgba(0,212,255,'+(0.12*(1-d/130))+')';bgCtx.lineWidth=0.5;bgCtx.stroke();}}}
+            requestAnimationFrame(animBg);
         }
-        if(tg)tg.HapticFeedback.notificationOccurred('success');
-        showSuccess();
-        jf.reset();
-        document.getElementById('levelField').value='';
-        document.querySelectorAll('.level-btn').forEach(function(b){b.classList.remove('active');});
-      } else {
-        alert('Ошибка: '+(data.description||'попробуйте ещё раз'));
-      }
-    })
-    .catch(function(err){btn.disabled=false;btn.querySelector('span').textContent='Подать заявку';alert('Ошибка сети: '+err);});
+        animBg();
+    }
+
+    // Nav hide on scroll
+    var lastY=0,nav=document.querySelector('nav');
+    window.addEventListener('scroll',function(){var y=window.scrollY;if(nav){if(y>lastY&&y>80)nav.style.transform='translateY(-100%)';else nav.style.transform='';}lastY=y;});
+
+    // Accordion
+    document.querySelectorAll('.acc-header').forEach(function(header){
+        header.addEventListener('click',function(){
+            var item=header.parentElement,wasOpen=item.classList.contains('open');
+            document.querySelectorAll('.acc-item').forEach(function(i){i.classList.remove('open');});
+            if(!wasOpen)item.classList.add('open');
+        });
+    });
+
+    // Tech logos
+    (function(){
+        var CDN='https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/';
+        var techs=[{url:CDN+'javascript/javascript-original.svg',name:'JavaScript'},{url:CDN+'typescript/typescript-original.svg',name:'TypeScript'},{url:CDN+'python/python-original.svg',name:'Python'},{url:CDN+'go/go-original-wordmark.svg',name:'Go'},{url:CDN+'cplusplus/cplusplus-original.svg',name:'C++'},{url:CDN+'react/react-original.svg',name:'React'},{url:CDN+'html5/html5-original.svg',name:'HTML5'},{url:CDN+'css3/css3-original.svg',name:'CSS3'},{url:CDN+'docker/docker-original.svg',name:'Docker'},{url:CDN+'kubernetes/kubernetes-original.svg',name:'Kubernetes'},{url:CDN+'amazonwebservices/amazonwebservices-original-wordmark.svg',name:'AWS'},{url:CDN+'nodejs/nodejs-original-wordmark.svg',name:'Node.js'},{url:CDN+'git/git-original.svg',name:'Git'},{url:CDN+'postgresql/postgresql-original.svg',name:'PostgreSQL'},{url:CDN+'redis/redis-original.svg',name:'Redis'}];
+        var grid=document.getElementById('techLogosGrid');
+        if(!grid)return;
+        techs.forEach(function(tech,i){var item=document.createElement('div');item.className='tech-logo-item';item.style.transition='opacity 0.5s '+(i*0.06)+'s, transform 0.5s '+(i*0.06)+'s, border-color 0.25s, background 0.25s';var img=document.createElement('img');img.src=tech.url;img.alt=tech.name;img.loading='lazy';var label=document.createElement('span');label.textContent=tech.name;item.appendChild(img);item.appendChild(label);grid.appendChild(item);});
+        var observer=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){grid.querySelectorAll('.tech-logo-item').forEach(function(item){item.classList.add('visible');});observer.disconnect();}});},{threshold:0.15});
+        observer.observe(grid);
+    })();
+
+    // Telegram WebApp
+    var tg=window.Telegram&&window.Telegram.WebApp;
+    if(tg){tg.ready();tg.expand();var user=tg.initDataUnsafe&&tg.initDataUnsafe.user;if(user){var uname=user.username?'@'+user.username:(user.first_name+(user.last_name?' '+user.last_name:''));var uField=document.getElementById('username'),jField=document.getElementById('joinUsername'),fnField=document.getElementById('fullName');if(uField)uField.value=uname;if(jField)jField.value=uname;if(fnField&&!fnField.value)fnField.value=user.first_name+(user.last_name?' '+user.last_name:'');}}
+
+    // Custom selects
+    function initSelect(id,hiddenId){
+        var cs=document.getElementById(id),hidden=document.getElementById(hiddenId);
+        if(!cs)return;
+        var trigger=cs.querySelector('.custom-select-trigger'),valueEl=cs.querySelector('.custom-select-value'),options=cs.querySelectorAll('.custom-select-option');
+        trigger.addEventListener('click',function(e){e.stopPropagation();cs.classList.toggle('open');});
+        options.forEach(function(opt){opt.addEventListener('click',function(){options.forEach(function(o){o.classList.remove('selected');});opt.classList.add('selected');valueEl.textContent=opt.textContent.trim();trigger.classList.add('has-value');if(hidden)hidden.value=opt.getAttribute('data-value');cs.classList.remove('open');});});
+        document.addEventListener('click',function(){cs.classList.remove('open');});
+        cs.addEventListener('click',function(e){e.stopPropagation();});
+    }
+    initSelect('csService','serviceType');
+    initSelect('csBudget','budgetRange');
+    initSelect('csDeadline','deadlinePref');
+    initSelect('csPayment','paymentScheme');
+    initSelect('csSource','leadSource');
+    initSelect('csSpec','specialization');
+    initSelect('csAvail','availability');
+
+    // Level buttons
+    document.querySelectorAll('.level-btn').forEach(function(btn){
+        btn.addEventListener('click',function(){
+            document.querySelectorAll('.level-btn').forEach(function(b){b.classList.remove('active');});
+            btn.classList.add('active');
+            document.getElementById('levelField').value=btn.getAttribute('data-val');
+        });
+    });
+
+    // Telegram send
+    var TG_TOKEN='8759243252:AAGcMEARFHLaWpFDCghswusg2hbcjnBW9nw';
+    var TG_CHAT='-1003846908224';
+
+    function showSuccess(){document.getElementById('overlay').classList.add('show');document.getElementById('successMsg').classList.add('show');setTimeout(function(){document.getElementById('overlay').classList.remove('show');document.getElementById('successMsg').classList.remove('show');},3000);}
+
+    function sendTG(text, btnId, resetFn) {
+        var btn = document.getElementById(btnId);
+        btn.disabled=true; btn.querySelector('span').textContent='Отправка...';
+        fetch('https://api.telegram.org/bot'+TG_TOKEN+'/sendMessage',{
+            method:'POST', headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({chat_id:TG_CHAT, text:text, parse_mode:'HTML'})
+        })
+        .then(function(r){return r.json();})
+        .then(function(data){
+            btn.disabled=false; btn.querySelector('span').textContent=btn.id==='tzSubmitBtn'?'Отправить ТЗ':'Подать заявку';
+            if(data.ok){ showSuccess(); if(resetFn)resetFn(); }
+            else{ alert('Ошибка: '+(data.description||'попробуйте ещё раз')); }
+        })
+        .catch(function(){ btn.disabled=false; btn.querySelector('span').textContent='Ошибка'; alert('Ошибка сети.'); });
+    }
+
+    window.submitTZDoc = function() {
+        var client = document.getElementById('tz_client').value.trim();
+        var contact = document.getElementById('tz_contact').value.trim();
+        var project = document.getElementById('tz_project').value.trim();
+        var desc = document.getElementById('tz_desc') ? document.getElementById('tz_desc').value.trim() : '';
+        if(!client||!contact||!project){alert('Заполните обязательные поля');return;}
+        var checks = [];
+        document.querySelectorAll('#dp-tz .docs-check input:checked').forEach(function(c){ checks.push(c.closest('.docs-check').textContent.trim()); });
+        var text = '📋 <b>Новое ТЗ — Thin Lucid</b>\n\n'+
+            '<b>Клиент:</b> '+client+'\n'+
+            '<b>Контакт:</b> '+contact+'\n'+
+            '<b>Проект:</b> '+project+'\n'+
+            '<b>Услуги:</b> '+(checks.join(', ')||'—')+'\n\n'+
+            '<b>Описание:</b>\n'+(desc||'—');
+        var TG_TOKEN='8759243252:AAGcMEARFHLaWpFDCghswusg2hbcjnBW9nw';
+        var TG_CHAT='-1003846908224';
+        fetch('https://api.telegram.org/bot'+TG_TOKEN+'/sendMessage',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:TG_CHAT,text:text,parse_mode:'HTML'})})
+        .then(function(r){return r.json();}).then(function(d){if(d.ok){document.getElementById('overlay').classList.add('show');document.getElementById('successMsg').classList.add('show');setTimeout(function(){document.getElementById('overlay').classList.remove('show');document.getElementById('successMsg').classList.remove('show');},3000);}else{alert('Ошибка отправки');}});
+    };
+    window.submitTZ = function() {
+        var client = document.getElementById('tz_client').value.trim();
+        var contact = document.getElementById('tz_contact').value.trim();
+        var project = document.getElementById('tz_project').value.trim();
+        var service = document.getElementById('serviceType').value;
+        var desc = document.getElementById('tz_desc').value.trim();
+        var budget = document.getElementById('budgetRange').value;
+        var deadline = document.getElementById('deadlinePref').value;
+        var payment = document.getElementById('paymentScheme').value;
+        var source = document.getElementById('leadSource').value;
+        if(!client||!contact||!project||!service||!desc){alert('Заполните все обязательные поля *');return;}
+        var text = '📋 <b>Новое ТЗ — Thin Lucid</b>\n\n'+
+            '<b>Клиент:</b> '+client+'\n'+
+            '<b>Контакт:</b> '+contact+'\n'+
+            '<b>Проект:</b> '+project+'\n'+
+            '<b>Услуга:</b> '+(service||'—')+'\n'+
+            '<b>Бюджет:</b> '+(budget||'—')+'\n'+
+            '<b>Дедлайн:</b> '+(deadline||'—')+'\n'+
+            '<b>Оплата:</b> '+(payment||'—')+'\n'+
+            '<b>Источник:</b> '+(source||'—')+'\n\n'+
+            '<b>Описание:</b>\n'+desc;
+        sendTG(text,'tzSubmitBtn',function(){
+            ['tz_client','tz_contact','tz_project','tz_desc'].forEach(function(id){document.getElementById(id).value='';});
+            ['serviceType','budgetRange','deadlinePref','paymentScheme','leadSource'].forEach(function(id){document.getElementById(id).value='';});
+            ['csService','csBudget','csDeadline','csPayment','csSource'].forEach(function(id){
+                var cs=document.getElementById(id);if(cs){cs.querySelector('.custom-select-value').textContent=cs.querySelector('.custom-select-trigger').textContent.trim().split('\n')[0];cs.querySelector('.custom-select-trigger').classList.remove('has-value');}
+            });
+        });
+    };
+
+    window.submitJoin = function() {
+        var name = document.getElementById('emp_name').value.trim();
+        var tg = document.getElementById('emp_tg').value.trim();
+        var spec = document.getElementById('specialization').value;
+        var level = document.getElementById('levelField').value;
+        var exp = document.getElementById('emp_exp').value;
+        var avail = document.getElementById('availability').value;
+        var portfolio = document.getElementById('emp_portfolio').value.trim();
+        var skills = document.getElementById('emp_skills').value.trim();
+        var motivation = document.getElementById('emp_motivation').value.trim();
+        if(!name||!tg||!spec||!level||!exp||!portfolio||!skills||!motivation){alert('Заполните все обязательные поля *');return;}
+        var text = '🔥 <b>Новая заявка в команду — Thin Lucid</b>\n\n'+
+            '<b>Имя:</b> '+name+'\n'+
+            '<b>Telegram:</b> '+tg+'\n'+
+            '<b>Направление:</b> '+spec+'\n'+
+            '<b>Грейд:</b> '+level+'\n'+
+            '<b>Опыт:</b> '+exp+' лет\n'+
+            '<b>Доступность:</b> '+(avail||'—')+'\n'+
+            '<b>Портфолио:</b> '+portfolio+'\n\n'+
+            '<b>Навыки:</b>\n'+skills+'\n\n'+
+            '<b>Мотивация:</b>\n'+motivation;
+
+        var tgApp = window.Telegram&&window.Telegram.WebApp;
+        var userId = tgApp&&tgApp.initDataUnsafe&&tgApp.initDataUnsafe.user?tgApp.initDataUnsafe.user.id:null;
+        var fullText = text + (userId?'\n\n#uid:'+userId:'');
+
+        var btn = document.getElementById('joinSubmitBtn');
+        btn.disabled=true; btn.querySelector('span').textContent='Отправка...';
+        fetch('https://api.telegram.org/bot'+TG_TOKEN+'/sendMessage',{
+            method:'POST', headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({chat_id:TG_CHAT, text:fullText, parse_mode:'HTML'})
+        })
+        .then(function(r){return r.json();})
+        .then(function(data){
+            btn.disabled=false; btn.querySelector('span').textContent='Подать заявку';
+            if(data.ok){
+                if(userId){
+                    fetch('https://api.telegram.org/bot'+TG_TOKEN+'/editMessageReplyMarkup',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:TG_CHAT,message_id:data.result.message_id,reply_markup:{inline_keyboard:[[{text:'✅ Принять',callback_data:'approve:'+userId},{text:'❌ Отказать',callback_data:'reject:'+userId}]]}})});
+                }
+                showSuccess();
+                ['emp_name','emp_tg','emp_exp','emp_portfolio','emp_skills','emp_motivation'].forEach(function(id){document.getElementById(id).value='';});
+                document.getElementById('levelField').value='';
+                document.querySelectorAll('.level-btn').forEach(function(b){b.classList.remove('active');});
+            } else { alert('Ошибка: '+(data.description||'попробуйте ещё раз')); }
+        })
+        .catch(function(){ btn.disabled=false; btn.querySelector('span').textContent='Подать заявку'; alert('Ошибка сети.'); });
+    };
 });
-});
+
+// Docs tabs
+function docsTab(name, btn) {
+    document.querySelectorAll('.docs-tab').forEach(function(t){t.classList.remove('active');});
+    document.querySelectorAll('.docs-panel').forEach(function(p){p.classList.remove('active');});
+    btn.classList.add('active');
+    document.getElementById('dp-'+name).classList.add('active');
+}
+
+// Clear docs form
+function clearDocs(panelId) {
+    var panel = document.getElementById(panelId);
+    panel.querySelectorAll('input, textarea').forEach(function(el){el.value='';});
+    panel.querySelectorAll('select').forEach(function(el){el.selectedIndex=0;});
+    panel.querySelectorAll('input[type=checkbox]').forEach(function(el){el.checked=false;});
+}
 </script>
 </body>
 </html>
